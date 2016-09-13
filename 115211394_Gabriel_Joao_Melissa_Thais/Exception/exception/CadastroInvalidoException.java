@@ -4,14 +4,13 @@
 package exception;
 
 /**
- * 
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
 @SuppressWarnings("serial")
-public class StringInvalidaException extends Exception{
+public class CadastroInvalidoException extends Exception{
 	
-	public StringInvalidaException(String msg){
+	public CadastroInvalidoException(String msg){
 		super(msg);
 	}
 }

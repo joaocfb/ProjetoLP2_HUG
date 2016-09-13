@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import exception.BuscaHospedeException;
+import exception.CadastroInvalidoException;
+import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
 import factorys.FactoryHospedes;
 import quartos.QuartoSimples;
@@ -23,6 +25,7 @@ public class Hotel {
 	
 
 	public Hotel() {
+		this.factoryHospedes = new FactoryHospedes();
 		this.meusHospedes = new HashMap<String, Hospede>();
 	}
 	
@@ -57,7 +60,7 @@ public class Hotel {
 	 * @return String
 	 * @throws StringInvalidaException
 	 */
-	public String getInfoHospede(String info, String id) throws StringInvalidaException{
+	public String getInfoHospede(String id, String info) throws StringInvalidaException{
 		//info que eh o que quer retornar e id que relaciona ao hospede
 		switch (info.toLowerCase().trim()) {
 		
@@ -80,24 +83,26 @@ public class Hotel {
 	 * @param email
 	 * @param dataNascimento
 	 */
-	public String cadastraHospede(String nome, String email, String dataNascimento) throws StringInvalidaException{
+	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException{
 		//se nao existir esse email como chave ele adiciona o hospede 
 		if (!(verificaSeExisteHospede(email))) {
 			meusHospedes.put(email, factoryHospedes.criaHospede(nome, email, dataNascimento));
 			return email;
 		}
-		throw new StringInvalidaException("O nome do hospede nao eh valido.");
+		throw new CadastroInvalidoException("O nome do hospede nao eh valido.");
 		
 	}
 	
 	/**
-	 * Metodo que remove um hospede usando o email
+	 * Metodo que remove um hospede atraves do email
 	 * @param email
+	 * @throws RemocaoInvalidaException
 	 */
-	public void removeHospede(String email){
+	public void removeHospede(String email) throws RemocaoInvalidaException{
 		if (verificaSeExisteHospede(email)) {
 			meusHospedes.remove(email);
 		}
+		throw new RemocaoInvalidaException("Nao foi possivel remover o hospede, email nao cadastrado.");
 	}
 	
 	/**
@@ -119,7 +124,7 @@ public class Hotel {
 	 * @return Hospede
 	 * @throws BuscaHospedeException
 	 */
-	public Hospede retornaHospede(String email)throws BuscaHospedeException{
+	private Hospede retornaHospede(String email)throws BuscaHospedeException{
 		if (verificaSeExisteHospede(email)) {
 			return meusHospedes.get(email);
 		}

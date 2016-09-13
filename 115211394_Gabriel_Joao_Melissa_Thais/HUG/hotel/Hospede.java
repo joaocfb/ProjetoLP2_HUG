@@ -3,10 +3,9 @@
  */
 package hotel;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import exception.StringInvalidaException;
 import factorys.FactoryEstadia;
 
 /**
@@ -29,8 +28,10 @@ public class Hospede {
 	 * @param nome
 	 * @param email
 	 * @param dataNascimento
+	 * @throws StringInvalidaException 
 	 */
-	public Hospede(String nome, String email, String dataNascimento) {
+	public Hospede(String nome, String email, String dataNascimento) throws StringInvalidaException {
+		verificaHospede(nome, email, dataNascimento);
 		this.nome = nome;
 		this.email = email;
 		this.dataNascimento = dataNascimento;
@@ -120,7 +121,15 @@ public class Hospede {
 		return false;
 	}
 	
-	
+	private void verificaHospede(String nome, String email, String dataNascimento) throws StringInvalidaException {
+		if (nome == null || nome.trim().isEmpty()) {
+			throw new StringInvalidaException("Parametro invalido.");
+		} else if (email == null || email.trim().isEmpty()) {
+			throw new StringInvalidaException("Parametro invalido.");
+		} else if (email == null || email.trim().isEmpty()) {
+			throw new StringInvalidaException("Parametro invalido.");
+		}
+	}
 
 	
 	
