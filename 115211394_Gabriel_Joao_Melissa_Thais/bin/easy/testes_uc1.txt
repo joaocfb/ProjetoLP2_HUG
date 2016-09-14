@@ -20,7 +20,7 @@ id4=cadastraHospede nome="Robyn" email="robyn@sverige.se" dataNascimento="12/06/
 #   Para esse caso, ele retorna as informacoes referente ao parametro.     # 
 ############################################################################
 
-expect "Sven Svensson"  getInfoHospede id=${id1} atributo="Nome"
+expect "Sven Svensson"  getInfoHospede id=${id1} atributo="Nome" 
 expect 10/02/1978 getInfoHospede id=${id1} atributo="Data de Nascimento"
 
 expect "Ines Brasil"  getInfoHospede id=${id2} atributo="Nome"

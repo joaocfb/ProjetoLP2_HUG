@@ -4,7 +4,6 @@
 package exception;
 
 /**
- * Classe de exception
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */

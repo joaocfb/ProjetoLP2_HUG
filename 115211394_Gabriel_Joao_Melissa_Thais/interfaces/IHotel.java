@@ -19,7 +19,7 @@ public interface IHotel {
 		
 	public String getInfoHospede(String info, String id) throws StringInvalidaException;
 	
-	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException;
+	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException;
 	
 	public void removeHospede(String email) throws RemocaoInvalidaException;
 		

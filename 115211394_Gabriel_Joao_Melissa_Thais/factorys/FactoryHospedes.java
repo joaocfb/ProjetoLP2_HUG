@@ -3,7 +3,6 @@
  */
 package factorys;
 
-import exception.StringInvalidaException;
 import hotel.Hospede;
 
 /**
@@ -18,9 +17,8 @@ public class FactoryHospedes {
 	 * @param email
 	 * @param dataNascimento
 	 * @return
-	 * @throws StringInvalidaException 
 	 */
-	public Hospede criaHospede(String nome, String email, String dataNascimento) throws StringInvalidaException{
+	public Hospede criaHospede(String nome, String email, String dataNascimento){
 		return new Hospede(nome, email, dataNascimento);
 	}
 }

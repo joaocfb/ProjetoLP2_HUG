@@ -13,14 +13,8 @@ import exception.StringInvalidaException;
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-
-// ********** COLOCAR TRY/CATCH ****************
 public class HotelFacade {
 	private HotelController controller;
-	
-	public HotelFacade(){
-		this.controller = new HotelController();
-	}
 	
 	/**
 	 * @param info
@@ -50,9 +44,8 @@ public class HotelFacade {
 	 * @param dataNascimento
 	 * @return String
 	 * @throws CadastroInvalidoException
-	 * @throws StringInvalidaException 
 	 */
-	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException {
+	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException {
 		return controller.cadastraHospede( nome, email, dataNascimento);
 	}
 
