@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import exception.CadastroInvalidoException;
 import exception.StringInvalidaException;
-import gerenciaHotel.HotelController;
+import gerenciaHotel.SystemController;
 import hotel.Hospede;
 
 /**
@@ -18,7 +18,7 @@ import hotel.Hospede;
  *
  */
 public class testeHospede {
-	private HotelController controle;
+	private SystemController controle;
 	private Hotel hotel;
 	/**
 	 * 

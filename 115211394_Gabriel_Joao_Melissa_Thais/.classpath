@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="HUG"/>
 	<classpathentry kind="src" path="Exception"/>
 	<classpathentry kind="src" path="testes"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/Melissa/Downloads/easyaccept.jar"/>
+	<classpathentry kind="lib" path="/home/nicolly/projetolp2/ProjetoLP2_HUG/115211394_Gabriel_Joao_Melissa_Thais/lib/easyaccept.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

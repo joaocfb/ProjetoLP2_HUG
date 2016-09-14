@@ -3,14 +3,12 @@
  */
 package interfaces;
 
-import exception.BuscaHospedeException;
 import exception.CadastroInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
-import hotel.Hospede;
 
 /**
- * @author melissadg
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
 public interface IHotel {
