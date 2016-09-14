@@ -6,6 +6,7 @@ package hotel;
 import java.util.HashMap;
 import java.util.Map;
 
+import exception.StringInvalidaException;
 import quartos.QuartoSimples;
 
 /**
@@ -17,7 +18,8 @@ public class Estadia {
 	private int quantDias;
 	private String IDQuarto;
 	
-	public Estadia(String IDQuarto, int quantDias){
+	public Estadia(String IDQuarto, int quantDias) throws StringInvalidaException {
+		verificaEstadia(IDQuarto, quantDias);
 		this.IDQuarto = IDQuarto;
 		this.quantDias = quantDias;
 	}
@@ -47,6 +49,14 @@ public class Estadia {
 		IDQuarto = iDQuarto;
 	}
 	
+	private void verificaEstadia(String IDQuarto, int quantDias) throws StringInvalidaException {
+		if (IDQuarto == null || IDQuarto.trim().isEmpty()) {
+			throw new StringInvalidaException("Parametro invalido.");
+		} else if (quantDias <= 0) {
+			throw new StringInvalidaException("Parametro invalido.");
+		}
+		
+	}
 	
 	
 	
