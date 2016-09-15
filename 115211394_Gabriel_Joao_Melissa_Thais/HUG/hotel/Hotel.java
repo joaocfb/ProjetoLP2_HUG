@@ -1,15 +1,13 @@
 package hotel;
 
 import java.util.HashMap;
-import java.util.Map;
 
+import quartos.QuartoSimples;
 import exception.BuscaHospedeException;
 import exception.CadastroInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
-import exception.TestesHospedeException;
 import factorys.FactoryHospedes;
-import quartos.QuartoSimples;
 
 /**
  * Classe Hotel: faz o cadastro, edicao/atualizacao, busca e remove hospedes
@@ -99,7 +97,7 @@ public class Hotel {
 	 * @throws StringInvalidaException
 	 * @throws TestesHospedeException 
 	 */
-	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException, TestesHospedeException {
+	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException {
 		// se nao existir esse email como chave ele adiciona o hospede
 		if (!(verificaSeExisteHospede(email))) {
 			//Hospede hospedeNovo = factoryHospedes.criaHospede(nome, email, dataNascimento);

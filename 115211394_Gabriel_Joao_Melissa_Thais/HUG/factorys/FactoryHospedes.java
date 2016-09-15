@@ -3,9 +3,8 @@
  */
 package factorys;
 
-import exception.StringInvalidaException;
-import exception.TestesHospedeException;
 import hotel.Hospede;
+import exception.StringInvalidaException;
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -22,7 +21,7 @@ public class FactoryHospedes {
 	 * @throws StringInvalidaException 
 	 * @throws TestesHospedeException 
 	 */
-	public Hospede criaHospede(String nome, String email, String dataNascimento) throws StringInvalidaException, TestesHospedeException{
+	public Hospede criaHospede(String nome, String email, String dataNascimento) throws StringInvalidaException{
 		return new Hospede(nome, email, dataNascimento);
 	}
 }
