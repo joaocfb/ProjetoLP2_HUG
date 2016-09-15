@@ -7,6 +7,7 @@ import easyaccept.EasyAccept;
 import exception.CadastroInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
+import exception.TestesHospedeException;
 
 /**
  * Classe Hotel Facade que delega funcoes para o controller de Hotel
@@ -51,8 +52,9 @@ public class SystemFacade {
 	 * @return String
 	 * @throws CadastroInvalidoException
 	 * @throws StringInvalidaException 
+	 * @throws TestesHospedeException 
 	 */
-	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException {
+	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException, TestesHospedeException {
 		return controller.cadastraHospede( nome, email, dataNascimento);
 	}
 

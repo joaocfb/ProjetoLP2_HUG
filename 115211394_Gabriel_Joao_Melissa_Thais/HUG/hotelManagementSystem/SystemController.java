@@ -3,6 +3,7 @@ package hotelManagementSystem;
 import exception.CadastroInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
+import exception.TestesHospedeException;
 import hotel.Hotel;
 import interfaces.IHotel;
 
@@ -34,7 +35,7 @@ public class SystemController implements IHotel {
 
 	@Override
 	public String cadastraHospede(String nome, String email, String dataNascimento)
-			throws CadastroInvalidoException, StringInvalidaException {
+			throws CadastroInvalidoException, StringInvalidaException, TestesHospedeException {
 		return controleHotel.cadastraHospede(nome, email, dataNascimento);
 	}
 

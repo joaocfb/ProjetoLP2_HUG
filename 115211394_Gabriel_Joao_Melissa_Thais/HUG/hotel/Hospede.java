@@ -29,14 +29,38 @@ public class Hospede {
 	 * @param email
 	 * @param dataNascimento
 	 * @throws StringInvalidaException 
+	 * @throws Exception 
 	 */
-	public Hospede(String nome, String email, String dataNascimento) throws StringInvalidaException {
-		verificaHospede(nome, email, dataNascimento);
+	public Hospede(String nome, String email, String dataNascimento) throws StringInvalidaException  {
+		
+		testandoNome(nome);
+		testandoEmail(email);
+		testandoDataNascimento(dataNascimento);
+		
 		this.nome = nome;
 		this.email = email;
 		this.dataNascimento = dataNascimento;
+		
 	}
-
+	
+	
+	private void testandoNome(String nome) throws StringInvalidaException {
+		if (nome == null || nome.trim().isEmpty()) {
+			throw new StringInvalidaException("Nome do hospede nao pode ser nulo ou vazio.");
+		}
+	}
+	
+	private void testandoEmail(String email) throws StringInvalidaException{
+		if (email == null || email.trim().isEmpty()) {
+			throw new StringInvalidaException("Email do hospede nao pode ser nulo ou vazio.");
+		}
+	}
+	
+	private void testandoDataNascimento(String dataNascimento) throws StringInvalidaException{
+		if (dataNascimento == null || dataNascimento.trim().isEmpty()) {
+			throw new StringInvalidaException("Data de Nascimento do hospede nao pode ser nulo ou vazio.");
+		}
+	}
 
 	/**
 	 * @return the nome
@@ -120,17 +144,5 @@ public class Hospede {
 		}
 		return false;
 	}
-	
-	private void verificaHospede(String nome, String email, String dataNascimento) throws StringInvalidaException {
-		if (nome == null || nome.trim().isEmpty()) {
-			throw new StringInvalidaException("Parametro invalido.");
-		} else if (email == null || email.trim().isEmpty()) {
-			throw new StringInvalidaException("Parametro invalido.");
-		} else if (email == null || email.trim().isEmpty()) {
-			throw new StringInvalidaException("Parametro invalido.");
-		}
-	}
-
-	
 	
 }

@@ -7,6 +7,7 @@ import exception.BuscaHospedeException;
 import exception.CadastroInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
+import exception.TestesHospedeException;
 import factorys.FactoryHospedes;
 import quartos.QuartoSimples;
 
@@ -96,8 +97,9 @@ public class Hotel {
 	 * @param email
 	 * @param dataNascimento
 	 * @throws StringInvalidaException
+	 * @throws TestesHospedeException 
 	 */
-	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException {
+	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException, TestesHospedeException {
 		// se nao existir esse email como chave ele adiciona o hospede
 		if (!(verificaSeExisteHospede(email))) {
 			//Hospede hospedeNovo = factoryHospedes.criaHospede(nome, email, dataNascimento);
