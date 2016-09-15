@@ -28,8 +28,8 @@ public class SystemFacade {
 	 * @param id
 	 * @throws StringInvalidaException
 	 */
-	public void atualizaCadastro(String info, String valor, String id) throws StringInvalidaException {
-		controller.atualizaCadastro(info, valor, id);
+	public void atualizaCadastro(String id, String valor, String info) throws StringInvalidaException {
+		controller.atualizaCadastro(id, valor, info);
 	}
 
 	/**
@@ -62,13 +62,13 @@ public class SystemFacade {
 	 * @param email
 	 * @throws RemocaoInvalidaException
 	 */
-	public void removeHospede(String email) throws RemocaoInvalidaException {
+	public void removeHospede(String email) throws StringInvalidaException {
 		controller.removeHospede(email);
 		
 	}
 	
 	public static void main(String[] args) {
-	    args = new String[] {"gerenciaHotel.HotelFacade", "testes/easy/testes_uc1.txt"}; //separe cada script de teste por virgula.
+	    args = new String[] {"hotelManagementSystem.SystemFacade", "testes/easy/testes_uc1.txt"}; //separe cada script de teste por virgula.
 	    EasyAccept.main(args);
 	}
 	

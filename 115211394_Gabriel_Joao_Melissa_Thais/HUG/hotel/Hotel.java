@@ -23,14 +23,16 @@ public class Hotel {
 	private FactoryHospedes factoryHospedes;
 
 	/**
-	 * Construtor do hotel / inicializa o mapa de hospedes / inicializa a fabrica de hospedes
+	 * Construtor do hotel / inicializa o mapa de hospedes / inicializa a
+	 * fabrica de hospedes
 	 */
 	public Hotel() {
 		this.factoryHospedes = new FactoryHospedes();
 		this.meusHospedes = new HashMap<String, Hospede>();
 	}
 
-	// #################################################CRUD HOSPEDE#################################################################
+	// #################################################CRUD
+	// HOSPEDE#################################################################
 
 	/**
 	 * Atualiza as informacoes do hospede
@@ -40,20 +42,30 @@ public class Hotel {
 	 * @param id
 	 * @throws StringInvalidaException
 	 */
-	public void atualizaCadastro(String info, String valor, String id) throws StringInvalidaException {
+	public void atualizaCadastro(String id, String valor, String info) throws StringInvalidaException {
 
-		switch (info.toLowerCase().trim()) {
+		switch (valor.toLowerCase().trim()) {
 		// info que eh o que quer alterar e id que relaciona ao hospede
-
 		case "nome":
-			meusHospedes.get(id).setNome(valor);
+			meusHospedes.get(id).setNome(info);
+			return;
 		case "data de nascimento":
-			meusHospedes.get(id).setDataNascimento(valor);
+			meusHospedes.get(id).setDataNascimento(info);
+			return;
 		case "email":
-			meusHospedes.get(id).setEmail(valor);
+			// salva as informacoes do hospede com antigo email
+			Hospede hospede = meusHospedes.get(id);
+			// altera o email
+			hospede.setEmail(info);
+			// remove o hospede com antiga chave/email
+			meusHospedes.remove(id);
+			// adiciona o mesmo hospede com nova chave/email
+			meusHospedes.put(info, hospede);
+			return;
 		default:
-			throw new StringInvalidaException("Erro na consulta de hospede. Hospede de email "
-					+ meusHospedes.get(id).getEmail() + " nao foi cadastrado(a).");
+			//lanca excecao se o parametro nao for um dos tres possiveis
+			throw new StringInvalidaException("Parametro invalido.");
+
 		}
 	}
 
@@ -72,20 +84,22 @@ public class Hotel {
 	 * @throws StringInvalidaException
 	 */
 	public String getInfoHospede(String id, String info) throws StringInvalidaException {
-		// info que eh o que quer retornar e id que relaciona ao hospede
-		switch (info.toLowerCase().trim()) {
+		//verifica se existe esse email cadastrado, se sim pesquisa
+		if (meusHospedes.containsKey(id)) {
+			switch (info.toLowerCase().trim()) {
 
-		case "nome":
-			// pega no mapa de hospedes o nome do hospede com o id/chave(email)
-			return meusHospedes.get(id).getNome();
-		case "data de nascimento":
-			return meusHospedes.get(id).getDataNascimento();
-		case "email":
-			return meusHospedes.get(id).getEmail();
-		default:
-			throw new StringInvalidaException("Erro na consulta de hospede. Hospede de email "
-					+ meusHospedes.get(id).getEmail() + " nao foi cadastrado(a).");
-		}
+			case "nome":
+				return meusHospedes.get(id).getNome();
+			case "data de nascimento":
+				return meusHospedes.get(id).getDataNascimento();
+			case "email":
+				return meusHospedes.get(id).getEmail();
+				
+			}
+		}			
+		//se nao houver ele lanca excecao
+		throw new StringInvalidaException("Erro na consulta de hospede. Hospede de email " + id +" nao foi cadastrado(a).");
+		
 	}
 
 	/**
@@ -95,13 +109,14 @@ public class Hotel {
 	 * @param email
 	 * @param dataNascimento
 	 * @throws StringInvalidaException
-	 * @throws TestesHospedeException 
+	 * @throws TestesHospedeException
 	 */
-	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException {
+	public String cadastraHospede(String nome, String email, String dataNascimento)
+			throws CadastroInvalidoException, StringInvalidaException {
 		// se nao existir esse email como chave ele adiciona o hospede
 		if (!(verificaSeExisteHospede(email))) {
-			//Hospede hospedeNovo = factoryHospedes.criaHospede(nome, email, dataNascimento);
-			meusHospedes.put(email, new Hospede(nome, email, dataNascimento));
+			
+			meusHospedes.put(email, factoryHospedes.criaHospede(nome, email, dataNascimento));
 			return email;
 		}
 		throw new CadastroInvalidoException("Cadastro nao realizado.");
@@ -114,11 +129,14 @@ public class Hotel {
 	 * @param email
 	 * @throws RemocaoInvalidaException
 	 */
-	public void removeHospede(String email) throws RemocaoInvalidaException {
-		if (verificaSeExisteHospede(email)) {
+	public void removeHospede(String email) throws StringInvalidaException {
+		if (!meusHospedes.containsKey(email)) {
+			throw new StringInvalidaException("Erro na consulta de hospede. Hospede de email " + email +" nao foi cadastrado(a).");
+
+		}else{
 			meusHospedes.remove(email);
+			
 		}
-		throw new RemocaoInvalidaException("Nao foi possivel remover o hospede, email nao cadastrado.");
 	}
 
 	/**
@@ -133,20 +151,6 @@ public class Hotel {
 			return false;
 		}
 		return meusHospedes.containsKey(email);
-	}
-
-	/**
-	 * Metodo que retorna o Hospede se ele existir
-	 * 
-	 * @param email
-	 * @return Hospede
-	 * @throws BuscaHospedeException
-	 */
-	private Hospede retornaHospede(String email) throws BuscaHospedeException {
-		if (verificaSeExisteHospede(email)) {
-			return meusHospedes.get(email);
-		}
-		throw new BuscaHospedeException("Nao existe um hospede com esse email.");
 	}
 
 	// ########################################################### ESTADIA

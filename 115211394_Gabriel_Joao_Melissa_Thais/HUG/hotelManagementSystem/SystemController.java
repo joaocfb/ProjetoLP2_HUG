@@ -20,8 +20,8 @@ public class SystemController implements IHotel {
 	}
 
 	@Override
-	public void atualizaCadastro(String info, String valor, String id) throws StringInvalidaException {
-		controleHotel.atualizaCadastro(info, valor, id);
+	public void atualizaCadastro(String id, String valor, String info) throws StringInvalidaException {
+		controleHotel.atualizaCadastro(id, valor, info);
 
 	}
 
@@ -39,7 +39,7 @@ public class SystemController implements IHotel {
 	}
 
 	@Override
-	public void removeHospede(String email) throws RemocaoInvalidaException {
+	public void removeHospede(String email) throws StringInvalidaException {
 
 		controleHotel.removeHospede(email);
 

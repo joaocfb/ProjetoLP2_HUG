@@ -16,7 +16,7 @@ import exception.StringInvalidaException;
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class hospedeTest {
+public class HospedeTest {
 	
 	private Hospede hospedeFour;
 	private Hospede hospedeFive;

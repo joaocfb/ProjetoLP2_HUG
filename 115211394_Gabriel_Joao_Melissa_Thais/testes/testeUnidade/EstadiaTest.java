@@ -8,7 +8,7 @@ import org.junit.Test;
 import exception.StringInvalidaException;
 import hotel.Estadia;
 
-public class estadiaTest {
+public class EstadiaTest {
 	
 	private Estadia estadiaOne;
 	private Estadia estadiaTwo;
