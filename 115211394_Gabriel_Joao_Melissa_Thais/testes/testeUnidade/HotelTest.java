@@ -18,7 +18,7 @@ public class HotelTest {
 	
 	
 	@Before
-	public void setUp(){
+	public void setUp() throws Exception{
 		Hotel hotel1 = new Hotel();
 	}
 	/**

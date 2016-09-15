@@ -3,8 +3,6 @@
  */
 package hotel;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import exception.StringInvalidaException;
 import quartos.QuartoSimples;
@@ -17,6 +15,7 @@ import quartos.QuartoSimples;
 public class Estadia {
 	private int quantDias;
 	private String IDQuarto;
+	private QuartoSimples meuQuarto;
 	
 	public Estadia(String IDQuarto, int quantDias) throws StringInvalidaException {
 		
@@ -26,6 +25,7 @@ public class Estadia {
 		this.IDQuarto = IDQuarto;
 		this.quantDias = quantDias;
 	}
+	
 	
 	/**
 	 * Auxilio test para identificar possiveis erros com relacao ao parametro recebido

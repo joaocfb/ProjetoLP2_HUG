@@ -3,7 +3,7 @@
  */
 package hotel;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import exception.StringInvalidaException;
 import factorys.FactoryEstadia;
@@ -20,8 +20,10 @@ public class Hospede {
 	private String email;
 	private String dataNascimento;
 	private FactoryEstadia factoryEstadia;
-	private ArrayList<Estadia> estadias;
+	private HashMap<String, Estadia> estadias;
 
+
+	
 
 	/**
 	 * Construtor do hospede
@@ -40,27 +42,30 @@ public class Hospede {
 		this.nome = nome;
 		this.email = email;
 		this.dataNascimento = dataNascimento;
-		
+		this.factoryEstadia = new FactoryEstadia();
 	}
 	
-	
+	//teste
 	private void testandoNome(String nome) throws StringInvalidaException {
 		if (nome == null || nome.trim().isEmpty()) {
 			throw new StringInvalidaException("Nome do hospede nao pode ser nulo ou vazio.");
 		}
 	}
 	
+	//teste
 	private void testandoEmail(String email) throws StringInvalidaException{
 		if (email == null || email.trim().isEmpty()) {
 			throw new StringInvalidaException("Email do hospede nao pode ser nulo ou vazio.");
 		}
 	}
 	
+	//teste
 	private void testandoDataNascimento(String dataNascimento) throws StringInvalidaException{
 		if (dataNascimento == null || dataNascimento.trim().isEmpty()) {
 			throw new StringInvalidaException("Data de Nascimento do hospede nao pode ser nulo ou vazio.");
 		}
 	}
+	
 
 	/**
 	 * @return the nome
@@ -95,6 +100,14 @@ public class Hospede {
 	 */
 	public String getDataNascimento() {
 		return dataNascimento;
+	}
+	
+	public HashMap<String, Estadia> getEstadias() {
+		return estadias;
+	}
+
+	public void setEstadias(HashMap<String, Estadia> estadias) {
+		this.estadias = estadias;
 	}
 
 	/**

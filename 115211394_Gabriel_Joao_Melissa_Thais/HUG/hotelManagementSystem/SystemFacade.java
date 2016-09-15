@@ -18,7 +18,7 @@ import exception.StringInvalidaException;
 public class SystemFacade {
 	private SystemController controller;
 	
-	public SystemFacade(){
+	public SystemFacade() throws Exception{
 		this.controller = new SystemController();
 	}
 	

@@ -15,7 +15,7 @@ import exception.StringInvalidaException;
 public class SystemController implements IHotel {
 	private Hotel controleHotel;
 
-	public SystemController() {
+	public SystemController() throws Exception {
 		this.controleHotel = new Hotel();
 	}
 

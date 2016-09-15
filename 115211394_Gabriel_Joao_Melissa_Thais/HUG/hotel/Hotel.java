@@ -1,17 +1,22 @@
 package hotel;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import quartos.QuartoSimples;
-import exception.BuscaHospedeException;
 import exception.CadastroInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
+import factorys.FactoryEstadia;
 import factorys.FactoryHospedes;
+import factorys.FactoryQuartos;
 
 /**
  * Classe Hotel: faz o cadastro, edicao/atualizacao, busca e remove hospedes
  * atraves do email
+ * Faz checkin/checkout
  * 
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
@@ -21,18 +26,45 @@ public class Hotel {
 	private HashMap<String, QuartoSimples> quartos;
 	private HashMap<String, Hospede> meusHospedes;
 	private FactoryHospedes factoryHospedes;
+	private FactoryEstadia factoryEstadia;
+	private FactoryQuartos factoryQuarto;
+	private ArrayList<String> lucrosDoHotel;
+	private LocalDate hoje = LocalDate.now();
+	private double precoTotalDoHospede;
+
 
 	/**
 	 * Construtor do hotel / inicializa o mapa de hospedes / inicializa a
 	 * fabrica de hospedes
+	 * @throws Exception 
 	 */
-	public Hotel() {
+	public Hotel() throws Exception {
+		this.lucrosDoHotel = new ArrayList<String>();
+		this.factoryQuarto = new FactoryQuartos();
 		this.factoryHospedes = new FactoryHospedes();
+		this.factoryEstadia = new FactoryEstadia();
 		this.meusHospedes = new HashMap<String, Hospede>();
+		this.quartos = new HashMap<>();
+		this.criaListaQuartos();
+		this.precoTotalDoHospede = precoTotalDoHospede;
 	}
 
-	// #################################################CRUD
-	// HOSPEDE#################################################################
+	
+
+	/**
+	 * Metodo que cria os quatos do hotel 
+	 * @throws Exception
+	 */
+	private void criaListaQuartos() throws Exception {
+		java.util.List<String> ids = Arrays.asList("1S", "2S", "3S", "4S", "1LX", "2LX","3LX","4LX", "1KIN", "2KIN", "3KIN", "4KIN");
+		
+		//adiciona no mapa de quartos
+		for (String id : ids) {
+			quartos.put(id, factoryQuarto.criaQuartos(id));
+		}
+	}
+
+	// #################################################CRUD HOSPEDE#################################################################
 
 	/**
 	 * Atualiza as informacoes do hospede
@@ -46,12 +78,15 @@ public class Hotel {
 
 		switch (valor.toLowerCase().trim()) {
 		// info que eh o que quer alterar e id que relaciona ao hospede
+		
 		case "nome":
 			meusHospedes.get(id).setNome(info);
 			return;
+			
 		case "data de nascimento":
 			meusHospedes.get(id).setDataNascimento(info);
 			return;
+			
 		case "email":
 			// salva as informacoes do hospede com antigo email
 			Hospede hospede = meusHospedes.get(id);
@@ -62,18 +97,12 @@ public class Hotel {
 			// adiciona o mesmo hospede com nova chave/email
 			meusHospedes.put(info, hospede);
 			return;
+			
 		default:
 			//lanca excecao se o parametro nao for um dos tres possiveis
 			throw new StringInvalidaException("Parametro invalido.");
 
 		}
-	}
-
-	/**
-	 * @return the meusHospedes
-	 */
-	public int getMeusHospedes() {
-		return meusHospedes.size();
 	}
 
 	/**
@@ -152,15 +181,92 @@ public class Hotel {
 		}
 		return meusHospedes.containsKey(email);
 	}
+	
 
-	// ########################################################### ESTADIA
-	// ########################################################################
+	// ########################################################### ESTADIA ########################################################################
 
-	/*
-	 * public double calculaTotal(String email){ estadias.get(email).g
-	 * 
-	 * 
-	 * 
-	 * }
+	/**
+	 * Metodo que adiciona estadias no mapa do hospede
+	 * @param email
+	 * @param IDQuarto
+	 * @param quantDias
+	 * @throws Exception 
 	 */
+	//lembrete: verificar se o IDQUARTO ta vago
+	public void checkin(String email, String IDQuarto, int quantDias) throws Exception{
+		if (quartos.get(IDQuarto).getStatus()) {
+			//pega o hospede com o email dado
+			Hospede hospede = meusHospedes.get(email);
+			//cria uma estadia com os parametros(Id quato e quant Dias)
+			Estadia estadiaNova = factoryEstadia.criaEstadia(IDQuarto, quantDias);
+			//adiciona no mapa de estadias pertencente ao hospede 
+			hospede.getEstadias().put(IDQuarto, estadiaNova);
+			//altera o status do quarto
+			quartos.get(IDQuarto).setStatus(false);
+		
+		}
+		throw new Exception("O quarto esta ocupado.");
+	}
+	
+	/**
+	 * Metodo que remove uma estadia de um hospede
+	 * @param email
+	 * @param idQuarto
+	 */
+	private void removeEstadia(String email, String idQuarto){
+		//remove uma estadia de um hospede
+		meusHospedes.get(email).getEstadias().remove(idQuarto);
+	}
+	
+	
+	/**
+	 * Metodo que realiza o checkout de um hospede
+	 * @param email
+	 * @param IDQuarto
+	 * @return double
+	 */
+	public double checkout(String email, String IDQuarto){
+		
+		//pega o numero de dias de hospedagem 
+		int diasHospede = meusHospedes.get(email).getEstadias().get(IDQuarto).getQuantDias();
+		//pega o preco do quarto(depende do tipo)
+		double preco = quartos.get(IDQuarto).getPRECO();
+		//faz o calculo dos gastos
+		precoTotalDoHospede = diasHospede * preco;
+		
+		//altera o status do quarto para vago
+		quartos.get(IDQuarto).setStatus(true);
+		
+		//remove a estadia 
+		removeEstadia(email, IDQuarto);
+		
+		this.registroHotel(email, IDQuarto);
+		return precoTotalDoHospede;
+		
+	}
+	
+	/**
+	 * Metodo que atualiza os registro de lucro do hotel
+	 * @param email
+	 * @param idQuarto
+	 * @return String
+	 */
+	public String registroHotel(String email, String idQuarto){
+		StringBuilder dados = new StringBuilder();
+		dados.append(hoje);
+		dados.append(meusHospedes.get(email).getNome());
+		dados.append(idQuarto);
+		dados.append(this.getPrecoTotal());
+		
+		lucrosDoHotel.add(dados.toString());
+		return dados.toString();
+	}
+	
+	public double getPrecoTotal() {
+		return precoTotalDoHospede;
+	}
+
+	public void setPrecoTotal(double precoTotalDoHospede) {
+		this.precoTotalDoHospede = precoTotalDoHospede;
+	}
 }

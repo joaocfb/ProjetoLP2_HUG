@@ -15,13 +15,19 @@ public class QuartoSimples {
 	
 	public QuartoSimples(String iD) {
 		this.ID = iD;
+		//quarto comeca livre
 		this.status = true;
+	}
+	
+	@Override
+	public String toString() {
+		return "QuartoSimples [ID=" + ID + ", status=" + status + ", PRECO=" + PRECO + "]";
 	}
 	
 	/**
 	 * @return the status
 	 */
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
