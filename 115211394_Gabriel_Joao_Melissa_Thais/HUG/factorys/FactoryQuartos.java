@@ -16,10 +16,11 @@ public class FactoryQuartos {
 	
 	public QuartoSimples criaQuartos(String ID) throws Exception{
 		
+		//se for tamanho 2
+		//se nao for ja eh simples
 		if (ID.length() == 2) {
 			return criaQuartoSimples(ID);
-		}
-		else if (ID.length() == 3) {
+		}else if (ID.length() == 3) {
 			return criaQuartoLuxo(ID);
 		}else if (ID.length() == 4) {
 			return criaQuartoPresidencial(ID);
