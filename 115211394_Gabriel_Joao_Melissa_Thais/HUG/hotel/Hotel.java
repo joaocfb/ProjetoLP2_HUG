@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import quartos.QuartoSimples;
 import exception.CadastroInvalidoException;
@@ -23,6 +24,7 @@ import factorys.FactoryQuartos;
  */
 public class Hotel {
 
+	private static final String Map = null;
 	private HashMap<String, QuartoSimples> quartos;
 	private HashMap<String, Hospede> meusHospedes;
 	private FactoryHospedes factoryHospedes;
@@ -201,7 +203,7 @@ public class Hotel {
 			Estadia estadiaNova = factoryEstadia.criaEstadia(IDQuarto, quantDias);
 			//adiciona no mapa de estadias pertencente ao hospede 
 			hospede.getEstadias().put(IDQuarto, estadiaNova);
-			//altera o status do quarto
+			// altera o status do quarto
 			quartos.get(IDQuarto).setStatus(false);
 		
 		}
