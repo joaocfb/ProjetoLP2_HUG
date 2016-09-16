@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import quartos.QuartoSimples;
 import exception.CadastroInvalidoException;
@@ -22,6 +23,12 @@ import factorys.FactoryQuartos;
  */
 public class Hotel {
 
+<<<<<<< HEAD
+=======
+	private static final String Map = null;
+	private HashMap<String, QuartoSimples> quartos;
+	private HashMap<String, Hospede> meusHospedes;
+>>>>>>> 3686bf8ebc30920ff8ec270cd1522f0e174cdf1b
 	private FactoryHospedes factoryHospedes;
 	private FactoryEstadia factoryEstadia;
 	private FactoryQuartos factoryQuarto;
