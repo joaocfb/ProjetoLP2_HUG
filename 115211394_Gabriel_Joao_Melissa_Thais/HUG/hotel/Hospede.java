@@ -4,6 +4,7 @@
 package hotel;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import exception.StringInvalidaException;
 import factorys.FactoryEstadia;
@@ -20,10 +21,9 @@ public class Hospede {
 	private String email;
 	private String dataNascimento;
 	private FactoryEstadia factoryEstadia;
-	private HashMap<String, Estadia> estadias;
+	private LinkedHashMap<String, Estadia> estadias;
 
 
-	
 
 	/**
 	 * Construtor do hospede
@@ -43,6 +43,7 @@ public class Hospede {
 		this.email = email;
 		this.dataNascimento = dataNascimento;
 		this.factoryEstadia = new FactoryEstadia();
+		this.estadias = new LinkedHashMap<>();
 	}
 	
 	//teste
@@ -106,7 +107,7 @@ public class Hospede {
 		return estadias;
 	}
 
-	public void setEstadias(HashMap<String, Estadia> estadias) {
+	public void setEstadias(LinkedHashMap<String, Estadia> estadias) {
 		this.estadias = estadias;
 	}
 

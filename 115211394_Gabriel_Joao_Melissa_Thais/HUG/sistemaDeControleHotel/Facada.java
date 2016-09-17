@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hotelManagementSystem;
+package sistemaDeControleHotel;
 
 import easyaccept.EasyAccept;
 import exception.CadastroInvalidoException;
@@ -15,11 +15,11 @@ import exception.StringInvalidaException;
  */
 
 // ********** COLOCAR TRY/CATCH ****************
-public class SystemFacade {
-	private SystemController controller;
+public class Facada{
+	private ControleDoSistema controller;
 	
-	public SystemFacade() throws Exception{
-		this.controller = new SystemController();
+	public Facada() throws Exception{
+		this.controller = new ControleDoSistema();
 	}
 	
 	/**
@@ -28,6 +28,15 @@ public class SystemFacade {
 	 * @param id
 	 * @throws StringInvalidaException
 	 */
+	
+	public void iniciaSistema() {
+		controller.iniciaSistema();
+	}
+	
+	public void fechaSistema() {
+		controller.fechaSistema();
+	}
+	
 	public void atualizaCadastro(String id, String valor, String info) throws StringInvalidaException {
 		controller.atualizaCadastro(id, valor, info);
 	}
@@ -68,8 +77,22 @@ public class SystemFacade {
 	}
 	
 	public static void main(String[] args) {
-	    args = new String[] {"hotelManagementSystem.SystemFacade", "testes/easy/testes_uc1.txt"}; //separe cada script de teste por virgula.
+	    args = new String[] {"sistemaDeControleHotel.Facada", "testes/easy/testes_uc1.txt", "testes/easy/testes_uc2.txt"}; //separe cada script de teste por virgula.
 	    EasyAccept.main(args);
+	}
+
+	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception {
+		controller.realizaCheckin(email, quantDias, IDQuarto, tipoQuarto);
+		
+	}
+
+	public void realizaCheckout(String email, String IDQuarto) {
+		controller.realizaCheckout(email, IDQuarto);
+		
+	}
+
+	public String getInfoHospedagem(String email, String atributo) throws Exception {
+		return controller.getInfoHospedagem(email, atributo);
 	}
 	
 }

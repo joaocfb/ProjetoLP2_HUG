@@ -1,9 +1,8 @@
-package hotelManagementSystem;
+package sistemaDeControleHotel;
 
 import hotel.Hotel;
 import interfaces.IHotel;
 import exception.CadastroInvalidoException;
-import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
 
 /**
@@ -12,13 +11,21 @@ import exception.StringInvalidaException;
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class SystemController implements IHotel {
+public class ControleDoSistema implements IHotel {
 	private Hotel controleHotel;
 
-	public SystemController() throws Exception {
+	public ControleDoSistema() throws Exception {
 		this.controleHotel = new Hotel();
 	}
 
+	public void iniciaSistema() {
+		//NAO IMPLEMENTADO AINDA.
+	}
+	
+	public void fechaSistema() {
+		//NAO IMPLEMENTADO AINDA.
+	}
+	
 	@Override
 	public void atualizaCadastro(String id, String valor, String info) throws StringInvalidaException {
 		controleHotel.atualizaCadastro(id, valor, info);
@@ -43,6 +50,22 @@ public class SystemController implements IHotel {
 
 		controleHotel.removeHospede(email);
 
+	}
+
+	@Override
+	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception {
+		controleHotel.realizaCheckin(email, quantDias, IDQuarto, tipoQuarto);
+		
+	}
+
+	@Override
+	public void realizaCheckout(String email, String IDQuarto) {
+		controleHotel.realizaCheckout(email, IDQuarto);
+	}
+
+	@Override
+	public String getInfoHospedagem(String email, String atributo) throws Exception {
+		return controleHotel.getInfoHospedagem(email, atributo);
 	}
 
 }

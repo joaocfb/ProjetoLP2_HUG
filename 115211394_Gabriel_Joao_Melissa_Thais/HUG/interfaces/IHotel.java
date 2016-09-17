@@ -13,6 +13,7 @@ import exception.StringInvalidaException;
  */
 public interface IHotel {
 	
+
 	public void atualizaCadastro(String id, String valor, String info)throws StringInvalidaException;
 		
 	public String getInfoHospede(String info, String id) throws StringInvalidaException;
@@ -21,5 +22,10 @@ public interface IHotel {
 	
 	public void removeHospede(String email) throws StringInvalidaException;
 		
-		
+	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception;
+	
+	public void realizaCheckout(String email, String IDQuarto);
+	
+	public String getInfoHospedagem(String email, String atributo) throws Exception;
+
 }

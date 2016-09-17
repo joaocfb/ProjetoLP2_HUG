@@ -4,14 +4,15 @@
 package quartos;
 
 /**
- *@author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
+ * Classe Quarto
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
 public class QuartoSimples {
 	private String ID;
 	//representa se o quarto esta vago(true) ou nao(false)
 	private boolean status;
-	private final double PRECO = 100.0;
+	private double PRECO = 100.0;
 	
 	public QuartoSimples(String iD) {
 		this.ID = iD;
@@ -19,11 +20,18 @@ public class QuartoSimples {
 		this.status = true;
 	}
 	
+	
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "QuartoSimples [ID=" + ID + ", status=" + status + ", PRECO=" + PRECO + "]";
+		return "QuartoSimples [ID=" + ID + ", status=" + getStatus() + ", PRECO=" + PRECO + "]";
 	}
-	
+
+
+
 	/**
 	 * @return the status
 	 */

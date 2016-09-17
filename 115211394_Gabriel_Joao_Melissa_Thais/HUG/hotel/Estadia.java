@@ -5,7 +5,6 @@ package hotel;
 
 
 import exception.StringInvalidaException;
-import quartos.QuartoSimples;
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -15,7 +14,6 @@ import quartos.QuartoSimples;
 public class Estadia {
 	private int quantDias;
 	private String IDQuarto;
-	private QuartoSimples meuQuarto;
 	
 	public Estadia(String IDQuarto, int quantDias) throws StringInvalidaException {
 		
@@ -83,6 +81,15 @@ public class Estadia {
 	 */
 	public void setIDQuarto(String iDQuarto) {
 		IDQuarto = iDQuarto;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Estadia [quantDias=" + quantDias + ", IDQuarto=" + IDQuarto + "]";
 	}
 	
 	// HashCode

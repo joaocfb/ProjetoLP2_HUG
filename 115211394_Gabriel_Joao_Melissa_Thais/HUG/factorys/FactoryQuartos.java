@@ -8,36 +8,39 @@ import quartos.QuartoPresidencial;
 import quartos.QuartoSimples;
 
 /**
- * @author gabrielvba
+ * 
  *
  */
 public class FactoryQuartos {
 	private String ID;
-	
-	public QuartoSimples criaQuartos(String ID) throws Exception{
-		
-		//se for tamanho 2
-		//se nao for ja eh simples
-		if (ID.length() == 2) {
+	private String tipoQuarto;
+
+	public QuartoSimples criaQuartos(String ID, String tipoQuarto) throws Exception {
+
+		switch (tipoQuarto.toLowerCase()) {
+
+		case "simples":
 			return criaQuartoSimples(ID);
-		}else if (ID.length() == 3) {
-			return criaQuartoLuxo(ID);
-		}else if (ID.length() == 4) {
+		case "presidencial":
 			return criaQuartoPresidencial(ID);
+		case "luxo":
+			return criaQuartoLuxo(ID);
+
 		}
+
 		throw new Exception("Nao criou o quarto.");
 	}
-	
-	private QuartoSimples criaQuartoSimples(String ID){
+
+	private QuartoSimples criaQuartoSimples(String ID) {
 		return new QuartoSimples(ID);
 	}
-	
-	private QuartoLuxo criaQuartoLuxo(String ID){
+
+	private QuartoLuxo criaQuartoLuxo(String ID) {
 		return new QuartoLuxo(ID);
 
 	}
-	
-	private QuartoPresidencial criaQuartoPresidencial(String ID){
+
+	private QuartoPresidencial criaQuartoPresidencial(String ID) {
 		return new QuartoPresidencial(ID);
 
 	}

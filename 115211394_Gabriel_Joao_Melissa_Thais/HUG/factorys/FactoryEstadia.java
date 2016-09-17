@@ -3,7 +3,6 @@
  */
 package factorys;
 
-import exception.StringInvalidaException;
 import hotel.Estadia;
 
 /**
@@ -15,6 +14,7 @@ public class FactoryEstadia {
 	
 	//cria uma estadia com ID do quarto e a quantidade de dias
 	public Estadia criaEstadia(String IDQuarto, int quantDias) throws Exception{
+		
 		testaQuantDias(quantDias);
 		return new Estadia(IDQuarto, quantDias);
 	}

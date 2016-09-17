@@ -17,10 +17,9 @@ id4=cadastraHospede nome="Robyn" email="robyn@sverige.se" dataNascimento="12/06/
 
 ############################################################################ 
 #        Note que o getInfoHospede abaixo tem diferentes parametros.       # 
-#   Para esse caso, ele retorna as informacoes referente ao parametro.     # 
-############################################################################
+#   Para esse caso, ele retorna as informacoes referente ao parametro.     # ############################################################################
 
-expect "Sven Svensson"  getInfoHospede id=${id1} atributo="Nome" 
+expect "Sven Svensson"  getInfoHospede id=${id1} atributo="Nome"
 expect 10/02/1978 getInfoHospede id=${id1} atributo="Data de Nascimento"
 
 expect "Ines Brasil"  getInfoHospede id=${id2} atributo="Nome"
@@ -43,8 +42,7 @@ atualizaCadastro id=${id2} atributo="Data de Nascimento" valor="25/10/1969"
 expect 25/10/1969  getInfoHospede id=${id2} atributo="Data de Nascimento"
 
 atualizaCadastro id=${id3} atributo="Email" valor="agnetha@monomusic.se"
-
-expect "agnetha@monomusic.se"  getInfoHospede id="agnetha@monomusic.se" atributo="Email"
+expect "agnetha@monomusic.se"  getInfoHospede id=${id3} atributo="Email"
 
 ###############################
 #      Remove Hospede         #
@@ -55,7 +53,6 @@ removeHospede email="robyn@sverige.se"
 expectError "Erro na consulta de hospede. Hospede de email robyn@sverige.se nao foi cadastrado(a)." getInfoHospede id=${id4} atributo="Nome"
 expectError "Erro na consulta de hospede. Hospede de email robyn@sverige.se nao foi cadastrado(a)." getInfoHospede id=${id4} atributo="Email"
 expectError "Erro na consulta de hospede. Hospede de email robyn@sverige.se nao foi cadastrado(a)." getInfoHospede id=${id4} atributo="Data de Nascimento"
-
 
 
 

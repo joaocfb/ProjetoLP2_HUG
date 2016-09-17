@@ -1,9 +1,8 @@
-/easy/
-/exception/
-/factorys/
 /hotel/
-/hotelManagementSystem/
-/interfaces/
-/quartos/
-/restaurante/
 /testeUnidade/
+/hotelManagementSystem/
+/easy/
+/interfaces/
+/factorys/
+/quartos/
+/sistemaDeControleHotel/
