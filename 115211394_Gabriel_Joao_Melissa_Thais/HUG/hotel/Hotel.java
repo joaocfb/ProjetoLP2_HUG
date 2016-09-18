@@ -2,10 +2,7 @@ package hotel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 import quartos.QuartoSimples;
 import exception.CadastroInvalidoException;
@@ -23,11 +20,19 @@ import factorys.FactoryQuartos;
  *
  */
 public class Hotel {
-
+	
+	//fabricas
 	private FactoryHospedes factoryHospedes;
 	private FactoryEstadia factoryEstadia;
 	private FactoryQuartos factoryQuarto;
+	
+	//varia
+	private Checkout checkout;
+	private String nomesHospedes;
+	private int numeroTransacoes;
+	private double valorTransacoes;
 
+	private ArrayList<Checkout> listaCheckouts;
 	private HashMap<String, QuartoSimples> quartos;
 	private HashMap<String, Hospede> meusHospedes;
 	private ArrayList<String> lucrosDoHotel;
@@ -45,15 +50,19 @@ public class Hotel {
 		this.factoryHospedes = new FactoryHospedes();
 		this.factoryEstadia = new FactoryEstadia();
 
+		this.nomesHospedes = "";
+		this.valorTransacoes = 0;
+		this.numeroTransacoes = 0;
+
+		this.listaCheckouts = new ArrayList<>();
 		this.lucrosDoHotel = new ArrayList<String>();
 		this.meusHospedes = new HashMap<String, Hospede>();
 		this.quartos = new HashMap<>();
-		// cria uma lista de quartos
-		// this.criaListaQuartos();
 
 	}
 
-	// #################################################CRUD HOSPEDE#################################################################
+	// #################################################CRUD
+	// HOSPEDE#################################################################
 
 	/**
 	 * Atualiza as informacoes do hospede
@@ -84,7 +93,7 @@ public class Hotel {
 			// remove o hospede com antiga chave/email
 			meusHospedes.remove(email);
 			// adiciona o mesmo hospede com nova chave/email
-			meusHospedes.put(email, hospede);
+			meusHospedes.put(info, hospede);
 
 			return;
 
@@ -104,6 +113,7 @@ public class Hotel {
 	 */
 	public String getInfoHospede(String id, String info) throws StringInvalidaException {
 		// verifica se existe esse email cadastrado, se sim pesquisa
+
 		if (meusHospedes.containsKey(id)) {
 			switch (info.toLowerCase().trim()) {
 
@@ -112,11 +122,14 @@ public class Hotel {
 			case "data de nascimento":
 				return meusHospedes.get(id).getDataNascimento();
 			case "email":
+
 				return meusHospedes.get(id).getEmail();
 
 			}
+
 		}
-		// se nao houver ele lanca excecao
+		// se nao houver ele lanca excecao "Erro na consulta de hospede. Hospede
+		// de email " + id + " nao foi cadastrado(a).
 		throw new StringInvalidaException(
 				"Erro na consulta de hospede. Hospede de email " + id + " nao foi cadastrado(a).");
 
@@ -128,11 +141,11 @@ public class Hotel {
 	 * @param nome
 	 * @param email
 	 * @param dataNascimento
-	 * @throws StringInvalidaException
+	 * @throws Exception 
 	 * @throws TestesHospedeException
 	 */
 	public String cadastraHospede(String nome, String email, String dataNascimento)
-			throws CadastroInvalidoException, StringInvalidaException {
+			throws Exception {
 		// se nao existir esse email como chave ele adiciona o hospede
 		if (!(verificaSeExisteHospede(email))) {
 
@@ -175,8 +188,106 @@ public class Hotel {
 		return meusHospedes.containsKey(email);
 	}
 
-	// ########################################################### ESTADIA #######################################################################
+	// ########################################################### ESTADIA
+	// #######################################################################
+
+	/**
+	 * Metodo que realiza o checkout de um hospede/atualiza os valores
+	 * referentes aos checkouts do hotel TODO ERRADO
+	 * 
+	 * @param email
+	 * @param IDQuarto
+	 * @return double
+	 */
+	public String realizaCheckout(String email, String IDQuarto) throws Exception {
+
+		// se o hospede estiver cadastrado
+		if (verificaSeExisteHospede(email)) {
+			// e hospedado
+			if (meusHospedes.get(email).getEstadias().size() != 0) {
+
+				// altera o status do quarto para vago
+				quartos.get(IDQuarto).setStatus(true);
+
+				this.nomesHospedes += meusHospedes.get(email).getNome() + ";";
+				this.numeroTransacoes += 1;
+				this.valorTransacoes += calculaTotalEstadia(email, IDQuarto);
+
+				checkout = new Checkout(meusHospedes.get(email).getNome(), calculaTotalEstadia(email, IDQuarto));
+				listaCheckouts.add(checkout);
+
+				// formata o valor da estadia para String
+				String retorno = "";
+				retorno += "R$";
+				retorno += String.format("%.2f", calculaTotalEstadia(email, IDQuarto));
+				meusHospedes.get(email).getEstadias().remove(IDQuarto);
+
+				return retorno;
+			}
+		}
+
+		throw new Exception(
+				"Erro na consulta de hospedagem. " + meusHospedes.get(email).getNome() + " nao esta hospedado(a).");
+
+	}
+
 	
+	public String consultaTransacoes(String atributo, int indice) throws Exception{
+		
+		if (indice <= listaCheckouts.size()) {
+
+			switch (atributo.toLowerCase()) {
+
+			case "quantidade":
+				return Integer.toString(listaCheckouts.size());
+
+			case "total":
+				
+				// formata a string
+				String retorno = "";
+				retorno += "R$";
+				retorno += String.format("%.2f", listaCheckouts.get(indice).getValor());
+				return retorno;
+
+			case "nome":
+				String nome = listaCheckouts.get(indice).getNome();
+				return nome;
+			}
+
+		}
+		throw new Exception("Erro");
+
+	}
+
+	/**
+	 * Metodo que retorna dados sobre os checkout do hotel
+	 * 
+	 * @param atributo
+	 * @return String
+	 * @throws Exception
+	 */
+	public String consultaTransacoes(String atributo) throws Exception {
+
+		switch (atributo.toLowerCase()) {
+
+		case "quantidade":
+			// esse valor eh atualizado cada vez que faz um checkout
+			return Integer.toString(this.numeroTransacoes);
+
+		case "total":
+			// formata a string
+			String retorno = "";
+			retorno += "R$";
+			retorno += String.format("%.2f", valorTransacoes);
+			return retorno;
+
+		case "nome":
+			// apaga o ; no final da string
+			String modificada = nomesHospedes.substring(0, nomesHospedes.length() - 1);
+			return modificada;
+		}
+		throw new Exception("Erro");
+	}
 
 	/**
 	 * Metodos que realiza o checkin de um hospede no hotel
@@ -188,7 +299,7 @@ public class Hotel {
 	 * @throws Exception
 	 */
 	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception {
-		
+
 		if (!quartos.containsKey(IDQuarto)) {
 			quartos.put(IDQuarto, factoryQuarto.criaQuartos(IDQuarto, tipoQuarto));
 
@@ -198,12 +309,12 @@ public class Hotel {
 
 			// adiciona no mapa de estadias pertencente ao hospede
 			meusHospedes.get(email).getEstadias().put(IDQuarto, estadiaNova);
-			
-			//altera o status do quarto
+
+			// altera o status do quarto
 			quartos.get(IDQuarto).setStatus(false);
-			
+
 		} else {
-			
+
 			// se ja existir esse quarto na lista verifica se ele ta livre
 			if (quartos.get(IDQuarto).getStatus()) {
 				// pega o hospede com o email dado
@@ -232,16 +343,16 @@ public class Hotel {
 	private String retornaIdQuartos(String email) {
 		String meusIds = "";
 		ArrayList<String> ids = new ArrayList<String>();
-		
+
 		for (Estadia estadia : meusHospedes.get(email).getEstadias().values()) {
 			ids.add(estadia.getIDQuarto());
 		}
-		
+
 		for (String string : ids) {
 			meusIds = meusIds + "," + string;
 		}
 
-		//retira a , da frente
+		// retira a , da frente
 		if (!meusIds.isEmpty()) {
 			meusIds = meusIds.substring(1);
 		}
@@ -252,6 +363,7 @@ public class Hotel {
 	// ERRO NA LINHA 31 O NOME DO METODO
 	/**
 	 * Metodo que recupera as informacoes da hospedagem de um hospede
+	 * 
 	 * @param email
 	 * @param atributo
 	 * @return String
@@ -260,11 +372,11 @@ public class Hotel {
 	public String getInfoHospedagem(String email, String atributo) throws Exception {
 		String nome = meusHospedes.get(email).getNome();
 
-		//se o hospede esta cadastrado
+		// se o hospede esta cadastrado
 		if (meusHospedes.containsKey(email)) {
-			//se ele possui estadia ativa
+			// se ele possui estadia ativa
 			if (meusHospedes.get(email).getEstadias().size() != 0) {
-				
+
 				switch (atributo.toLowerCase()) {
 
 				case "hospedagens ativas":
@@ -278,7 +390,7 @@ public class Hotel {
 					retorno += "R$";
 					retorno += String.format("%.2f", calculaTodasAsEstadias(email));
 					return retorno;
-					
+
 				default:
 					throw new Exception("Parametro invalido.");
 				}
@@ -287,37 +399,22 @@ public class Hotel {
 		}
 		throw new Exception("Erro na consulta de hospedagem. Hospede " + nome + " nao esta hospedado(a).");
 	}
-	
-	/**
-	 * Metodo que realiza o checkout de um hospede
-	 * TODO ERRADO
-	 * @param email
-	 * @param IDQuarto
-	 * @return double
-	 */
-	public void realizaCheckout(String email, String IDQuarto) {
 
-		// altera o status do quarto para vago
-		quartos.get(IDQuarto).setStatus(true);
-
-		// remove a estadia
-		removeEstadia(email, IDQuarto);
-
-		this.registroHotel(email, IDQuarto);
-
-	}
-	
 	/**
 	 * Metodo que remove uma estadia de um hospede
 	 * 
 	 * @param email
 	 * @param idQuarto
 	 */
-	private void removeEstadia(String email, String idQuarto) {
-		// remove uma estadia de um hospede
-		meusHospedes.get(email).getEstadias().remove(idQuarto);
-	}
+	private boolean removeEstadia(String email, String idQuarto) {
 
+		// remove uma estadia de um hospede
+		if (meusHospedes.get(email).getEstadias().containsKey(idQuarto)) {
+			meusHospedes.get(email).getEstadias().remove(idQuarto);
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Metodo que atualiza os registro de lucro do hotel
@@ -337,17 +434,16 @@ public class Hotel {
 		return dados.toString();
 	}
 
-	private double calculaTodasAsEstadias(String email){
+	private double calculaTodasAsEstadias(String email) {
 		double valorTotal = 0;
 		Hospede hospede = meusHospedes.get(email);
 		for (Estadia estadia : hospede.getEstadias().values()) {
 			valorTotal += quartos.get(estadia.getIDQuarto()).getPRECO() * estadia.getQuantDias();
 		}
-		
+
 		return valorTotal;
 	}
-	
-	
+
 	/**
 	 * Metodo que calcula o valor total de uma estadia de um hospede
 	 * 
@@ -356,7 +452,7 @@ public class Hotel {
 	 * @return double
 	 */
 	private double calculaTotalEstadia(String email, String IDQuarto) {
-		
+
 		// pega o numero de dias de hospedagem
 		int diasHospede = meusHospedes.get(email).getEstadias().get(IDQuarto).getQuantDias();
 		// pega o preco do quarto(depende do tipo)

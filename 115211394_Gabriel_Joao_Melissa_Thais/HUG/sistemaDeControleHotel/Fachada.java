@@ -15,19 +15,13 @@ import exception.StringInvalidaException;
  */
 
 // ********** COLOCAR TRY/CATCH ****************
-public class Facada{
+public class Fachada{
+	
 	private ControleDoSistema controller;
 	
-	public Facada() throws Exception{
+	public Fachada() throws Exception{
 		this.controller = new ControleDoSistema();
 	}
-	
-	/**
-	 * @param info
-	 * @param valor
-	 * @param id
-	 * @throws StringInvalidaException
-	 */
 	
 	public void iniciaSistema() {
 		controller.iniciaSistema();
@@ -41,44 +35,23 @@ public class Facada{
 		controller.atualizaCadastro(id, valor, info);
 	}
 
-	/**
-	 * 
-	 * @param info
-	 * @param id
-	 * @return string
-	 * @throws StringInvalidaException
-	 */
 	public String getInfoHospede(String info, String id) throws StringInvalidaException {
 		return controller.getInfoHospede(info, id);
 	}
 
-	/**
-	 * 
-	 * @param nome
-	 * @param email
-	 * @param dataNascimento
-	 * @return String
-	 * @throws CadastroInvalidoException
-	 * @throws StringInvalidaException 
-	 * @throws TestesHospedeException 
-	 */
-	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException {
+
+	public String cadastraHospede(String nome, String email, String dataNascimento) throws Exception {
 		return controller.cadastraHospede( nome, email, dataNascimento);
 	}
 
-	/**
-	 * 
-	 * @param email
-	 * @throws RemocaoInvalidaException
-	 */
+	public static void main(String[] args) {
+	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt", "testes/easy/testes_uc2.txt", "testes/easy/testes_uc3.txt"}; //separe cada script de teste por virgula.
+	    EasyAccept.main(args);
+	}
+	
 	public void removeHospede(String email) throws StringInvalidaException {
 		controller.removeHospede(email);
 		
-	}
-	
-	public static void main(String[] args) {
-	    args = new String[] {"sistemaDeControleHotel.Facada", "testes/easy/testes_uc1.txt", "testes/easy/testes_uc2.txt"}; //separe cada script de teste por virgula.
-	    EasyAccept.main(args);
 	}
 
 	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception {
@@ -86,8 +59,8 @@ public class Facada{
 		
 	}
 
-	public void realizaCheckout(String email, String IDQuarto) {
-		controller.realizaCheckout(email, IDQuarto);
+	public String realizaCheckout(String email, String IDQuarto) throws Exception {
+		return controller.realizaCheckout(email, IDQuarto);
 		
 	}
 
@@ -95,4 +68,11 @@ public class Facada{
 		return controller.getInfoHospedagem(email, atributo);
 	}
 	
+	public String consultaTransacoes(String atributo) throws Exception {
+		return controller.consultaTransacoes(atributo);
+	}
+	
+	public String consultaTransacoes(String atributo, int indice) throws Exception {
+		return controller.consultaTransacoes(atributo, indice);
+	}
 }

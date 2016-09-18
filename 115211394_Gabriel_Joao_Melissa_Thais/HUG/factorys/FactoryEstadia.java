@@ -4,6 +4,7 @@
 package factorys;
 
 import hotel.Estadia;
+import testesValores.TestaValores;
 
 /**
  * Fabrica de estadias
@@ -12,16 +13,19 @@ import hotel.Estadia;
  */
 public class FactoryEstadia {
 	
-	//cria uma estadia com ID do quarto e a quantidade de dias
+
+	/**
+	 * Cria uma estadia com id do quarto e uma quantidade de dias
+	 * @param IDQuarto
+	 * @param quantDias
+	 * @return
+	 * @throws Exception
+	 */
 	public Estadia criaEstadia(String IDQuarto, int quantDias) throws Exception{
-		
-		testaQuantDias(quantDias);
+		TestaValores.testaQuantDias(quantDias);
 		return new Estadia(IDQuarto, quantDias);
 	}
 	
-	private void testaQuantDias(int quant)throws Exception{
-		if (quant <= 0) {
-			throw new Exception("Nao pode.");
-		}
-	}
+	
+	
 }

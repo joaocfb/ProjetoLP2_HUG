@@ -24,7 +24,6 @@ public class Hospede {
 	private LinkedHashMap<String, Estadia> estadias;
 
 
-
 	/**
 	 * Construtor do hospede
 	 * @param nome
@@ -46,28 +45,6 @@ public class Hospede {
 		this.estadias = new LinkedHashMap<>();
 	}
 	
-	//teste
-	private void testandoNome(String nome) throws StringInvalidaException {
-		if (nome == null || nome.trim().isEmpty()) {
-			throw new StringInvalidaException("Nome do hospede nao pode ser nulo ou vazio.");
-		}
-	}
-	
-	//teste
-	private void testandoEmail(String email) throws StringInvalidaException{
-		if (email == null || email.trim().isEmpty()) {
-			throw new StringInvalidaException("Email do hospede nao pode ser nulo ou vazio.");
-		}
-	}
-	
-	//teste
-	private void testandoDataNascimento(String dataNascimento) throws StringInvalidaException{
-		if (dataNascimento == null || dataNascimento.trim().isEmpty()) {
-			throw new StringInvalidaException("Data de Nascimento do hospede nao pode ser nulo ou vazio.");
-		}
-	}
-	
-
 	/**
 	 * @return the nome
 	 */
@@ -116,6 +93,27 @@ public class Hospede {
 	 */
 	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	
+	//teste
+	private void testandoNome(String nome) throws StringInvalidaException {
+		if (nome == null || nome.trim().isEmpty()) {
+			throw new StringInvalidaException("Nome do hospede nao pode ser nulo ou vazio.");
+		}
+	}
+	
+	//teste
+	private void testandoEmail(String email) throws StringInvalidaException{
+		if (email == null || email.trim().isEmpty()) {
+			throw new StringInvalidaException("Email do hospede nao pode ser nulo ou vazio.");
+		}
+	}
+	
+	//teste
+	private void testandoDataNascimento(String dataNascimento) throws StringInvalidaException{
+		if (dataNascimento == null || dataNascimento.trim().isEmpty()) {
+			throw new StringInvalidaException("Data de Nascimento do hospede nao pode ser nulo ou vazio.");
+		}
 	}
 	
 	

@@ -21,32 +21,39 @@ expect "R$200,00" realizaCheckout email="agnetha@abba.se" quarto="15A"
 expect "1" getInfoHospedagem email="sven@sverige.se" atributo="Hospedagens ativas"
 expect "1" getInfoHospedagem email="ines@brasil.com.br" atributo="Hospedagens ativas"
 
-expectError "Erro na consulta de hospedagem. Agnetha Faltskog nao esta hospedado(a)." getInfoHospedagem email="agnetha@abba.se" atributo="Hospedagens ativas"
-expectError "Erro na consulta de hospedagem. Hospede Alfred Nobel nao esta hospedado(a)." getInfoHospede email="nobel@got.se" atributo="Hospedagens ativas"
+expectError "Erro na consulta de hospedagem. Hospede Agnetha Faltskog nao esta hospedado(a)." getInfoHospedagem email="agnetha@abba.se" atributo="Hospedagens ativas"
+expectError "Erro na consulta de hospedagem. Hospede Alfred Nobel nao esta hospedado(a)." getInfoHospedagem email="nobel@got.se" atributo="Hospedagens ativas"
 
 expect "2A" getInfoHospedagem email="sven@sverige.se" atributo="Quarto"
-expect "1B" getInfoHospedagem email="ines@brasil.com.br" atributo="Quarto"
 
-expectError "Erro na consulta de hospedagem. Agnetha Faltskog nao esta hospedado(a)." getInfoHospedagem email="agnetha@abba.se" atributo="Quarto"
+# eh pra retornar quarto 2B                   #
+
+expect "2B" getInfoHospedagem email="ines@brasil.com.br" atributo="Quarto"
+
+expectError "Erro na consulta de hospedagem. Hospede Agnetha Faltskog nao esta hospedado(a)." getInfoHospedagem email="agnetha@abba.se" atributo="Quarto"
 expectError "Erro na consulta de hospedagem. Hospede Alfred Nobel nao esta hospedado(a)." getInfoHospedagem email="nobel@got.se" atributo="Quarto"
 
 expect "R$1350,00" getInfoHospedagem email="sven@sverige.se" atributo="Total"
 expect "R$750,00" getInfoHospedagem email="ines@brasil.com.br" atributo="Total"
 
-expectError "Erro na consulta de hospedagem. Agnetha Faltskog nao esta hospedado(a)." email="agnetha@abba.se" atributo="Total"
+# esqueceu o metodo                  #
+
+expectError "Erro na consulta de hospedagem. Hospede Agnetha Faltskog nao esta hospedado(a)." getInfoHospedagem email="agnetha@abba.se" atributo="Total"
 expectError "Erro na consulta de hospedagem. Hospede Alfred Nobel nao esta hospedado(a)." getInfoHospedagem email="nobel@got.se" atributo="Total"
+
+# alterei os valores                  #
 
 expect "3" consultaTransacoes atributo="Quantidade"
 expect "R$2950,00" consultaTransacoes atributo="Total"
 expect "Sven Gudmar Svenson;Ines Brasil;Agnetha Faltskog" consultaTransacoes atributo="Nome"
 
-expect "R$2950,00" consultaTransacoes atributo="Total" indice=0
+expect "R$2250,00" consultaTransacoes atributo="Total" indice=0
 expect "Sven Gudmar Svenson" consultaTransacoes atributo="Nome" indice=0
 
-expect "R$1350,00" consultaTransacoes atributo="Total" indice=1
+expect "R$500,00" consultaTransacoes atributo="Total" indice=1
 expect "Ines Brasil" consultaTransacoes atributo="Nome" indice=1
 
-expect "R$750,00" consultaTransacoes atributo="Total" indice=2
+expect "R$200,00" consultaTransacoes atributo="Total" indice=2
 expect "Agnetha Faltskog" consultaTransacoes atributo="Nome" indice=2
 
 ##############################################################
@@ -66,7 +73,7 @@ expect "R$750,00" consultaTransacoes atributo="Total" indice=2
 expect "Agnetha Faltskog" consultaTransacoes atributo="Nome" indice=2
 
 ##############################################################
-#             O checkout por sua vez altera                  #
+#             O checkout por sua vez altera    TUDO ERRADO              #
 ##############################################################
 
 expect "R$250,00" realizaCheckout email="nobel@got.se" quarto="1A"

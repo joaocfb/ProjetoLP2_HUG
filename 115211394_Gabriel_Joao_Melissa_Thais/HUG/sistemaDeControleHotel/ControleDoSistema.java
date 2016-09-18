@@ -40,8 +40,7 @@ public class ControleDoSistema implements IHotel {
 	}
 
 	@Override
-	public String cadastraHospede(String nome, String email, String dataNascimento)
-			throws CadastroInvalidoException, StringInvalidaException {
+	public String cadastraHospede(String nome, String email, String dataNascimento)	throws Exception {
 		return controleHotel.cadastraHospede(nome, email, dataNascimento);
 	}
 
@@ -59,13 +58,23 @@ public class ControleDoSistema implements IHotel {
 	}
 
 	@Override
-	public void realizaCheckout(String email, String IDQuarto) {
-		controleHotel.realizaCheckout(email, IDQuarto);
+	public String realizaCheckout(String email, String IDQuarto) throws Exception {
+		return controleHotel.realizaCheckout(email, IDQuarto);
 	}
 
 	@Override
 	public String getInfoHospedagem(String email, String atributo) throws Exception {
 		return controleHotel.getInfoHospedagem(email, atributo);
+	}
+
+	@Override
+	public String consultaTransacoes(String atributo) throws Exception {
+		return controleHotel.consultaTransacoes(atributo);
+	}
+
+	@Override
+	public String consultaTransacoes(String atributo, int indice) throws Exception {
+		return controleHotel.consultaTransacoes(atributo, indice);
 	}
 
 }
