@@ -4,10 +4,7 @@
 package factorys;
 
 import restaurante.Prato;
-import restaurante.PratoEntrada;
-import restaurante.PratoPetitFour;
-import restaurante.PratoPrincipal;
-import restaurante.PratoSobremesa;
+
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -15,21 +12,30 @@ import restaurante.PratoSobremesa;
  */
 public class FactoryPrato {
 	
-	
-	
-	public Prato criaPratoEntrada(String nomePrato, double precoPrato, String descricaoPrato){
-		return new PratoEntrada(nomePrato, precoPrato, descricaoPrato);
+	public Prato criaPrato(String nomePrato, double precoPrato, String descricaoPrato) throws Exception{
+		verificaNomePratovazio(nomePrato);
+		verificaDescVazio(descricaoPrato);
+		verificaPrecoInvalido(precoPrato);
+		
+		return new Prato(nomePrato, precoPrato, descricaoPrato);
+	}
+
+
+	private void verificaNomePratovazio(String nomePrato) throws Exception {
+		if (nomePrato.trim().isEmpty()) {
+			throw new Exception("Erro no cadastro do prato. Nome do prato esta vazio.");
+		}
 	}
 	
-	public Prato criaPratoPrincipal(String nomePrato, double precoPrato, String descricaoPrato){
-		return new PratoPrincipal(nomePrato, precoPrato, descricaoPrato);
+	private void verificaDescVazio(String descricao) throws Exception {
+		if (descricao.trim().isEmpty()) {
+			throw new Exception("Erro no cadastro do prato. Descricao do prato esta vazia.");
+		}
 	}
 	
-	public Prato criaPratoSobremesa(String nomePrato, double precoPrato, String descricaoPrato){
-		return new PratoSobremesa(nomePrato, precoPrato, descricaoPrato);
-	}
-	
-	public Prato criaPratoPetitFour(String nomePrato, double precoPrato, String descricaoPrato){
-		return new PratoPetitFour(nomePrato, precoPrato, descricaoPrato);
+	private void verificaPrecoInvalido(double precoPrato) throws Exception {
+		if (precoPrato <= 0) {
+			throw new Exception("Erro no cadastro do prato. Preco do prato eh invalido.");
+		}
 	}
 }

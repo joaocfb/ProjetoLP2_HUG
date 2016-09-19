@@ -387,8 +387,7 @@ public class Hotel {
 
 				case "total":
 					String retorno = "";
-					retorno += "R$";
-					retorno += String.format("%.2f", calculaTodasAsEstadias(email));
+					retorno += String.format("R$%.2f", calculaTodasAsEstadias(email));
 					return retorno;
 
 				default:

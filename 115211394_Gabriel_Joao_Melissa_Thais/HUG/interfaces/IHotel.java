@@ -31,5 +31,11 @@ public interface IHotel {
 	public String consultaTransacoes(String atributo)throws Exception;
 	
 	public String consultaTransacoes(String atributo, int indice)throws Exception;
+	
+	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)throws Exception;
+
+	public String consultaRestaurante(String chaveNome, String atributo) throws Exception;
+
+	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws Exception;
 
 }

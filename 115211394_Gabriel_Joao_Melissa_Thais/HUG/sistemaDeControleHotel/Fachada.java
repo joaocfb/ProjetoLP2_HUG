@@ -7,6 +7,7 @@ import easyaccept.EasyAccept;
 import exception.CadastroInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
+import interfaces.IHotel;
 
 /**
  * Classe Hotel Facade que delega funcoes para o controller de Hotel
@@ -15,7 +16,7 @@ import exception.StringInvalidaException;
  */
 
 // ********** COLOCAR TRY/CATCH ****************
-public class Fachada{
+public class Fachada {
 	
 	private ControleDoSistema controller;
 	
@@ -45,7 +46,7 @@ public class Fachada{
 	}
 
 	public static void main(String[] args) {
-	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt", "testes/easy/testes_uc2.txt", "testes/easy/testes_uc3.txt"}; //separe cada script de teste por virgula.
+	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt", "testes/easy/testes_uc2.txt", "testes/easy/testes_uc4.txt"}; //separe cada script de teste por virgula.
 	    EasyAccept.main(args);
 	}
 	
@@ -74,5 +75,17 @@ public class Fachada{
 	
 	public String consultaTransacoes(String atributo, int indice) throws Exception {
 		return controller.consultaTransacoes(atributo, indice);
+	}
+
+	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws Exception {
+		controller.cadastraPrato(nomePrato, precoPrato, descricaoPrato);
+	}
+	
+	public String consultaRestaurante(String chaveNome, String atributo) throws Exception {
+		return controller.consultaRestaurante(chaveNome, atributo);
+	}
+	
+	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws Exception {
+		controller.cadastraRefeicao(nomeRef, descricaoRef, componentes);
 	}
 }

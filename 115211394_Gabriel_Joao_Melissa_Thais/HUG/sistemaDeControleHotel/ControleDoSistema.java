@@ -1,9 +1,11 @@
 package sistemaDeControleHotel;
 
+import org.junit.Assert;
+
+import exception.StringInvalidaException;
 import hotel.Hotel;
 import interfaces.IHotel;
-import exception.CadastroInvalidoException;
-import exception.StringInvalidaException;
+import restaurante.Restaurante;
 
 /**
  * Classe que controla as funcionalidades do hotel
@@ -13,9 +15,11 @@ import exception.StringInvalidaException;
  */
 public class ControleDoSistema implements IHotel {
 	private Hotel controleHotel;
-
+	private Restaurante controleRestaurante;
+	
 	public ControleDoSistema() throws Exception {
 		this.controleHotel = new Hotel();
+		this.controleRestaurante = new Restaurante();
 	}
 
 	public void iniciaSistema() {
@@ -27,8 +31,12 @@ public class ControleDoSistema implements IHotel {
 	}
 	
 	@Override
-	public void atualizaCadastro(String id, String valor, String info) throws StringInvalidaException {
-		controleHotel.atualizaCadastro(id, valor, info);
+	public void atualizaCadastro(String id, String valor, String info) {
+		try {
+			controleHotel.atualizaCadastro(id, valor, info);
+		} catch (StringInvalidaException e) {
+			Assert.fail("ARRUMAR DEPOIS");
+		}
 
 	}
 
@@ -75,6 +83,22 @@ public class ControleDoSistema implements IHotel {
 	@Override
 	public String consultaTransacoes(String atributo, int indice) throws Exception {
 		return controleHotel.consultaTransacoes(atributo, indice);
+	}
+
+	@Override
+	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws Exception {
+		controleRestaurante.cadastraPrato(nomePrato, precoPrato, descricaoPrato);
+		
+	}
+
+	@Override
+	public String consultaRestaurante(String chaveNome, String atributo) throws Exception {
+		return controleRestaurante.consultaRestaurante(chaveNome, atributo);
+	}
+
+	@Override
+	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws Exception {
+		controleRestaurante.cadastraRefeicao(nomeRef, descricaoRef, componentes);
 	}
 
 }
