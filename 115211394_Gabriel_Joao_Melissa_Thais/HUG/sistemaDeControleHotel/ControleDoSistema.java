@@ -35,7 +35,7 @@ public class ControleDoSistema implements IHotel {
 		try {
 			controleHotel.atualizaCadastro(id, valor, info);
 		} catch (StringInvalidaException e) {
-			Assert.fail("ARRUMAR DEPOIS");
+			Assert.fail("Nao foi possivel atualizar o cadastro.");
 		}
 
 	}
@@ -53,15 +53,21 @@ public class ControleDoSistema implements IHotel {
 	}
 
 	@Override
-	public void removeHospede(String email) throws StringInvalidaException {
+	public void removeHospede(String email) {
 
-		controleHotel.removeHospede(email);
+		try {
+			controleHotel.removeHospede(email);
+		} catch (StringInvalidaException e) {
+			Assert.fail("Nao foi possivel remover o hospede.");
+		}
 
 	}
 
 	@Override
-	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception {
-		controleHotel.realizaCheckin(email, quantDias, IDQuarto, tipoQuarto);
+	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto)throws Exception {
+		
+			controleHotel.realizaCheckin(email, quantDias, IDQuarto, tipoQuarto);
+		
 		
 	}
 

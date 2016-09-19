@@ -36,9 +36,7 @@ public class Restaurante {
 	 * @throws Exception
 	 */
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)throws Exception{
-		if (pratos.containsKey(nomePrato)) {
-			throw new Exception("Prato ja cadastrado.");
-		}
+		
 		pratos.put(nomePrato, factoryPrato.criaPrato(nomePrato, precoPrato, descricaoPrato));
 	}
 	
@@ -82,7 +80,7 @@ public class Restaurante {
 			}
 		
 		}
-		throw new Exception("Parametro invalido.");
+		throw new Exception("Erro na consulta do restaurante. Nome do prato esto vazio.");
 	}
 	
 	/**
@@ -90,7 +88,7 @@ public class Restaurante {
 	 * @param componentes
 	 * @return ArrayList
 	 */
-	private ArrayList<Prato> pratosRefeicao(String componentes){
+	public ArrayList<Prato> pratosRefeicao(String componentes){
 		ArrayList<Prato> pratosRef = new ArrayList<>();
 		String[] nomesComponentes = componentes.split(";");
 		for (String string : nomesComponentes) {
@@ -107,10 +105,7 @@ public class Restaurante {
 	 * @throws Exception
 	 */
 	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws Exception{
-		if (refeicao.containsKey(nomeRef)) {
-			throw new Exception("Refeicao ja cadastrada.");
-
-		}
+		
 		refeicao.put(nomeRef, factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRefeicao(componentes)));
 	}
 	

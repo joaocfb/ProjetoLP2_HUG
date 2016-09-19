@@ -58,7 +58,7 @@ public class Hotel {
 		this.lucrosDoHotel = new ArrayList<String>();
 		this.meusHospedes = new HashMap<String, Hospede>();
 		this.quartos = new HashMap<>();
-
+		System.out.println(hoje.toString());
 	}
 
 	// #################################################CRUD
@@ -147,14 +147,8 @@ public class Hotel {
 	public String cadastraHospede(String nome, String email, String dataNascimento)
 			throws Exception {
 		// se nao existir esse email como chave ele adiciona o hospede
-		if (!(verificaSeExisteHospede(email))) {
-
 			meusHospedes.put(email, factoryHospedes.criaHospede(nome, email, dataNascimento));
 			return email;
-		}
-
-		throw new CadastroInvalidoException("Cadastro nao realizado.");
-
 	}
 
 	/**
@@ -164,6 +158,7 @@ public class Hotel {
 	 * @throws RemocaoInvalidaException
 	 */
 	public void removeHospede(String email) throws StringInvalidaException {
+		
 		if (!meusHospedes.containsKey(email)) {
 			throw new StringInvalidaException(
 					"Erro na consulta de hospede. Hospede de email " + email + " nao foi cadastrado(a).");

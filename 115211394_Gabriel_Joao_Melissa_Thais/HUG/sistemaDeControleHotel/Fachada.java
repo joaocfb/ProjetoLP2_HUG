@@ -46,7 +46,7 @@ public class Fachada {
 	}
 
 	public static void main(String[] args) {
-	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt", "testes/easy/testes_uc2.txt", "testes/easy/testes_uc4.txt"}; //separe cada script de teste por virgula.
+	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt", "testes/easy/testes_uc2.txt", "testes/easy/testes_uc4.txt", "testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc4_exception.txt"}; //separe cada script de teste por virgula.
 	    EasyAccept.main(args);
 	}
 	
