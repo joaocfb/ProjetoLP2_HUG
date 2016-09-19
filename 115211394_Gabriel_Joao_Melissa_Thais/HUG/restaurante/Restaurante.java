@@ -88,12 +88,22 @@ public class Restaurante {
 	 * @param componentes
 	 * @return ArrayList
 	 */
-	public ArrayList<Prato> pratosRefeicao(String componentes){
+	public ArrayList<Prato> pratosRefeicao(String componentes)throws Exception{
+		
+		if (componentes.trim().isEmpty()) {
+			throw new Exception("Erro no cadastro de refeicao. Componente(s) esta(o) vazio(s).");
+		}
+		
 		ArrayList<Prato> pratosRef = new ArrayList<>();
 		String[] nomesComponentes = componentes.split(";");
 		for (String string : nomesComponentes) {
 			pratosRef.add(this.pratos.get(string));
 		}
+		
+		if (pratosRef.size() > 4 || pratosRef.size() < 3) {
+			throw new Exception("Erro no cadastro de refeicao completa. Uma refeicao completa deve possuir no minimo 3 e no maximo 4 pratos.");
+		}
+		
 		return pratosRef;
 	}
 	

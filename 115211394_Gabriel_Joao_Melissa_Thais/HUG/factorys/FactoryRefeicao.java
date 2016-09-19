@@ -15,11 +15,12 @@ import restaurante.Refeicao;
  *
  */
 public class FactoryRefeicao {
+	private Refeicao refeicao;
 	
 	public Refeicao criaRefeicao(String nomeRef, String descricaoRef, ArrayList<Prato> componentes) throws Exception{
 		verificaNomeRefvazio(nomeRef);
 		verificaDescVazio(descricaoRef);
-		
+	
 		return new Refeicao(nomeRef, descricaoRef, componentes);
 				
 	}
@@ -31,7 +32,9 @@ public class FactoryRefeicao {
 
 	}
 
-	
+	private void refe() {
+
+	}
 	
 	private void verificaNomeRefvazio(String nomeRef) throws Exception {
 		if (nomeRef.trim().isEmpty()) {

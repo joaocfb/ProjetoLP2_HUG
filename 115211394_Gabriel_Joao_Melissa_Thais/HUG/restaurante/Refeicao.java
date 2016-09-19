@@ -14,12 +14,15 @@ public class Refeicao {
 	private String descricaoRef;
 	private ArrayList<Prato> componentes;
 	
-	public Refeicao(String nomeRef, String descricaoRef, ArrayList<Prato> componentes){
+	public Refeicao(String nomeRef, String descricaoRef, ArrayList<Prato> componentes) throws Exception{
+		
 		this.nomeRef = nomeRef;
 		this.descricaoRef = descricaoRef;
 		this.componentes = componentes;
 
 	}
+	
+	
 	
 	private String toStringPratos(){
 		String toPratos = "";
