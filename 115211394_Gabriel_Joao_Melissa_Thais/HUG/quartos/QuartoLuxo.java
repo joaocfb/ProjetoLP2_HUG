@@ -15,14 +15,12 @@ public class QuartoLuxo extends QuartoSimples{
 		super(iD);
 	}
 	
-	
 	/**
 	 * @return the pRECO
 	 */
 	public double getPRECO() {
 		return PRECO;
 	}
-
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -31,9 +29,5 @@ public class QuartoLuxo extends QuartoSimples{
 	public String toString() {
 		return "QuartoLuxo [PRECO=" + PRECO + ", status=" + getStatus() + ", ID=" + getID() + "]";
 	}
-
-
-	
-
 
 }

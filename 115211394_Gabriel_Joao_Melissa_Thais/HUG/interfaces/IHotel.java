@@ -14,9 +14,9 @@ import exception.StringInvalidaException;
 public interface IHotel {
 	
 
-	public void atualizaCadastro(String id, String valor, String info)throws StringInvalidaException;
+	public void atualizaCadastro(String id, String valor, String info)throws Exception;
 		
-	public String getInfoHospede(String info, String id) throws StringInvalidaException;
+	public String getInfoHospede(String info, String id) throws Exception;
 	
 	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException, Exception;
 	

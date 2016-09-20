@@ -31,17 +31,15 @@ public class ControleDoSistema implements IHotel {
 	}
 	
 	@Override
-	public void atualizaCadastro(String id, String valor, String info) {
-		try {
+	public void atualizaCadastro(String id, String valor, String info) throws Exception {
+		
 			controleHotel.atualizaCadastro(id, valor, info);
-		} catch (StringInvalidaException e) {
-			Assert.fail("Nao foi possivel atualizar o cadastro.");
-		}
+		
 
 	}
 
 	@Override
-	public String getInfoHospede(String info, String id) throws StringInvalidaException {
+	public String getInfoHospede(String info, String id) throws Exception {
 
 		return controleHotel.getInfoHospede(info, id);
 

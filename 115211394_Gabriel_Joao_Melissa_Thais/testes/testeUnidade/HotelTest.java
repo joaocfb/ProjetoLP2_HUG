@@ -30,17 +30,13 @@ public class HotelTest {
 	@Before
 	public void setUp() {
 		
-		try {
-			hotel = new Hotel();
-		} catch (Exception e1) {
-		
-		}
+		hotel = new Hotel();
+
 		
 		this.meusHospedes = new HashMap<String, Hospede>();
 		this.factoryHospedes = new FactoryHospedes();
 		
 		try {
-			hotel.cadastraHospede("Isabelly Araujo", "isa_araujo.br", "02/12/1995");
 			hotel.cadastraHospede("hektor farias", "hektor_farias.br", "22/02/1996");
 			hotel.cadastraHospede("Hynghrid farias", "hyn_farias.br", "20/09/1999");
 			
@@ -55,6 +51,7 @@ public class HotelTest {
 			
 		} catch (Exception e) {
 		}
+		
 	}
 	
 	@Test
@@ -66,15 +63,16 @@ public class HotelTest {
 			
 		}
 	}
-	
+	 
 	@Test
-	public void testAtualizaCadastro() {
+	public void testAtualizaCadastro() throws Exception {
 		
 		// testando o atualizaCadastro pelo nome
 		try {
+			hotel.cadastraHospede("Isabelly Araujo", "isa_araujo@br", "02/12/1995");
+
 			hotel.atualizaCadastro("isa_araujo.br", "nome", "Isabelly Carla de Araujo");	
 			assertEquals("Isabelly Carla de Araujo",hotel.getInfoHospede("isa_araujo.br", "nome"));
-			
 		} catch (StringInvalidaException e) {
 			Assert.fail("excecao nao esperada");
 		}
@@ -97,7 +95,7 @@ public class HotelTest {
 	}
 	
 	@Test
-	public void testRemoveHospede(){
+	public void testRemoveHospede() throws Exception{
 		
 		try {
 			
@@ -111,7 +109,7 @@ public class HotelTest {
 	}
 	
 	@Test
-	public void testGetInfoHospede(){
+	public void testGetInfoHospede() throws Exception{
 		
 		// testando o getInfoHospede pelo nome
 		try {

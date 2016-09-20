@@ -32,11 +32,11 @@ public class Fachada {
 		controller.fechaSistema();
 	}
 	
-	public void atualizaCadastro(String id, String valor, String info) throws StringInvalidaException {
+	public void atualizaCadastro(String id, String valor, String info) throws Exception {
 		controller.atualizaCadastro(id, valor, info);
 	}
 
-	public String getInfoHospede(String info, String id) throws StringInvalidaException {
+	public String getInfoHospede(String info, String id) throws Exception {
 		return controller.getInfoHospede(info, id);
 	}
 
@@ -46,7 +46,8 @@ public class Fachada {
 	}
 
 	public static void main(String[] args) {
-	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt", "testes/easy/testes_uc2.txt", "testes/easy/testes_uc4.txt", "testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc4_exception.txt"}; //separe cada script de teste por virgula.
+		//, "testes/easy/testes_uc3.txt", "testes/easy/testes_uc4.txt", "testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc4_exception.txt"
+	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt","testes/easy/testes_uc1_exception.txt"}; //separe cada script de teste por virgula.
 	    EasyAccept.main(args);
 	}
 	

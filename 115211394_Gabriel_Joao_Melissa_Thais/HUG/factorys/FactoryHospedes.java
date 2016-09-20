@@ -4,6 +4,7 @@
 package factorys;
 
 import hotel.Hospede;
+import testesValores.TestaValores;
 
 import java.util.regex.Pattern;
 
@@ -15,7 +16,9 @@ import java.util.regex.Pattern;
  *
  */
 public class FactoryHospedes {
-
+	private TestaValores testa;
+	
+	
 	/**
 	 * Cria um hospede
 	 * 
@@ -27,6 +30,8 @@ public class FactoryHospedes {
 	 * @throws TestesHospedeException
 	 */
 	public Hospede criaHospede(String nome, String email, String dataNascimento) throws Exception {
+		//colocar aqui os metodos da classe testa valores
+		
 		verificaNomevazio(nome);
 		verificaEmailInvalido(email);
 		verificaNascimentoVazio(dataNascimento);
@@ -49,11 +54,14 @@ public class FactoryHospedes {
 		if (email.trim().isEmpty()) {
 			throw new Exception("Erro no cadastro de Hospede. Email do(a) hospede nao pode ser vazio.");
 			
-		}if (!email.contains("@") || email.startsWith("@") || !email.contains(".")) {
+		}
+		if (!email.matches("[a-zA-Z]+@[a-z]+\\.[a-z|\\.a-z+\\.a-z]+")) {
 			throw new Exception("Erro no cadastro de Hospede. Email do(a) hospede esta invalido.");
-
 		}
 
+		
+
+		
 	}
 	
 	private void verificaNascimentoVazio(String dataNascimento) throws Exception {

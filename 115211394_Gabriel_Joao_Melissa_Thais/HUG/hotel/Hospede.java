@@ -3,6 +3,10 @@
  */
 package hotel;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -19,9 +23,10 @@ public class Hospede {
 	//atributos do hospede, cada hospede possui uma ou mais estadia
 	private String nome;
 	private String email;
-	private String dataNascimento;
+	private LocalDate dataNascimento;
 	private FactoryEstadia factoryEstadia;
 	private LinkedHashMap<String, Estadia> estadias;
+	private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
 	/**
@@ -40,10 +45,20 @@ public class Hospede {
 		
 		this.nome = nome;
 		this.email = email;
-		this.dataNascimento = dataNascimento;
 		this.factoryEstadia = new FactoryEstadia();
 		this.estadias = new LinkedHashMap<>();
+		this.setDataNascimento(dataNascimento);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getIdade(){
+		int idade = (int)ChronoUnit.YEARS.between(dataNascimento, LocalDate.now());
+		return idade;
+	}
+	
 	
 	/**
 	 * @return the nome
@@ -73,12 +88,6 @@ public class Hospede {
 		this.email = email;
 	}
 
-	/**
-	 * @return the dataNascimento
-	 */
-	public String getDataNascimento() {
-		return dataNascimento;
-	}
 	
 	public HashMap<String, Estadia> getEstadias() {
 		return estadias;
@@ -88,13 +97,26 @@ public class Hospede {
 		this.estadias = estadias;
 	}
 
+	
 	/**
 	 * @param dataNascimento the dataNascimento to set
 	 */
 	public void setDataNascimento(String dataNascimento) {
-		this.dataNascimento = dataNascimento;
+		LocalDate data = LocalDate.parse(dataNascimento, formatoData);
+		this.dataNascimento = data;
+
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getDataNascimento() {
+		String dataString = formatoData.format(dataNascimento);
+		return dataString;
+	}
+
+
 	//teste
 	private void testandoNome(String nome) throws StringInvalidaException {
 		if (nome == null || nome.trim().isEmpty()) {

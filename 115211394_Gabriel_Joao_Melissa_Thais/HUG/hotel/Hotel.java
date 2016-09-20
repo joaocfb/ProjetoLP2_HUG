@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import quartos.QuartoSimples;
+import testesValores.TestaValores;
 import exception.CadastroInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
@@ -31,13 +32,13 @@ public class Hotel {
 	private String nomesHospedes;
 	private int numeroTransacoes;
 	private double valorTransacoes;
+	private TestaValores testa;
 
 	private ArrayList<Checkout> listaCheckouts;
 	private HashMap<String, QuartoSimples> quartos;
 	private HashMap<String, Hospede> meusHospedes;
 	private ArrayList<String> lucrosDoHotel;
 
-	private LocalDate hoje = LocalDate.now();
 
 	/**
 	 * Construtor do hotel / inicializa o mapa de hospedes / inicializa a
@@ -45,7 +46,7 @@ public class Hotel {
 	 * 
 	 * @throws Exception
 	 */
-	public Hotel() throws Exception {
+	public Hotel(){
 		this.factoryQuarto = new FactoryQuartos();
 		this.factoryHospedes = new FactoryHospedes();
 		this.factoryEstadia = new FactoryEstadia();
@@ -58,7 +59,6 @@ public class Hotel {
 		this.lucrosDoHotel = new ArrayList<String>();
 		this.meusHospedes = new HashMap<String, Hospede>();
 		this.quartos = new HashMap<>();
-		System.out.println(hoje.toString());
 	}
 
 	// #################################################CRUD
@@ -72,8 +72,8 @@ public class Hotel {
 	 * @param id
 	 * @throws StringInvalidaException
 	 */
-	public void atualizaCadastro(String email, String valor, String info) throws StringInvalidaException {
-
+	public void atualizaCadastro(String email, String valor, String info) throws Exception {
+		testa.testaAtualizaNomeInvalido(info);
 		switch (valor.toLowerCase().trim()) {
 		// info que eh o que quer alterar e id que relaciona ao hospede
 
@@ -97,23 +97,23 @@ public class Hotel {
 
 			return;
 
-		default:
-			// lanca excecao se o parametro nao for um dos tres possiveis
-			throw new StringInvalidaException("Parametro invalido.");
+		
 
 		}
-	}
 
-	/**
+
+	}
+	
+		/**
 	 * Metodo que retorna informacoes sobre o hospede
 	 * 
 	 * @param info/id
 	 * @return String
-	 * @throws StringInvalidaException
+	 * @throws Exception 
 	 */
-	public String getInfoHospede(String id, String info) throws StringInvalidaException {
+	public String getInfoHospede(String id, String info) throws Exception {
 		// verifica se existe esse email cadastrado, se sim pesquisa
-
+		
 		if (meusHospedes.containsKey(id)) {
 			switch (info.toLowerCase().trim()) {
 
@@ -121,6 +121,7 @@ public class Hotel {
 				return meusHospedes.get(id).getNome();
 			case "data de nascimento":
 				return meusHospedes.get(id).getDataNascimento();
+				
 			case "email":
 
 				return meusHospedes.get(id).getEmail();
@@ -144,12 +145,22 @@ public class Hotel {
 	 * @throws Exception 
 	 * @throws TestesHospedeException
 	 */
-	public String cadastraHospede(String nome, String email, String dataNascimento)
-			throws Exception {
-		// se nao existir esse email como chave ele adiciona o hospede
+	public String cadastraHospede(String nome, String email, String dataNascimento)throws Exception {
+		
+		testa.verificaNomeCadastroInvalido(nome);
+		testa.verificaNascimentoVazio(dataNascimento);
+		testa.testaNascCadastroInvalido(dataNascimento);
+		
+		if (!verificaSeExisteHospede(email)) {
 			meusHospedes.put(email, factoryHospedes.criaHospede(nome, email, dataNascimento));
-			return email;
+			
+		}
+		//ALTERAMOS AKIIIIIIIIIIIIIIIIIIIIIIIIIIIIII 
+		return email;	
 	}
+	
+	
+	  
 
 	/**
 	 * Metodo que remove um hospede atraves do email
@@ -294,10 +305,12 @@ public class Hotel {
 	 * @throws Exception
 	 */
 	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception {
-
+		
 		if (!quartos.containsKey(IDQuarto)) {
 			quartos.put(IDQuarto, factoryQuarto.criaQuartos(IDQuarto, tipoQuarto));
+			
 
+			
 			// cria uma estadia com os parametros(Id quarto e quant Dias)
 			// Estadia
 			Estadia estadiaNova = factoryEstadia.criaEstadia(IDQuarto, quantDias);
@@ -326,6 +339,7 @@ public class Hotel {
 			}
 			throw new Exception("Erro ao realizar checkin. Quarto " + IDQuarto + " ja esta ocupado.");
 		}
+
 
 	}
 
@@ -412,14 +426,13 @@ public class Hotel {
 
 	/**
 	 * Metodo que atualiza os registro de lucro do hotel
-	 * 
+	 * ALTEEEEEEEEEEEEEEERAAAAAAAAAAAAAA
 	 * @param email
 	 * @param idQuarto
 	 * @return String
 	 */
 	private String registroHotel(String email, String IDQuarto) {
 		StringBuilder dados = new StringBuilder();
-		dados.append(hoje);
 		dados.append(meusHospedes.get(email).getNome());
 		dados.append(IDQuarto);
 		dados.append(calculaTotalEstadia(email, IDQuarto));
