@@ -94,10 +94,20 @@ public class Restaurante {
 			throw new Exception("Erro no cadastro de refeicao. Componente(s) esta(o) vazio(s).");
 		}
 		
+		int pratosCadastrados = 0;
+		
 		ArrayList<Prato> pratosRef = new ArrayList<>();
 		String[] nomesComponentes = componentes.split(";");
-		for (String string : nomesComponentes) {
-			pratosRef.add(this.pratos.get(string));
+		
+		for (String nomePrato : nomesComponentes) {
+			pratosRef.add(this.pratos.get(nomePrato));
+			if(pratos.containsKey(nomePrato)) {
+				pratosCadastrados ++;
+			}
+		}
+		
+		if (!(pratosCadastrados == pratosRef.size())) {
+			throw new Exception("Erro no cadastro de refeicao. So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
 		}
 		
 		if (pratosRef.size() > 4 || pratosRef.size() < 3) {
@@ -106,7 +116,7 @@ public class Restaurante {
 		
 		return pratosRef;
 	}
-	
+
 	/**
 	 * Metodo que cadastra uma refeicao
 	 * @param nomeRef
