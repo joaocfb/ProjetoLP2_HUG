@@ -17,7 +17,7 @@ public class EstadiaTest {
 	
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		
 		try {
 			estadia1 = new Estadia("A1", 2);
@@ -30,7 +30,7 @@ public class EstadiaTest {
 	}
 
 	@Test
-	public void testEstadia() {
+	public void testEstadia() throws Exception {
 		
 		// testando string IDQuarto vazio ou null
 		
@@ -66,7 +66,7 @@ public class EstadiaTest {
 	}
 	
 	@Test
-	public void testGets() {
+	public void testGets() throws Exception {
 		
 		try {
 			Estadia estadia5 = new Estadia("5E", 11);

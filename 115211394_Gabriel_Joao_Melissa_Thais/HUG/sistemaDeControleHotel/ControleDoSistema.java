@@ -51,14 +51,8 @@ public class ControleDoSistema implements IHotel {
 	}
 
 	@Override
-	public void removeHospede(String email) {
-
-		try {
+	public void removeHospede(String email) throws Exception {
 			controleHotel.removeHospede(email);
-		} catch (StringInvalidaException e) {
-			Assert.fail("Nao foi possivel remover o hospede.");
-		}
-
 	}
 
 	@Override

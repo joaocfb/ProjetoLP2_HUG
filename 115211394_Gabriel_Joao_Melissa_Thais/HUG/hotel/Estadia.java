@@ -5,6 +5,7 @@ package hotel;
 
 
 import exception.StringInvalidaException;
+import testesValores.TestaValores;
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -14,11 +15,12 @@ import exception.StringInvalidaException;
 public class Estadia {
 	private int quantDias;
 	private String IDQuarto;
+	private TestaValores testa;
 	
-	public Estadia(String IDQuarto, int quantDias) throws StringInvalidaException {
+	public Estadia(String IDQuarto, int quantDias) throws Exception {
 		
-		verificaIDQuarto(IDQuarto);
 		verificaQuantDias(quantDias);
+		//testa.testaIdInvalido(IDQuarto);
 		
 		this.IDQuarto = IDQuarto;
 		this.quantDias = quantDias;
