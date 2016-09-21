@@ -10,8 +10,8 @@ package exception;
 @SuppressWarnings("serial")
 public class RemocaoInvalidaException extends Exception{
 	
-	public RemocaoInvalidaException(String msg){
-		super(msg);
+	public RemocaoInvalidaException(String erro){
+		super("Erro na remocao do Hospede. " + erro);
 	}
 
 }

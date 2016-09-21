@@ -7,7 +7,12 @@ import java.util.regex.Pattern;
 
 import quartos.QuartoSimples;
 import testesValores.TestaValores;
+import exception.AtualizacaoInvalidaException;
 import exception.CadastroInvalidoException;
+import exception.CheckinInvalidoException;
+import exception.ConsultaInvalidaException;
+import exception.HospedagemAtivaInvalidaException;
+import exception.MensagemErroException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
 import factorys.FactoryEstadia;
@@ -62,8 +67,7 @@ public class Hotel {
 		this.quartos = new HashMap<>();
 	}
 
-	// #################################################CRUD
-	// HOSPEDE#################################################################
+	// #################################################CRUD HOSPEDE#################################################################
 
 	/**
 	 * Atualiza as informacoes do hospede
@@ -73,32 +77,32 @@ public class Hotel {
 	 * @param id
 	 * @throws StringInvalidaException
 	 */
-	public void atualizaCadastro(String email, String valor, String info) throws Exception {
+	public void atualizaCadastro(String email, String valor, String info) throws Exception, AtualizacaoInvalidaException {
 		
 			switch (valor.toLowerCase().trim()) {
 			// info que eh o que quer alterar e id que relaciona ao hospede
 
 			case "nome":
 				if (info.trim().isEmpty()) {
-					throw new Exception("Erro na atualizacao do cadastro de Hospede. Nome do(a) hospede nao pode ser vazio.");	
+					throw new AtualizacaoInvalidaException("Nome do(a) hospede nao pode ser vazio.");	
 				}
 				if(!(Pattern.matches("[a-zA-Z ]+", info))) {
-					throw new Exception("Erro na atualizacao do cadastro de Hospede. Nome do(a) hospede esta invalido.");
+					throw new AtualizacaoInvalidaException("Nome do(a) hospede esta invalido.");
 				}
 				meusHospedes.get(email).setNome(info);
 				return;
 
 			case "data de nascimento":
 				
-				testa.testaNascVazio(info);
-				testa.verificaNascInvalido(info);
-				testa.verificaIdadeInvalido(info);
+				testa.verificaDataInvalidaAtualizacao(info);
+				testa.verificaDataNascInvalidoAtualizacao(info);
+				testa.verificaIdadeInvalidaAtualizacao(info);
 				
 				meusHospedes.get(email).setDataNascimento(info);
 				return;
 
 			case "email":
-				testa.verificaEmailAtualizaInvalido(info);
+				testa.verificaEmailInvalidoAtualizacao(info);
 				// salva as informacoes do hospede com antigo email
 				Hospede hospede = meusHospedes.get(email);
 				// altera o email
@@ -112,9 +116,6 @@ public class Hotel {
 			}
 
 	}
-
-		
-
 
 		/**
 	 * Metodo que retorna informacoes sobre o hospede
@@ -157,10 +158,10 @@ public class Hotel {
 	 * @throws Exception 
 	 * @throws TestesHospedeException
 	 */
-	public String cadastraHospede(String nome, String email, String dataNascimento)throws Exception {
-		testa.verificaNomeCadastroInvalido(nome);
-		testa.verificaNascimentoVazio(dataNascimento);
-		testa.testaNascCadastroInvalido(dataNascimento);
+	public String cadastraHospede(String nome, String email, String dataNascimento)throws Exception, CadastroInvalidoException {
+		testa.verificaNomeInvalidoCadastro(nome);
+		testa.verificaDataInvalidaCadastro(dataNascimento);
+		testa.verificaFrDataInvalidaCadastro(dataNascimento);
 		
 		if (!verificaSeExisteHospede(email)) {
 			meusHospedes.put(email, factoryHospedes.criaHospede(nome, email, dataNascimento));
@@ -180,20 +181,17 @@ public class Hotel {
 	 * @throws Exception 
 	 * @throws RemocaoInvalidaException
 	 */
-	public void removeHospede(String email) throws Exception {
-		testa.verificaEmailremoveInvalido(email);
+	public void removeHospede(String email) throws ConsultaInvalidaException, RemocaoInvalidaException {
+		testa.verificaEmailInvalidoRemocao(email);
 		
 		if (!meusHospedes.containsKey(email)) {
-			throw new StringInvalidaException(
-					"Erro na consulta de hospede. Hospede de email " + email + " nao foi cadastrado(a).");
+			throw new ConsultaInvalidaException("hospede. Hospede de email " + email + " nao foi cadastrado(a).");
 
 		} else {
 			meusHospedes.remove(email);
 
 		}
 	}
-
-	
 
 	/**
 	 * Metodo que verifica se um email ja esta cadastrado
@@ -220,7 +218,7 @@ public class Hotel {
 	 * @param IDQuarto
 	 * @return double
 	 */
-	public String realizaCheckout(String email, String IDQuarto) throws Exception {
+	public String realizaCheckout(String email, String IDQuarto) throws ConsultaInvalidaException {
 
 		// se o hospede estiver cadastrado
 		if (verificaSeExisteHospede(email)) {
@@ -247,13 +245,12 @@ public class Hotel {
 			}
 		}
 
-		throw new Exception(
-				"Erro na consulta de hospedagem. " + meusHospedes.get(email).getNome() + " nao esta hospedado(a).");
+		throw new ConsultaInvalidaException("hospedagem. " + meusHospedes.get(email).getNome() + " nao esta hospedado(a).");
 
 	}
 
 	
-	public String consultaTransacoes(String atributo, int indice) throws Exception{
+	public String consultaTransacoes(String atributo, int indice) throws MensagemErroException{
 		
 		if (indice <= listaCheckouts.size()) {
 
@@ -276,7 +273,7 @@ public class Hotel {
 			}
 
 		}
-		throw new Exception("Erro");
+		throw new MensagemErroException("");
 
 	}
 
@@ -287,7 +284,7 @@ public class Hotel {
 	 * @return String
 	 * @throws Exception
 	 */
-	public String consultaTransacoes(String atributo) throws Exception {
+	public String consultaTransacoes(String atributo) throws MensagemErroException {
 
 		switch (atributo.toLowerCase()) {
 
@@ -307,7 +304,7 @@ public class Hotel {
 			String modificada = nomesHospedes.substring(0, nomesHospedes.length() - 1);
 			return modificada;
 		}
-		throw new Exception("Erro");
+		throw new MensagemErroException("");
 	}
 
 	/**
@@ -319,20 +316,20 @@ public class Hotel {
 	 * @param tipoQuarto
 	 * @throws Exception
 	 */
-	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception {
+	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception, CheckinInvalidoException {
 		
 		
 		if (email.trim().isEmpty()) {
-			throw new Exception("Erro ao realizar checkin. Email do(a) hospede nao pode ser vazio.");
+			throw new CheckinInvalidoException("Email do(a) hospede nao pode ser vazio.");
 		}
-		testa.verificaEmailCheckinInvalido(email);
+		testa.verificaEmailInvalidoCheckin(email);
 		
 		if (!meusHospedes.containsKey(email)) {
-			throw new Exception("Erro ao realizar checkin. Hospede de email "+ email + " nao foi cadastrado(a).");
+			throw new CheckinInvalidoException("Hospede de email "+ email + " nao foi cadastrado(a).");
 		}
-		testa.testaQuantDias(quantDias);
+		testa.verificaQuantDiasInvalidaCheckin(quantDias);
 		if (!(tipoQuarto.equalsIgnoreCase("luxo") || tipoQuarto.equalsIgnoreCase("simples") || tipoQuarto.equalsIgnoreCase("presidencial"))) {
-			throw new Exception("Erro ao realizar checkin. Tipo de quarto invalido.");
+			throw new CheckinInvalidoException("Tipo de quarto invalido.");
 		}
 		
 		if (!quartos.containsKey(IDQuarto)) {
@@ -365,7 +362,7 @@ public class Hotel {
 				// altera o status do quarto
 				quartos.get(IDQuarto).setStatus(false);
 			}
-			throw new Exception("Erro ao realizar checkin. Quarto " + IDQuarto + " ja esta ocupado.");
+			throw new CheckinInvalidoException("Quarto " + IDQuarto + " ja esta ocupado.");
 		}
 
 
@@ -404,18 +401,19 @@ public class Hotel {
 	 * @param email
 	 * @param atributo
 	 * @return String
+	 * @throws MensagemErroException 
 	 * @throws Exception
 	 */
-	public String getInfoHospedagem(String email, String atributo) throws Exception {
+	public String getInfoHospedagem(String email, String atributo) throws ConsultaInvalidaException, HospedagemAtivaInvalidaException, MensagemErroException{
 		String nome = meusHospedes.get(email).getNome();
 		
 		if (email.trim().isEmpty()) {
-			throw new Exception("Erro ao checar hospedagem ativa. Email do(a) hospede nao pode ser vazio.");
+			throw new HospedagemAtivaInvalidaException("Email do(a) hospede nao pode ser vazio.");
 
 		}
 		
 		if (!email.matches("[a-zA-Z]+@[a-z]+\\.[a-z|\\.a-z+\\.a-z]+")) {
-			throw new Exception("Erro ao checar hospedagem ativa. Email do(a) hospede esta invalido.");
+			throw new HospedagemAtivaInvalidaException("Email do(a) hospede esta invalido.");
 		}
 		
 		// se o hospede esta cadastrado
@@ -437,12 +435,12 @@ public class Hotel {
 					return retorno;
 
 				default:
-					throw new Exception("Parametro invalido.");
+					throw new MensagemErroException("");
 				}
 			}
 
 		}
-		throw new Exception("Erro na consulta de hospedagem. Hospede " + nome + " nao esta hospedado(a).");
+		throw new ConsultaInvalidaException("hospedagem. Hospede " + nome + " nao esta hospedado(a).");
 	}
 
 	/**

@@ -8,7 +8,7 @@ import interfaces.IHotel;
 import restaurante.Restaurante;
 
 /**
- * Classe que controla as funcionalidades do hotel
+ * Classe que controla as funcionalidades do hotel e do restaurante
  * 
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
@@ -30,17 +30,14 @@ public class ControleDoSistema implements IHotel {
 		//NAO IMPLEMENTADO AINDA.
 	}
 	
+	// ##################################### Controle do Hotel #####################################
 	@Override
 	public void atualizaCadastro(String id, String valor, String info) throws Exception {
-		
 			controleHotel.atualizaCadastro(id, valor, info);
-		
-
 	}
 
 	@Override
 	public String getInfoHospede(String info, String id) throws Exception {
-
 		return controleHotel.getInfoHospede(info, id);
 
 	}
@@ -57,10 +54,8 @@ public class ControleDoSistema implements IHotel {
 
 	@Override
 	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto)throws Exception {
-		
 			controleHotel.realizaCheckin(email, quantDias, IDQuarto, tipoQuarto);
-		
-		
+			
 	}
 
 	@Override
@@ -82,7 +77,8 @@ public class ControleDoSistema implements IHotel {
 	public String consultaTransacoes(String atributo, int indice) throws Exception {
 		return controleHotel.consultaTransacoes(atributo, indice);
 	}
-
+	
+	// #####################################  Controle do Restaurante ##################################### 
 	@Override
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws Exception {
 		controleRestaurante.cadastraPrato(nomePrato, precoPrato, descricaoPrato);

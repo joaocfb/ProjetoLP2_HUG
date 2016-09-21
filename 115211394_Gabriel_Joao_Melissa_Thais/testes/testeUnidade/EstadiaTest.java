@@ -1,11 +1,11 @@
 package testeUnidade;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import exception.StringInvalidaException;
 import hotel.Estadia;
 
 public class EstadiaTest {
@@ -17,34 +17,34 @@ public class EstadiaTest {
 	
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		
 		try {
 			estadia1 = new Estadia("A1", 2);
 			estadia2 = new Estadia("2B", 5);
 			estadia3 = new Estadia("3C", 7);
 			estadia4 = new Estadia("4D", 9);
-		} catch (StringInvalidaException e) {
+		} catch (Exception e) {
 			
 		}
 	}
 
 	@Test
-	public void testEstadia() throws Exception {
+	public void testEstadia() {
 		
 		// testando string IDQuarto vazio ou null
 		
 		try {
 			estadia1 = new Estadia(" ", 2);
 			fail("Lancamento de exception com ID do quarto invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (Exception msg) {
 			assertEquals("ID do quarto nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
 		try {
 			estadia2 = new Estadia(null, 5);
 			fail("Lancamento de exception com ID do quarto invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (Exception msg) {
 			assertEquals("ID do quarto nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
@@ -53,20 +53,20 @@ public class EstadiaTest {
 		try {
 			estadia3 = new Estadia("3C", -7);
 			fail("Lancamento de exception com quantidade de dias invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (Exception msg) {
 			assertEquals("quantidade de dias nao pode ser menor ou igual a zero.", msg.getMessage());
 		}
 		
 		try {
 			estadia4 = new Estadia("4D", 0);
 			fail("Lancamento de exception com quantidade de dias invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (Exception msg) {
 			assertEquals("quantidade de dias nao pode ser menor ou igual a zero.", msg.getMessage());
 		}
 	}
 	
 	@Test
-	public void testGets() throws Exception {
+	public void testGets() {
 		
 		try {
 			Estadia estadia5 = new Estadia("5E", 11);
@@ -78,7 +78,7 @@ public class EstadiaTest {
 			assertEquals(11, estadia5.getQuantDias());
 			assertEquals(13, estadia6.getQuantDias());
 			
-		} catch (StringInvalidaException e) {
+		} catch (Exception e) {
 			
 		}
 		

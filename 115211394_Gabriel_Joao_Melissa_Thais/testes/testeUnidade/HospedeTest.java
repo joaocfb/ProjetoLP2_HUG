@@ -34,8 +34,8 @@ public class HospedeTest {
 	public void setUp()  {
 	
 		try {
-			hospedePamela = new Hospede("Pamela Nicole", "pamy_beautiful.br", "15/12/1995");
-			hospedeLucas = new Hospede("Lucas Lucco", "lucaxx_lucco.br","04/04/1991");
+			hospedePamela = new Hospede("Pamela Nicole", "pamy@beautiful.br", "15/12/1995");
+			hospedeLucas = new Hospede("Lucas Lucco", "lucaxx@lucco.br","04/04/1991");
 			
 		} catch (StringInvalidaException e) {
 			
@@ -48,12 +48,12 @@ public class HospedeTest {
 		
 		
 		try {
-			Hospede hospedeSebas = new Hospede("Sebas Lemos", "sebas_lemos.br", "12/12/1992");
-			Hospede hospedePatricia = new Hospede("Patricia Machado", "teoria.graos@phdnafranca.com.br", "31/10/1900");
-			Hospede hospedeLuan = new Hospede("Luan Santana", "luan_santana.br", "13/03/1991");
+			Hospede hospedeSebas = new Hospede("Sebas Lemos", "sebas@lemos.br", "12/12/1992");
+			Hospede hospedePatricia = new Hospede("Patricia Machado", "teoriagraos@phdnafranca.com.br", "31/10/1900");
+			Hospede hospedeLuan = new Hospede("Luan Santana", "luan@santana.br", "13/03/1991");
 			
 			assertEquals(hospedeSebas.getNome(), "Sebas Lemos");
-			assertEquals(hospedePatricia.getEmail(), "teoria.graos@phdnafranca.com.br");
+			assertEquals(hospedePatricia.getEmail(), "teoriagraos@phdnafranca.com.br");
 			assertEquals(hospedeLuan.getDataNascimento(),"13/03/1991" );
 		} catch (StringInvalidaException e) {
 		}
@@ -68,14 +68,14 @@ public class HospedeTest {
 		
 		
 		try {
-				hospedePamela = new Hospede(" ", "pamy_beautiful.br", "15/12/1995");
+				hospedePamela = new Hospede(" ", "pamy@beautiful.br", "15/12/1995");
 				fail("Lancamento de exception com nome do hospede invalido");
 		} catch (StringInvalidaException msg) {
 				assertEquals("Nome do hospede nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
 		try {
-				hospedeLucas = new Hospede(null, "lucaxx_lucco.br","04/04/1991");
+				hospedeLucas = new Hospede(null, "lucaxx@lucco.br","04/04/1991");
 				fail("Lancamento de exception com nome do hospede invalido");
 		} catch (StringInvalidaException msg) {
 				assertEquals("Nome do hospede nao pode ser nulo ou vazio.", msg.getMessage());
@@ -98,14 +98,14 @@ public class HospedeTest {
 		
 		// testando string dataNascimento vazio ou null
 		try {
-				hospedePamela = new Hospede("Pamela Nicole", "pamy_beautiful.br", " ");
+				hospedePamela = new Hospede("Pamela Nicole","pamy@beautiful.br", " ");
 				fail("Lancamento de exception com data de nascimento do hospede invalido");
 		} catch (StringInvalidaException msg) {
 				assertEquals("Data de Nascimento do hospede nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
 		try {
-				hospedeLucas = new Hospede("Lucas Lucco", "lucaxx_lucco.br", null);
+				hospedeLucas = new Hospede("Lucas Lucco", "lucaxx@lucco.br", null);
 				fail("Lancamento de exception com data de nascimento do hospede invalido");
 		} catch (StringInvalidaException msg) {
 				assertEquals("Data de Nascimento do hospede nao pode ser nulo ou vazio.", msg.getMessage());
@@ -118,8 +118,8 @@ public class HospedeTest {
 		
 		
 		try {
-			hospedeJustin = new Hospede("Justin Drew","sorry_baby.or", "01/03/1994");
-			hospedeJBieber = new Hospede("Justin Bieber","sorry_baby.or", "01/03/1994");
+			hospedeJustin = new Hospede("Justin Drew","sorry@baby.or", "01/03/1994");
+			hospedeJBieber = new Hospede("Justin Bieber","sorry@baby.or", "01/03/1994");
 			
 			assertEquals(hospedeJustin.getEmail(), hospedeJBieber.getEmail());
 			Assert.assertNotEquals(hospedePamela.getEmail(), hospedeJustin.getEmail());

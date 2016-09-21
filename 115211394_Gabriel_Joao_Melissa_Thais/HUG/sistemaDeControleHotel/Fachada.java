@@ -45,11 +45,6 @@ public class Fachada {
 		return controller.cadastraHospede( nome, email, dataNascimento);
 	}
 
-	public static void main(String[] args) {
-		//, "testes/easy/testes_uc3.txt", "testes/easy/testes_uc4.txt", "testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc4_exception.txt"
-	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt","testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc2.txt","testes/easy/testes_uc2_exception.txt", "testes/easy/testes_uc3.txt", "testes/easy/testes_uc3_exception.txt",}; //separe cada script de teste por virgula.
-	    EasyAccept.main(args);
-	}
 	
 	public void removeHospede(String email) throws Exception {
 		controller.removeHospede(email);
@@ -88,5 +83,12 @@ public class Fachada {
 	
 	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws Exception {
 		controller.cadastraRefeicao(nomeRef, descricaoRef, componentes);
+	}
+	
+	// main
+	public static void main(String[] args) {
+		//, "testes/easy/testes_uc3.txt", "testes/easy/testes_uc4.txt", "testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc4_exception.txt"
+	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt","testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc2.txt","testes/easy/testes_uc2_exception.txt", "testes/easy/testes_uc3.txt","testes/easy/testes_uc4.txt", "testes/easy/testes_uc3_exception.txt",}; //separe cada script de teste por virgula.
+	    EasyAccept.main(args);
 	}
 }

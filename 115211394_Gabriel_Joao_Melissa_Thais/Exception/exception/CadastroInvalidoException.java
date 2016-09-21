@@ -10,7 +10,7 @@ package exception;
 @SuppressWarnings("serial")
 public class CadastroInvalidoException extends Exception{
 	
-	public CadastroInvalidoException(String msg){
-		super(msg);
+	public CadastroInvalidoException(String erro){
+		super("Erro no cadastro de Hospede. " + erro);
 	}
 }

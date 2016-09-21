@@ -22,7 +22,7 @@ public class FactoryEstadia {
 	 * @throws Exception
 	 */
 	public Estadia criaEstadia(String IDQuarto, int quantDias) throws Exception{
-		TestaValores.testaQuantDias(quantDias);
+		TestaValores.verificaQuantDiasInvalidaCheckin(quantDias);
 		return new Estadia(IDQuarto, quantDias);
 	}
 	
