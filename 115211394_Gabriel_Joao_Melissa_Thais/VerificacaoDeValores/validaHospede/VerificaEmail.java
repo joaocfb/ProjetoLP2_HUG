@@ -9,8 +9,6 @@ public class VerificaEmail {
 		}
 		if (!email.matches("[a-zA-Z]+@[a-z]+\\.[a-z|\\.a-z+\\.a-z]+")) {
 			throw new Exception("Erro no cadastro de Hospede. Email do(a) hospede esta invalido.");
-		}
-	
-		
+		}		
 	}
 }

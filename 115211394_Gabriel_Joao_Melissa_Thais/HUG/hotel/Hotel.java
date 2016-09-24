@@ -1,5 +1,7 @@
 package hotel;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -23,6 +25,10 @@ import validaAtualizacao.*;
 import validaCadastro.*;
 import validaChecking.*;
 import validaRemocao.*;
+import validaHospede.*;
+import validaCheckout.*;
+
+
 /**
  * Classe Hotel: faz o cadastro, edicao/atualizacao, busca e remove hospedes
  * atraves do email Faz checkin/checkout, atualiza o historico de lucros.
@@ -172,7 +178,9 @@ public class Hotel {
 		VerificaNomeCadastro.verificaNomeInvalidoCadastro(nome);
 		VerificaDataCadastro.verificaDataInvalidaCadastro(dataNascimento);
 		VerificaDataCadastro.verificaFrDataInvalidaCadastro(dataNascimento);
-		
+		VerificaData.verificaIdadeInvalido(dataNascimento);
+
+
 		//testa.verificaNomeInvalidoCadastro(nome);
 		//testa.verificaDataInvalidaCadastro(dataNascimento);
 		//testa.verificaFrDataInvalidaCadastro(dataNascimento);
@@ -232,9 +240,12 @@ public class Hotel {
 	 * @param email
 	 * @param IDQuarto
 	 * @return double
+	 * @throws Exception 
 	 */
-	public String realizaCheckout(String email, String IDQuarto) throws ConsultaInvalidaException {
+	public String realizaCheckout(String email, String IDQuarto) throws Exception {
 
+		validaCheckout.VerificaEmailCheckout.verificaEmailInvalido(email);
+		validaCheckout.VerificaEmailCheckout.verificaIdInvalidaCheckout(IDQuarto);
 		// se o hospede estiver cadastrado
 		if (verificaSeExisteHospede(email)) {
 			// e hospedado
@@ -333,22 +344,22 @@ public class Hotel {
 	 */
 	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception, CheckinInvalidoException {
 		
-		if (email.trim().isEmpty()) {
-			throw new CheckinInvalidoException("Email do(a) hospede nao pode ser vazio.");
-		}
-		
+
+		verificaChecking.verificaIdInvalidaCheckin(IDQuarto);
 		verificaChecking.verificaEmailInvalidoCheckin(email);
+		verificaChecking.verificaEmailFrmInvalidoCheckin(email);
+		
 		
 		if (!meusHospedes.containsKey(email)) {
 			throw new CheckinInvalidoException("Hospede de email "+ email + " nao foi cadastrado(a).");
 		}
 		
 		verificaChecking.verificaQuantDiasInvalidaCheckin(quantDias);
-
+		//testa.verificaQuantDiasInvalidaCheckin(quantDias);
+		
 		if (!(tipoQuarto.equalsIgnoreCase("luxo") || tipoQuarto.equalsIgnoreCase("simples") || tipoQuarto.equalsIgnoreCase("presidencial"))) {
 			throw new CheckinInvalidoException("Tipo de quarto invalido.");
 		}
-		
 		
 		if (!quartos.containsKey(IDQuarto)) {
 			quartos.put(IDQuarto, factoryQuarto.criaQuartos(IDQuarto, tipoQuarto));
@@ -423,7 +434,8 @@ public class Hotel {
 	 * @throws Exception
 	 */
 	public String getInfoHospedagem(String email, String atributo) throws ConsultaInvalidaException, HospedagemAtivaInvalidaException, MensagemErroException{
-		String nome = meusHospedes.get(email).getNome();
+		
+		
 		
 		if (email.trim().isEmpty()) {
 			throw new HospedagemAtivaInvalidaException("Email do(a) hospede nao pode ser vazio.");
@@ -433,6 +445,8 @@ public class Hotel {
 		if (!email.matches("[a-zA-Z]+@[a-z]+\\.[a-z|\\.a-z+\\.a-z]+")) {
 			throw new HospedagemAtivaInvalidaException("Email do(a) hospede esta invalido.");
 		}
+		
+		String nome = meusHospedes.get(email).getNome();
 		
 		// se o hospede esta cadastrado
 		if (meusHospedes.containsKey(email)) {
@@ -520,5 +534,5 @@ public class Hotel {
 		// faz o calculo dos gastos
 		return diasHospede * preco;
 	}
-
+	
 }

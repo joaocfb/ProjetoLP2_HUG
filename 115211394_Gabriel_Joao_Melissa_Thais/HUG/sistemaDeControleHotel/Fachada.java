@@ -5,7 +5,6 @@ package sistemaDeControleHotel;
 
 import easyaccept.EasyAccept;
 import exception.CadastroInvalidoException;
-import exception.CheckinInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.StringInvalidaException;
 import interfaces.IHotel;
@@ -52,12 +51,8 @@ public class Fachada {
 		
 	}
 
-	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws CheckinInvalidoException, Exception {
-		try {
-			controller.realizaCheckin(email, quantDias, IDQuarto, tipoQuarto);
-		} catch (CheckinInvalidoException e) {
-			throw new CheckinInvalidoException(e.getMessage());
-		}
+	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception {
+		controller.realizaCheckin(email, quantDias, IDQuarto, tipoQuarto);
 		
 	}
 
@@ -93,7 +88,7 @@ public class Fachada {
 	// main
 	public static void main(String[] args) {
 		//, "testes/easy/testes_uc3.txt", "testes/easy/testes_uc4.txt", "testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc4_exception.txt"
-	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt","testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc2.txt","testes/easy/testes_uc2_exception.txt", "testes/easy/testes_uc3.txt","testes/easy/testes_uc4.txt", "testes/easy/testes_uc4_exception.txt", "testes/easy/testes_uc3_exception.txt"}; //separe cada script de teste por virgula.
+	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt","testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc2.txt","testes/easy/testes_uc2_exception.txt", "testes/easy/testes_uc3.txt","testes/easy/testes_uc4.txt", "testes/easy/testes_uc3_exception.txt",}; //separe cada script de teste por virgula.
 	    EasyAccept.main(args);
 	}
 }
