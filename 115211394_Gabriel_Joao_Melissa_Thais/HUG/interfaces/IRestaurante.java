@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
-import exception.ConsultaInvalidaException;
+import exception.ConsultaHospedeInvalidaException;
+import exception.ConsultaRestauranteInvalidoException;
 import restaurante.Prato;
 
 /**
@@ -22,5 +23,5 @@ public interface IRestaurante {
 	
 	public ArrayList<Prato> pratosRefeicao(String componentes) throws CadastroRefeicaoInvalidaException;
 	
-	public String consultaRestaurante(String chaveNome, String atributo) throws ConsultaInvalidaException, CadastroRefeicaoInvalidaException;
+	public String consultaRestaurante(String chaveNome, String atributo) throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException;
 }

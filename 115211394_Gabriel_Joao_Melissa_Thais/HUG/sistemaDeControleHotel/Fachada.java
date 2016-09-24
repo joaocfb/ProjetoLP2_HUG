@@ -12,9 +12,12 @@ import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
 import exception.CheckinInvalidoException;
 import exception.CheckoutInvalidoException;
-import exception.ConsultaInvalidaException;
+import exception.ConsultaHospedagemInvalidaException;
+import exception.ConsultaHospedeInvalidaException;
+import exception.ConsultaRestauranteInvalidoException;
 import exception.CriacaoQuartoInvalidoException;
 import exception.HospedagemAtivaInvalidaException;
+import exception.IndiceInvalidoException;
 import exception.MensagemErroException;
 import exception.RemocaoInvalidaException;
 import exception.VerificaNuloEVazioException;
@@ -57,12 +60,12 @@ public class Fachada implements IHotel, IRestaurante {
 		
 	}
 
-	public String getInfoHospede(String info, String id) throws ConsultaInvalidaException {
+	public String getInfoHospede(String info, String id) throws ConsultaHospedeInvalidaException {
 		return controller.getInfoHospede(info, id);
 		
 	}
 	
-	public void removeHospede(String email) throws ConsultaInvalidaException, RemocaoInvalidaException  {
+	public void removeHospede(String email) throws ConsultaHospedeInvalidaException, RemocaoInvalidaException  {
 		controller.removeHospede(email);
 		
 		
@@ -74,12 +77,12 @@ public class Fachada implements IHotel, IRestaurante {
 			
 	}
 
-	public String realizaCheckout(String email, String IDQuarto) throws CheckoutInvalidoException, ConsultaInvalidaException   {
+	public String realizaCheckout(String email, String IDQuarto) throws CheckoutInvalidoException, ConsultaHospedagemInvalidaException   {
 		return controller.realizaCheckout(email, IDQuarto);
 		
 	}
 
-	public String getInfoHospedagem(String email, String atributo) throws ConsultaInvalidaException, HospedagemAtivaInvalidaException, MensagemErroException  {
+	public String getInfoHospedagem(String email, String atributo) throws HospedagemAtivaInvalidaException, MensagemErroException, ConsultaHospedagemInvalidaException  {
 		return controller.getInfoHospedagem(email, atributo);
 		
 	}
@@ -89,7 +92,7 @@ public class Fachada implements IHotel, IRestaurante {
 		
 	}
 	
-	public String consultaTransacoes(String atributo, int indice) throws MensagemErroException  {
+	public String consultaTransacoes(String atributo, int indice) throws MensagemErroException, IndiceInvalidoException  {
 		return controller.consultaTransacoes(atributo, indice);
 		
 	}
@@ -110,7 +113,7 @@ public class Fachada implements IHotel, IRestaurante {
 		return controller.pratosRefeicao(componentes);
 	}
 	
-	public String consultaRestaurante(String chaveNome, String atributo) throws ConsultaInvalidaException, CadastroRefeicaoInvalidaException   {
+	public String consultaRestaurante(String chaveNome, String atributo) throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException   {
 		return controller.consultaRestaurante(chaveNome, atributo);
 		
 	}

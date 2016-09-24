@@ -10,9 +10,11 @@ import exception.AtualizacaoInvalidaException;
 import exception.CadastroHospedeInvalidoException;
 import exception.CheckinInvalidoException;
 import exception.CheckoutInvalidoException;
-import exception.ConsultaInvalidaException;
+import exception.ConsultaHospedagemInvalidaException;
+import exception.ConsultaHospedeInvalidaException;
 import exception.CriacaoQuartoInvalidoException;
 import exception.HospedagemAtivaInvalidaException;
+import exception.IndiceInvalidoException;
 import exception.MensagemErroException;
 import exception.RemocaoInvalidaException;
 import exception.VerificaNuloEVazioException;
@@ -173,7 +175,7 @@ public class Hotel {
 	 * @return String
 	 * @throws Exception 
 	 */
-	public String getInfoHospede(String id, String info) throws ConsultaInvalidaException {
+	public String getInfoHospede(String id, String info) throws ConsultaHospedeInvalidaException {
 		// verifica se existe esse email cadastrado, se sim pesquisa
 		
 		if (meusHospedes.containsKey(id)) {
@@ -191,7 +193,7 @@ public class Hotel {
 		}
 		// se nao houver ele lanca excecao "Erro na consulta de hospede. Hospede
 		// de email " + id + " nao foi cadastrado(a).
-		throw new ConsultaInvalidaException("de hospede. Hospede de email " + id + " nao foi cadastrado(a).");
+		throw new ConsultaHospedeInvalidaException(id);
 
 	}
   
@@ -201,14 +203,16 @@ public class Hotel {
 	 * @param email
 	 * @throws Exception 
 	 * @throws RemocaoInvalidaException
+	 * @throws ConsultaHospedeInvalidaException 
+	 * @throws NaoFoiCadastradoException 
 	 */
-	public void removeHospede(String email) throws ConsultaInvalidaException, RemocaoInvalidaException {
+	public void removeHospede(String email) throws  RemocaoInvalidaException, ConsultaHospedeInvalidaException {
 		
 		verificaEmailRemocao.verificaEmailInvalidoRemocao(email);
 		//testa.verificaEmailInvalidoRemocao(email);
 		
 		if (!meusHospedes.containsKey(email)) {
-			throw new ConsultaInvalidaException("de hospede. Hospede de email " + email + " nao foi cadastrado(a).");
+			throw new ConsultaHospedeInvalidaException(email);
 
 		} else {
 			meusHospedes.remove(email);
@@ -295,7 +299,7 @@ public class Hotel {
 				quartos.get(IDQuarto).setStatus(false);
 			}
 			throw new CheckinInvalidoException("Quarto " + IDQuarto + " ja esta ocupado.");
-		}
+		}       
 
 
 	}
@@ -308,10 +312,10 @@ public class Hotel {
 	 * @param IDQuarto
 	 * @return double
 	 * @throws CheckoutInvalidoException 
-	 * @throws ConsultaInvalidaException 
+	 * @throws ConsultaHospedagemInvalidaException 
 	 * @throws Exception 
 	 */
-	public String realizaCheckout(String email, String IDQuarto) throws CheckoutInvalidoException, ConsultaInvalidaException {
+	public String realizaCheckout(String email, String IDQuarto) throws CheckoutInvalidoException, ConsultaHospedagemInvalidaException {
 		validaCheckout.VerificaEmailCheckout.verificaEmailInvalido(email);
 		validaCheckout.VerificaEmailCheckout.verificaIdInvalidaCheckout(IDQuarto);
 		// se o hospede estiver cadastrado
@@ -339,7 +343,7 @@ public class Hotel {
 			}
 		}
 
-		throw new ConsultaInvalidaException("de hospedagem. " + meusHospedes.get(email).getNome() + " nao esta hospedado(a).");
+		throw new ConsultaHospedagemInvalidaException (meusHospedes.get(email).getNome());
 
 	}
 	
@@ -350,19 +354,18 @@ public class Hotel {
 	 * @param atributo
 	 * @return String
 	 * @throws MensagemErroException 
+	 * @throws ConsultaHospedagemInvalidaException 
 	 * @throws Exception
 	 */
-	public String getInfoHospedagem(String email, String atributo) throws ConsultaInvalidaException, HospedagemAtivaInvalidaException, MensagemErroException{
-		
-		
-		
+	public String getInfoHospedagem(String email, String atributo) throws HospedagemAtivaInvalidaException, MensagemErroException, ConsultaHospedagemInvalidaException{
+
 		if (email.trim().isEmpty()) {
-			throw new HospedagemAtivaInvalidaException("Email do(a) hospede nao pode ser vazio.");
+			throw new HospedagemAtivaInvalidaException("nao pode ser vazio.");
 
 		}
 		
 		if (!email.matches("[a-zA-Z]+@[a-z]+\\.[a-z|\\.a-z+\\.a-z]+")) {
-			throw new HospedagemAtivaInvalidaException("Email do(a) hospede esta invalido.");
+			throw new HospedagemAtivaInvalidaException("esta invalido.");
 		}
 		
 		String nome = meusHospedes.get(email).getNome();
@@ -391,7 +394,7 @@ public class Hotel {
 			}
 
 		}
-		throw new ConsultaInvalidaException("de hospedagem. Hospede " + nome + " nao esta hospedado(a).");
+		throw new ConsultaHospedagemInvalidaException ("Hospede " + nome);
 	}
 	
 	/**
@@ -430,8 +433,11 @@ public class Hotel {
 	 * @param indice
 	 * @return
 	 * @throws MensagemErroException
+	 * @throws IndiceInvalidoException 
 	 */
-	public String consultaTransacoes(String atributo, int indice) throws MensagemErroException{
+	public String consultaTransacoes(String atributo, int indice) throws MensagemErroException, IndiceInvalidoException{
+		
+		validaIndice.verificaIndice.verificaIndiceInvalido(indice);
 		
 		if (indice <= listaCheckouts.size()) {
 

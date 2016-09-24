@@ -13,7 +13,7 @@ import validaPrato.*;
  */
 public class FactoryPrato {
 	
-	public Prato criaPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException  {
+	public Prato criaPrato(String nomePrato, String descricaoPrato, double precoPrato) throws CadastroPratoInvalidoException  {
 		
 		VerificaPrato.verificaNomePratovazio(nomePrato);
 		VerificaPrato.verificaDescVazio(descricaoPrato);
@@ -23,7 +23,7 @@ public class FactoryPrato {
 		//verificaDescVazio(descricaoPrato);
 		//verificaPrecoInvalido(precoPrato);
 		
-		return new Prato(nomePrato, precoPrato, descricaoPrato);
+		return new Prato(nomePrato, descricaoPrato, precoPrato);
 	}
 
 }

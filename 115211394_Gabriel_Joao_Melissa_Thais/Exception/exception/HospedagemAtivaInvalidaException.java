@@ -11,6 +11,6 @@ package exception;
 public class HospedagemAtivaInvalidaException extends Exception {
 
 	public HospedagemAtivaInvalidaException(String erro){
-		super("Erro ao checar hospedagem ativa. " + erro);
+		super("Erro ao checar hospedagem ativa. Email do(a) hospede " + erro);
 	}
 }

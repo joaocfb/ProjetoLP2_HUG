@@ -10,9 +10,12 @@ import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
 import exception.CheckinInvalidoException;
 import exception.CheckoutInvalidoException;
-import exception.ConsultaInvalidaException;
+import exception.ConsultaHospedagemInvalidaException;
+import exception.ConsultaHospedeInvalidaException;
+import exception.ConsultaRestauranteInvalidoException;
 import exception.CriacaoQuartoInvalidoException;
 import exception.HospedagemAtivaInvalidaException;
+import exception.IndiceInvalidoException;
 import exception.MensagemErroException;
 import exception.RemocaoInvalidaException;
 import exception.VerificaNuloEVazioException;
@@ -59,13 +62,13 @@ public class ControleDoSistema implements IHotel, IRestaurante {
 	}
 
 	@Override
-	public String getInfoHospede(String info, String id) throws ConsultaInvalidaException {
+	public String getInfoHospede(String info, String id) throws ConsultaHospedeInvalidaException {
 		return controleHotel.getInfoHospede(info, id);
 
 	}
 
 	@Override
-	public void removeHospede(String email) throws ConsultaInvalidaException, RemocaoInvalidaException {
+	public void removeHospede(String email) throws ConsultaHospedeInvalidaException, RemocaoInvalidaException {
 			controleHotel.removeHospede(email);
 	}
 	
@@ -77,12 +80,12 @@ public class ControleDoSistema implements IHotel, IRestaurante {
 	}
 
 	@Override
-	public String realizaCheckout(String email, String IDQuarto) throws CheckoutInvalidoException, ConsultaInvalidaException {
+	public String realizaCheckout(String email, String IDQuarto) throws CheckoutInvalidoException, ConsultaHospedagemInvalidaException {
 		return controleHotel.realizaCheckout(email, IDQuarto);
 	}
 
 	@Override
-	public String getInfoHospedagem(String email, String atributo) throws ConsultaInvalidaException, HospedagemAtivaInvalidaException, MensagemErroException {
+	public String getInfoHospedagem(String email, String atributo) throws  HospedagemAtivaInvalidaException, MensagemErroException, ConsultaHospedagemInvalidaException {
 		return controleHotel.getInfoHospedagem(email, atributo);
 	}
 
@@ -92,7 +95,7 @@ public class ControleDoSistema implements IHotel, IRestaurante {
 	}
 
 	@Override
-	public String consultaTransacoes(String atributo, int indice) throws MensagemErroException {
+	public String consultaTransacoes(String atributo, int indice) throws MensagemErroException, IndiceInvalidoException {
 		return controleHotel.consultaTransacoes(atributo, indice);
 	}
 	
@@ -114,7 +117,7 @@ public class ControleDoSistema implements IHotel, IRestaurante {
 	}
 	
 	@Override
-	public String consultaRestaurante(String chaveNome, String atributo) throws ConsultaInvalidaException, CadastroRefeicaoInvalidaException  {
+	public String consultaRestaurante(String chaveNome, String atributo) throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException  {
 		return controleRestaurante.consultaRestaurante(chaveNome, atributo);
 	}
 

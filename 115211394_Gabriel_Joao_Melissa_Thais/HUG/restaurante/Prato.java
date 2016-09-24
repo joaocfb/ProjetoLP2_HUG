@@ -7,64 +7,30 @@ package restaurante;
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class Prato {
-	private String nomePrato;
+public class Prato extends TiposDeRefeicoes{
+	
 	private double precoPrato;
-	private String descricaoPrato;
 	
+	public Prato(String nome, String descricao, double precoPrato) {
+		super(nome, descricao);
+		
+		this.setPrecoPrato(precoPrato);
+		
+	}
 	
-	public Prato(String nomePrato, double precoPrato, String descricaoPrato) {
-		this.nomePrato = nomePrato;
-		this.precoPrato = precoPrato;
-		this.descricaoPrato = descricaoPrato;
-	}
-
 
 	/**
-	 * @return the nomePrato
-	 */
-	public String getNomePrato() {
-		return nomePrato;
-	}
-
-
-	/**
-	 * @param nomePrato the nomePrato to set
-	 */
-	public void setNomePrato(String nomePrato) {
-		this.nomePrato = nomePrato;
-	}
-
-
-	/**
-	 * @return the precoPrato
+	 * @return the preco
 	 */
 	public double getPrecoPrato() {
 		return precoPrato;
 	}
 
-
 	/**
-	 * @param precoPrato the precoPrato to set
+	 * @param preco the preco to set
 	 */
 	public void setPrecoPrato(double precoPrato) {
 		this.precoPrato = precoPrato;
-	}
-
-
-	/**
-	 * @return the descricaoPrato
-	 */
-	public String getDescricaoPrato() {
-		return descricaoPrato;
-	}
-
-
-	/**
-	 * @param descricaoPrato the descricaoPrato to set
-	 */
-	public void setDescricaoPrato(String descricaoPrato) {
-		this.descricaoPrato = descricaoPrato;
 	}
 
 
@@ -73,11 +39,9 @@ public class Prato {
 	 */
 	@Override
 	public String toString() {
-		return "Prato [nomePrato=" + nomePrato + ", precoPrato=" + precoPrato + ", descricaoPrato=" + descricaoPrato
+		return "Prato [nomePrato=" + this.getNome() + ", precoPrato=" + this.getPrecoPrato() + ", descricaoPrato=" + this.getDescricao()
 				+ "]";
 	}
-	
-	
 	
 	
 }

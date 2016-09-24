@@ -6,7 +6,8 @@ import java.util.HashMap;
 
 import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
-import exception.ConsultaInvalidaException;
+import exception.ConsultaHospedeInvalidaException;
+import exception.ConsultaRestauranteInvalidoException;
 import factorys.FactoryPrato;
 import factorys.FactoryRefeicao;
 
@@ -41,7 +42,7 @@ public class Restaurante {
 	 */
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException{
 		
-		pratos.put(nomePrato, factoryPrato.criaPrato(nomePrato, precoPrato, descricaoPrato));
+		pratos.put(nomePrato, factoryPrato.criaPrato(nomePrato, descricaoPrato,precoPrato));
 	}
 	
 	/**
@@ -97,9 +98,10 @@ public class Restaurante {
 	 * @param chaveNome
 	 * @param atributo
 	 * @return
+	 * @throws ConsultaRestauranteInvalidoException 
 	 * @throws Exception
 	 */
-	public String consultaRestaurante(String chaveNome, String atributo) throws ConsultaInvalidaException, CadastroRefeicaoInvalidaException{
+	public String consultaRestaurante(String chaveNome, String atributo) throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException{
 		
 		if (pratos.containsKey(chaveNome)) {
 
@@ -112,7 +114,7 @@ public class Restaurante {
 				
 			case "descricao":
 				
-				return pratos.get(chaveNome).getDescricaoPrato();
+				return pratos.get(chaveNome).getDescricao();
 			
 			}
 			
@@ -132,7 +134,7 @@ public class Restaurante {
 			}
 		
 		}
-		throw new ConsultaInvalidaException("do restaurante. Nome do prato esto vazio.");
+		throw new ConsultaRestauranteInvalidoException(" Nome do prato esto vazio.");
 	}
 	
 	

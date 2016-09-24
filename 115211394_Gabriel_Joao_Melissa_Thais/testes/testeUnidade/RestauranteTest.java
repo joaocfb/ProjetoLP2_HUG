@@ -45,9 +45,9 @@ public class RestauranteTest {
 		try {
 			
 			// criando os pratos
-			pratos.put("Artsoppa com panquecas", factoryPrato.criaPrato("Artsoppa com panquecas", 18.50, "Deliciosa sopa de ervilhas com carne. Essa comida tradicional da Suecia eh saboreada principalmente nas quintas-feiras."));
-			pratos.put("Kotbullar com lingon", factoryPrato.criaPrato("Kotbullar com lingon", 38.50, "Almondegas de carne feito no tradicional estilo sueco."));
-			pratos.put("Kanelbullar", factoryPrato.criaPrato("Kanelbullar", 15.00 , "Um pequeno pao de massa fofinha e sabor de canela"));	
+			pratos.put("Artsoppa com panquecas", factoryPrato.criaPrato("Artsoppa com panquecas", "Deliciosa sopa de ervilhas com carne. Essa comida tradicional da Suecia eh saboreada principalmente nas quintas-feiras.", 18.50));
+			pratos.put("Kotbullar com lingon", factoryPrato.criaPrato("Kotbullar com lingon", "Almondegas de carne feito no tradicional estilo sueco.", 38.50));
+			pratos.put("Kanelbullar", factoryPrato.criaPrato("Kanelbullar", "Um pequeno pao de massa fofinha e sabor de canela", 15.00));	
 			
 			
 			// criando refeicoes
