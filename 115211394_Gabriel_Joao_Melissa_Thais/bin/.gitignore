@@ -1,9 +1,4 @@
+/sistemaDeControleHotel/
 /hotel/
-/validaRemocao/
-/validaCadastro/
-/validaEstadia/
-/validaHospede/
-/factorys/
-/validaPrato/
-/validaRefeicao/
-/validaAtualizacao/
+/exception/
+/validaString/

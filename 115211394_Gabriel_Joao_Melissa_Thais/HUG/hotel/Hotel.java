@@ -333,23 +333,22 @@ public class Hotel {
 	 */
 	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception, CheckinInvalidoException {
 		
-		
 		if (email.trim().isEmpty()) {
 			throw new CheckinInvalidoException("Email do(a) hospede nao pode ser vazio.");
 		}
 		
 		verificaChecking.verificaEmailInvalidoCheckin(email);
-		//testa.verificaEmailInvalidoCheckin(email);
 		
 		if (!meusHospedes.containsKey(email)) {
 			throw new CheckinInvalidoException("Hospede de email "+ email + " nao foi cadastrado(a).");
 		}
 		
 		verificaChecking.verificaQuantDiasInvalidaCheckin(quantDias);
-		//testa.verificaQuantDiasInvalidaCheckin(quantDias);
+
 		if (!(tipoQuarto.equalsIgnoreCase("luxo") || tipoQuarto.equalsIgnoreCase("simples") || tipoQuarto.equalsIgnoreCase("presidencial"))) {
 			throw new CheckinInvalidoException("Tipo de quarto invalido.");
 		}
+		
 		
 		if (!quartos.containsKey(IDQuarto)) {
 			quartos.put(IDQuarto, factoryQuarto.criaQuartos(IDQuarto, tipoQuarto));
