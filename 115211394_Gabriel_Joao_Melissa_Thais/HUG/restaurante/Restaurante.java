@@ -4,6 +4,9 @@ package restaurante;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import exception.CadastroPratoInvalidoException;
+import exception.CadastroRefeicaoInvalidaException;
+import exception.ConsultaInvalidaException;
 import factorys.FactoryPrato;
 import factorys.FactoryRefeicao;
 
@@ -33,11 +36,60 @@ public class Restaurante {
 	 * @param nomePrato
 	 * @param precoPrato
 	 * @param descricaoPrato
+	 * @throws CadastroPratoInvalidoException 
 	 * @throws Exception
 	 */
-	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)throws Exception{
+	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException{
 		
 		pratos.put(nomePrato, factoryPrato.criaPrato(nomePrato, precoPrato, descricaoPrato));
+	}
+	
+	/**
+	 * Metodo que cadastra uma refeicao
+	 * @param nomeRef
+	 * @param descricaoRef
+	 * @param componentes
+	 * @throws CadastroRefeicaoInvalidaException 
+	 * @throws Exception
+	 */
+	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws CadastroRefeicaoInvalidaException {
+		
+		refeicao.put(nomeRef, factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRefeicao(componentes)));
+	}
+	
+	/**
+	 * Metodo que retorna uma lista com os objs prato
+	 * @param componentes
+	 * @return ArrayList
+	 * @throws CadastroRefeicaoInvalidaException 
+	 */
+	public ArrayList<Prato> pratosRefeicao(String componentes) throws CadastroRefeicaoInvalidaException{
+		
+		if (componentes.trim().isEmpty()) {
+			throw new CadastroRefeicaoInvalidaException(". Componente(s) esta(o) vazio(s).");
+		}
+		
+		int pratosCadastrados = 0;
+		
+		ArrayList<Prato> pratosRef = new ArrayList<>();
+		String[] nomesComponentes = componentes.split(";");
+		
+		for (String nomePrato : nomesComponentes) {
+			pratosRef.add(this.pratos.get(nomePrato));
+			if(pratos.containsKey(nomePrato)) {
+				pratosCadastrados ++;
+			}
+		}
+		
+		if (!(pratosCadastrados == pratosRef.size())) {
+			throw new CadastroRefeicaoInvalidaException(". So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
+		}
+		
+		if (pratosRef.size() > 4 || pratosRef.size() < 3) {
+			throw new CadastroRefeicaoInvalidaException(" completa. Uma refeicao completa deve possuir no minimo 3 e no maximo 4 pratos.");
+		}
+		
+		return pratosRef;
 	}
 	
 	/**
@@ -47,7 +99,7 @@ public class Restaurante {
 	 * @return
 	 * @throws Exception
 	 */
-	public String consultaRestaurante(String chaveNome, String atributo) throws Exception{
+	public String consultaRestaurante(String chaveNome, String atributo) throws ConsultaInvalidaException, CadastroRefeicaoInvalidaException{
 		
 		if (pratos.containsKey(chaveNome)) {
 
@@ -80,55 +132,8 @@ public class Restaurante {
 			}
 		
 		}
-		throw new Exception("Erro na consulta do restaurante. Nome do prato esto vazio.");
+		throw new ConsultaInvalidaException("do restaurante. Nome do prato esto vazio.");
 	}
-	
-	/**
-	 * Metodo que retorna uma lista com os objs prato
-	 * @param componentes
-	 * @return ArrayList
-	 */
-	public ArrayList<Prato> pratosRefeicao(String componentes)throws Exception{
-		
-		if (componentes.trim().isEmpty()) {
-			throw new Exception("Erro no cadastro de refeicao. Componente(s) esta(o) vazio(s).");
-		}
-		
-		int pratosCadastrados = 0;
-		
-		ArrayList<Prato> pratosRef = new ArrayList<>();
-		String[] nomesComponentes = componentes.split(";");
-		
-		for (String nomePrato : nomesComponentes) {
-			pratosRef.add(this.pratos.get(nomePrato));
-			if(pratos.containsKey(nomePrato)) {
-				pratosCadastrados ++;
-			}
-		}
-		
-		if (!(pratosCadastrados == pratosRef.size())) {
-			throw new Exception("Erro no cadastro de refeicao. So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
-		}
-		
-		if (pratosRef.size() > 4 || pratosRef.size() < 3) {
-			throw new Exception("Erro no cadastro de refeicao completa. Uma refeicao completa deve possuir no minimo 3 e no maximo 4 pratos.");
-		}
-		
-		return pratosRef;
-	}
-
-	/**
-	 * Metodo que cadastra uma refeicao
-	 * @param nomeRef
-	 * @param descricaoRef
-	 * @param componentes
-	 * @throws Exception
-	 */
-	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws Exception{
-		
-		refeicao.put(nomeRef, factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRefeicao(componentes)));
-	}
-	
 	
 	
 	

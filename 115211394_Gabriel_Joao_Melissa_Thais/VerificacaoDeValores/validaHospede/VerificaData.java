@@ -3,50 +3,52 @@ package validaHospede;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import exception.CadastroHospedeInvalidoException;
+
 public class VerificaData {
 
-	public static void verificaNascimentoVazio(String dataNascimento) throws Exception {
+	public static void verificaNascimentoVazio(String dataNascimento) throws CadastroHospedeInvalidoException {
 		if (dataNascimento.trim().isEmpty()) {
-			throw new Exception("Erro no cadastro de Hospede. Data de Nascimento do(a) hospede nao pode ser vazio.");
+			throw new CadastroHospedeInvalidoException("Data de Nascimento do(a) hospede nao pode ser vazio.");
 			
 		}
 	}
 	
-	public static void verificaNascInvalido(String dataNascimento) throws Exception{
+	public static void verificaNascInvalido(String dataNascimento) throws CadastroHospedeInvalidoException{
 		LocalDate birthDate;
 		try {
 			birthDate = stringToDate(dataNascimento);
-			checarAno(birthDate);
+			verificaFrAnoCadastro(birthDate);
 		} catch (Exception e) {
 			
-			throw new Exception("Erro no cadastro de Hospede. Formato de data invalido.");
+			throw new CadastroHospedeInvalidoException("Formato de data invalido.");
 		}		
 	}
 	
-	public static void checarAno(LocalDate birthDate) throws Exception {
+	public static void verificaFrAnoCadastro(LocalDate birthDate) throws CadastroHospedeInvalidoException {
 		int thisYear = LocalDate.now().getYear();
 
 		if ((birthDate.getYear()) > thisYear) {
-			throw new Exception("Erro no cadastro de Hospede. Formato de data invalido.");
+			throw new CadastroHospedeInvalidoException("Formato de data invalido.");
 		}
 	}
 	
-	public static void verificaIdadeInvalido(String dataNascimento) throws Exception{
+	public static void verificaIdadeInvalido(String dataNascimento) throws CadastroHospedeInvalidoException{
 		LocalDate birthDate;
 		try {
 			birthDate = stringToDate(dataNascimento);
-			checarIdade(birthDate);
+			verificaMaiorIdadeCadastro(birthDate);
 		} catch (Exception e) {
 			
-			throw new Exception("Erro no cadastro de Hospede. A idade do(a) hospede deve ser maior que 18 anos.");
+			throw new CadastroHospedeInvalidoException("A idade do(a) hospede deve ser maior que 18 anos.");
 		}		
 	}
 	
-	public static void checarIdade(LocalDate birthDate) throws Exception {
+	public static void verificaMaiorIdadeCadastro(LocalDate birthDate) throws CadastroHospedeInvalidoException {
 		int thisYear = LocalDate.now().getYear();
 
 		if (thisYear - (birthDate.getYear()) < 18) {
-			throw new Exception("Erro no cadastro de Hospede. A idade do(a) hospede deve ser maior que 18 anos.");
+			throw new CadastroHospedeInvalidoException("A idade do(a) hospede deve ser maior que 18 anos.");
 		}
 	}
 	

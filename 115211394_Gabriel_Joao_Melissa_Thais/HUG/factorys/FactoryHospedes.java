@@ -1,5 +1,7 @@
 package factorys;
 
+import exception.CadastroHospedeInvalidoException;
+import exception.VerificaNuloEVazioException;
 import hotel.Hospede;
 import validaHospede.VerificaData;
 import validaHospede.VerificaEmail;
@@ -22,10 +24,11 @@ public class FactoryHospedes {
 	 * @param email
 	 * @param dataNascimento
 	 * @return
+	 * @throws VerificaNuloEVazioException 
 	 * @throws Exception
 	 * @throws TestesHospedeException
 	 */
-	public Hospede criaHospede(String nome, String email, String dataNascimento) throws Exception {
+	public Hospede criaHospede(String nome, String email, String dataNascimento) throws CadastroHospedeInvalidoException, VerificaNuloEVazioException {
 		
 		VerificaNome.verificaNomevazio(nome);
 		VerificaEmail.verificaEmailInvalido(email);

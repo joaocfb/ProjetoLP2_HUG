@@ -3,6 +3,8 @@
  */
 package factorys;
 
+import exception.CheckinInvalidoException;
+import exception.VerificaNuloEVazioException;
 import hotel.Estadia;
 //import testesValores.TestaValores;
 import validaEstadia.*;
@@ -19,9 +21,11 @@ public class FactoryEstadia {
 	 * @param IDQuarto
 	 * @param quantDias
 	 * @return
+	 * @throws CheckinInvalidoException 
+	 * @throws VerificaNuloEVazioException 
 	 * @throws Exception
 	 */
-	public Estadia criaEstadia(String IDQuarto, int quantDias) throws Exception{
+	public Estadia criaEstadia(String IDQuarto, int quantDias) throws CheckinInvalidoException, VerificaNuloEVazioException {
 		VerificaDias.verificaQuantDias(quantDias);
 		//TestaValores.verificaQuantDiasInvalidaCheckin(quantDias);
 		return new Estadia(IDQuarto, quantDias);

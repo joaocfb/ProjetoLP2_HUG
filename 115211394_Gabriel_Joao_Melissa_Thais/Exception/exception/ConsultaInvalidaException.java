@@ -11,6 +11,6 @@ package exception;
 public class ConsultaInvalidaException extends Exception {
 	
 	public ConsultaInvalidaException(String erro){
-		super("Erro na consulta de " + erro);
+		super("Erro na consulta " + erro);
 	}
 }

@@ -3,6 +3,7 @@
  */
 package factorys;
 
+import exception.CadastroPratoInvalidoException;
 import restaurante.Prato;
 import validaPrato.*;
 
@@ -12,7 +13,7 @@ import validaPrato.*;
  */
 public class FactoryPrato {
 	
-	public Prato criaPrato(String nomePrato, double precoPrato, String descricaoPrato) throws Exception{
+	public Prato criaPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException  {
 		
 		VerificaPrato.verificaNomePratovazio(nomePrato);
 		VerificaPrato.verificaDescVazio(descricaoPrato);

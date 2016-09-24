@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import exception.AtualizacaoInvalidaException;
-import exception.CadastroInvalidoException;
+import exception.CadastroHospedeInvalidoException;
 
 public class verificaDataAtualizacao {
 
@@ -22,7 +22,7 @@ public class verificaDataAtualizacao {
 	/**
 	 * Verifica se o formato da data eh valida
 	 * @param dataNascimento
-	 * @throws CadastroInvalidoException
+	 * @throws CadastroHospedeInvalidoException
 	 */
 	public static void verificaFrDataInvalidaAtualizacao(String dataNascimento) throws AtualizacaoInvalidaException {
 		if (dataNascimento.length() != 10) {

@@ -5,6 +5,7 @@ package factorys;
 
 import java.util.ArrayList;
 
+import exception.CadastroRefeicaoInvalidaException;
 import restaurante.Prato;
 import restaurante.Refeicao;
 import validaRefeicao.*;
@@ -15,7 +16,7 @@ import validaRefeicao.*;
  */
 public class FactoryRefeicao {
 	
-	public Refeicao criaRefeicao(String nomeRef, String descricaoRef, ArrayList<Prato> componentes) throws Exception{
+	public Refeicao criaRefeicao(String nomeRef, String descricaoRef, ArrayList<Prato> componentes) throws CadastroRefeicaoInvalidaException {
 		
 		VerificaRefeicao.verificaNomeRefvazio(nomeRef);
 		VerificaRefeicao.verificaDescVazio(descricaoRef);

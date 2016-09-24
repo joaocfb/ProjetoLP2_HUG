@@ -4,7 +4,7 @@
 package hotel;
 
 
-import exception.StringInvalidaException;
+import exception.VerificaNuloEVazioException;
 //import testesValores.TestaValores;
 
 /**
@@ -17,7 +17,7 @@ public class Estadia {
 	private String IDQuarto;
 	//private TestaValores testa;
 	
-	public Estadia(String IDQuarto, int quantDias) throws Exception {
+	public Estadia(String IDQuarto, int quantDias) throws VerificaNuloEVazioException  {
 		
 		verificaQuantDias(quantDias);
 		//testa.testaIdInvalido(IDQuarto);
@@ -29,11 +29,11 @@ public class Estadia {
 	/**
 	 * Auxilio test para identificar possiveis erros com relacao ao parametro recebido
 	 * @param quantDias
-	 * @throws StringInvalidaException
+	 * @throws VerificaNuloEVazioException
 	 */
-	private void verificaQuantDias(int quantDias) throws StringInvalidaException {
+	private void verificaQuantDias(int quantDias) throws VerificaNuloEVazioException {
 		if (quantDias <= 0) {
-			throw new StringInvalidaException("quantidade de dias nao pode ser menor ou igual a zero.");
+			throw new VerificaNuloEVazioException("quantidade de dias nao pode ser menor ou igual a zero.");
 		}	
 	}
 	

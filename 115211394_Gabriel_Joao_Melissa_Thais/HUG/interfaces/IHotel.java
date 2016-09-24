@@ -3,9 +3,16 @@
  */
 package interfaces;
 
-import exception.CadastroInvalidoException;
+import exception.AtualizacaoInvalidaException;
+import exception.CadastroHospedeInvalidoException;
+import exception.CheckinInvalidoException;
+import exception.CheckoutInvalidoException;
+import exception.ConsultaInvalidaException;
+import exception.CriacaoQuartoInvalidoException;
+import exception.HospedagemAtivaInvalidaException;
+import exception.MensagemErroException;
 import exception.RemocaoInvalidaException;
-import exception.StringInvalidaException;
+import exception.VerificaNuloEVazioException;
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -13,29 +20,27 @@ import exception.StringInvalidaException;
  */
 public interface IHotel {
 	
-
-	public void atualizaCadastro(String id, String valor, String info)throws Exception;
+	// ## Hotel ##
+	
+	// Hospede
+	
+	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroHospedeInvalidoException, VerificaNuloEVazioException;
+	
+	public void atualizaCadastro(String id, String valor, String info) throws AtualizacaoInvalidaException;
 		
-	public String getInfoHospede(String info, String id) throws Exception;
+	public String getInfoHospede(String info, String id) throws ConsultaInvalidaException;
 	
-	public String cadastraHospede(String nome, String email, String dataNascimento) throws CadastroInvalidoException, StringInvalidaException, Exception;
+	public void removeHospede(String email) throws ConsultaInvalidaException, RemocaoInvalidaException;
 	
-	public void removeHospede(String email) throws Exception;
-		
-	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws Exception;
+	// Estadia
+	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws CheckinInvalidoException, CriacaoQuartoInvalidoException, VerificaNuloEVazioException;
 	
-	public String realizaCheckout(String email, String IDQuarto) throws Exception;
+	public String realizaCheckout(String email, String IDQuarto) throws CheckoutInvalidoException, ConsultaInvalidaException;
 	
-	public String getInfoHospedagem(String email, String atributo) throws Exception;
+	public String getInfoHospedagem(String email, String atributo) throws ConsultaInvalidaException, HospedagemAtivaInvalidaException, MensagemErroException;
 
-	public String consultaTransacoes(String atributo)throws Exception;
+	public String consultaTransacoes(String atributo) throws MensagemErroException;
 	
-	public String consultaTransacoes(String atributo, int indice)throws Exception;
-	
-	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)throws Exception;
-
-	public String consultaRestaurante(String chaveNome, String atributo) throws Exception;
-
-	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws Exception;
+	public String consultaTransacoes(String atributo, int indice) throws MensagemErroException;
 
 }

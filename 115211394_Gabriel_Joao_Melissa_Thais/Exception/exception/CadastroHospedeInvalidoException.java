@@ -8,9 +8,9 @@ package exception;
  *
  */
 @SuppressWarnings("serial")
-public class CadastroInvalidoException extends Exception{
+public class CadastroHospedeInvalidoException extends Exception{
 	
-	public CadastroInvalidoException(String erro){
+	public CadastroHospedeInvalidoException(String erro){
 		super("Erro no cadastro de Hospede. " + erro);
 	}
 }

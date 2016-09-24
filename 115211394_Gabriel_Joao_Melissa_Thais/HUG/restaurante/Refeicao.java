@@ -14,7 +14,7 @@ public class Refeicao {
 	private String descricaoRef;
 	private ArrayList<Prato> componentes;
 	
-	public Refeicao(String nomeRef, String descricaoRef, ArrayList<Prato> componentes) throws Exception{
+	public Refeicao(String nomeRef, String descricaoRef, ArrayList<Prato> componentes) {
 		
 		this.nomeRef = nomeRef;
 		this.descricaoRef = descricaoRef;

@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import exception.StringInvalidaException;
+import exception.VerificaNuloEVazioException;
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -37,7 +37,7 @@ public class HospedeTest {
 			hospedePamela = new Hospede("Pamela Nicole", "pamy@beautiful.br", "15/12/1995");
 			hospedeLucas = new Hospede("Lucas Lucco", "lucaxx@lucco.br","04/04/1991");
 			
-		} catch (StringInvalidaException e) {
+		} catch (VerificaNuloEVazioException e) {
 			
 		}
 		
@@ -55,7 +55,7 @@ public class HospedeTest {
 			assertEquals(hospedeSebas.getNome(), "Sebas Lemos");
 			assertEquals(hospedePatricia.getEmail(), "teoriagraos@phdnafranca.com.br");
 			assertEquals(hospedeLuan.getDataNascimento(),"13/03/1991" );
-		} catch (StringInvalidaException e) {
+		} catch (VerificaNuloEVazioException e) {
 		}
 		
 		
@@ -70,14 +70,14 @@ public class HospedeTest {
 		try {
 				hospedePamela = new Hospede(" ", "pamy@beautiful.br", "15/12/1995");
 				fail("Lancamento de exception com nome do hospede invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (VerificaNuloEVazioException msg) {
 				assertEquals("Nome do hospede nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
 		try {
 				hospedeLucas = new Hospede(null, "lucaxx@lucco.br","04/04/1991");
 				fail("Lancamento de exception com nome do hospede invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (VerificaNuloEVazioException msg) {
 				assertEquals("Nome do hospede nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
@@ -85,14 +85,14 @@ public class HospedeTest {
 		try {
 			 	hospedePamela = new Hospede("Pamela Nicole", " ", "15/12/1995");
 				fail("Lancamento de exception com email do hospede invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (VerificaNuloEVazioException msg) {
 				assertEquals("Email do hospede nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
 		try {
 				hospedeLucas = new Hospede("Lucas Lucco", null ,"04/04/1991");
 				fail("Lancamento de exception com email do hospede invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (VerificaNuloEVazioException msg) {
 				assertEquals("Email do hospede nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
@@ -100,14 +100,14 @@ public class HospedeTest {
 		try {
 				hospedePamela = new Hospede("Pamela Nicole","pamy@beautiful.br", " ");
 				fail("Lancamento de exception com data de nascimento do hospede invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (VerificaNuloEVazioException msg) {
 				assertEquals("Data de Nascimento do hospede nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
 		try {
 				hospedeLucas = new Hospede("Lucas Lucco", "lucaxx@lucco.br", null);
 				fail("Lancamento de exception com data de nascimento do hospede invalido");
-		} catch (StringInvalidaException msg) {
+		} catch (VerificaNuloEVazioException msg) {
 				assertEquals("Data de Nascimento do hospede nao pode ser nulo ou vazio.", msg.getMessage());
 		}
 		
@@ -123,7 +123,7 @@ public class HospedeTest {
 			
 			assertEquals(hospedeJustin.getEmail(), hospedeJBieber.getEmail());
 			Assert.assertNotEquals(hospedePamela.getEmail(), hospedeJustin.getEmail());
-		} catch (StringInvalidaException e) {
+		} catch (VerificaNuloEVazioException e) {
 		}
 		
 		equals(hospedeJustin.equals(hospedeJBieber));

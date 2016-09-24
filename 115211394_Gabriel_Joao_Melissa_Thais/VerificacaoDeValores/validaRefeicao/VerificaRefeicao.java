@@ -1,17 +1,24 @@
 package validaRefeicao;
 
+import exception.CadastroRefeicaoInvalidaException;
+
+/**
+ * 
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
+ *
+ */
 public class VerificaRefeicao {
 	
-	public static void verificaDescVazio(String descricao) throws Exception {
+	public static void verificaDescVazio(String descricao) throws CadastroRefeicaoInvalidaException {
 		if (descricao.trim().isEmpty()) {
-			throw new Exception("Erro no cadastro de refeicao. Descricao da refeicao esta vazia.");
+			throw new CadastroRefeicaoInvalidaException(". Descricao da refeicao esta vazia.");
 		}
 
 	}
 	
-	public static void verificaNomeRefvazio(String nomeRef) throws Exception {
+	public static void verificaNomeRefvazio(String nomeRef) throws CadastroRefeicaoInvalidaException {
 		if (nomeRef.trim().isEmpty()) {
-			throw new Exception("Erro no cadastro de refeicao. Nome da refeicao esta vazio.");
+			throw new CadastroRefeicaoInvalidaException(". Nome da refeicao esta vazio.");
 		}
 
 	}

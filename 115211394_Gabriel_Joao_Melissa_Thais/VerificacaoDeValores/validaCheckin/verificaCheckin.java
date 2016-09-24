@@ -1,10 +1,8 @@
-package validaChecking;
-
-import java.util.regex.Pattern;
+package validaCheckin;
 
 import exception.CheckinInvalidoException;
 
-public class verificaChecking {
+public class verificaCheckin {
 
 	public static void verificaQuantDiasInvalidaCheckin(int quant) throws CheckinInvalidoException  {
 		if (quant <= 0) {
@@ -12,9 +10,9 @@ public class verificaChecking {
 		}
 	}
 	
-	public static void verificaIdInvalidaCheckin(String id) throws Exception {
+	public static void verificaIdInvalidaCheckin(String id) throws CheckinInvalidoException {
 		if(!(id.matches("[a-zA-Z0-9]+"))) {
-			throw new Exception ("Erro ao realizar checkin. ID do quarto invalido, use apenas numeros ou letras.");
+			throw new CheckinInvalidoException("ID do quarto invalido, use apenas numeros ou letras.");
 		}
 	}
 	
@@ -27,9 +25,9 @@ public class verificaChecking {
 		
 	}
 	
-	public static void verificaEmailInvalidoCheckin(String email) throws Exception  {
+	public static void verificaEmailInvalidoCheckin(String email) throws CheckinInvalidoException  {
 		if (email.trim().isEmpty()) {
-			throw new Exception("Erro ao realizar checkin. Email do(a) hospede nao pode ser vazio.");
+			throw new CheckinInvalidoException("Email do(a) hospede nao pode ser vazio.");
 		}
 	}
 }

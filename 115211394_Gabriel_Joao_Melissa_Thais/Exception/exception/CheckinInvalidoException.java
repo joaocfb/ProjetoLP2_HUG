@@ -4,7 +4,8 @@
 package exception;
 
 /**
- * @author thaisnat
+ * 
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
 @SuppressWarnings("serial")

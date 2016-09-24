@@ -2,14 +2,16 @@ package validaHospede;
 
 import java.util.regex.Pattern;
 
+import exception.CadastroHospedeInvalidoException;
+
 public class VerificaNome {
 
-	public static void verificaNomevazio(String nome) throws Exception {
+	public static void verificaNomevazio(String nome) throws CadastroHospedeInvalidoException {
 		if (nome.trim().isEmpty()) {
-			throw new Exception("Erro no cadastro de Hospede. Nome do(a) hospede nao pode ser vazio.");
+			throw new CadastroHospedeInvalidoException("Nome do(a) hospede nao pode ser vazio.");
 		}
 		if(!(Pattern.matches("[a-zA-Z ]+", nome))) {
-			throw new Exception("Erro no cadastro de Hospede. Nome do(a) hospede esta invalido.");
+			throw new CadastroHospedeInvalidoException("Nome do(a) hospede esta invalido.");
 		}
 
 	}

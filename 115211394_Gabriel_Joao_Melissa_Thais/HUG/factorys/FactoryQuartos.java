@@ -3,6 +3,7 @@
  */
 package factorys;
 
+import exception.CriacaoQuartoInvalidoException;
 import quartos.QuartoLuxo;
 import quartos.QuartoPresidencial;
 import quartos.QuartoSimples;
@@ -11,7 +12,7 @@ import quartos.QuartoSimples;
 public class FactoryQuartos {
 
 
-	public QuartoSimples criaQuartos(String ID, String tipoQuarto) throws Exception {
+	public QuartoSimples criaQuartos(String ID, String tipoQuarto) throws CriacaoQuartoInvalidoException {
 
 		switch (tipoQuarto.toLowerCase()) {
 
@@ -22,7 +23,7 @@ public class FactoryQuartos {
 		case "luxo":
 			return criaQuartoLuxo(ID);
 		}
-		throw new Exception("Nao criou o quarto.");
+		throw new CriacaoQuartoInvalidoException("");
 	}
 
 	private QuartoSimples criaQuartoSimples(String ID) {

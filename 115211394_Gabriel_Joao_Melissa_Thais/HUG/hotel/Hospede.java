@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import exception.StringInvalidaException;
+import exception.VerificaNuloEVazioException;
 import factorys.FactoryEstadia;
 
 /**
@@ -34,10 +34,10 @@ public class Hospede {
 	 * @param nome
 	 * @param email
 	 * @param dataNascimento
-	 * @throws StringInvalidaException 
+	 * @throws VerificaNuloEVazioException 
 	 * @throws Exception 
 	 */
-	public Hospede(String nome, String email, String dataNascimento) throws StringInvalidaException  {
+	public Hospede(String nome, String email, String dataNascimento) throws VerificaNuloEVazioException  {
 		
 		testandoNome(nome);
 		testandoEmail(email);
@@ -118,23 +118,23 @@ public class Hospede {
 
 
 	//teste
-	private void testandoNome(String nome) throws StringInvalidaException {
+	private void testandoNome(String nome) throws VerificaNuloEVazioException {
 		if (nome == null || nome.trim().isEmpty()) {
-			throw new StringInvalidaException("Nome do hospede nao pode ser nulo ou vazio.");
+			throw new VerificaNuloEVazioException("Nome do hospede");
 		}
 	}
 	
 	//teste
-	private void testandoEmail(String email) throws StringInvalidaException{
+	private void testandoEmail(String email) throws VerificaNuloEVazioException{
 		if (email == null || email.trim().isEmpty()) {
-			throw new StringInvalidaException("Email do hospede nao pode ser nulo ou vazio.");
+			throw new VerificaNuloEVazioException("Email do hospede");
 		}
 	}
 	
 	//teste
-	private void testandoDataNascimento(String dataNascimento) throws StringInvalidaException{
+	private void testandoDataNascimento(String dataNascimento) throws VerificaNuloEVazioException{
 		if (dataNascimento == null || dataNascimento.trim().isEmpty()) {
-			throw new StringInvalidaException("Data de Nascimento do hospede nao pode ser nulo ou vazio.");
+			throw new VerificaNuloEVazioException("Data de Nascimento do hospede");
 		}
 	}
 	
