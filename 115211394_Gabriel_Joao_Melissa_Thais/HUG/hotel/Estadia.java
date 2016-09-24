@@ -5,7 +5,7 @@ package hotel;
 
 
 import exception.StringInvalidaException;
-import testesValores.TestaValores;
+//import testesValores.TestaValores;
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -15,7 +15,7 @@ import testesValores.TestaValores;
 public class Estadia {
 	private int quantDias;
 	private String IDQuarto;
-	private TestaValores testa;
+	//private TestaValores testa;
 	
 	public Estadia(String IDQuarto, int quantDias) throws Exception {
 		
@@ -24,18 +24,6 @@ public class Estadia {
 		
 		this.IDQuarto = IDQuarto;
 		this.quantDias = quantDias;
-	}
-	
-	
-	/**
-	 * Auxilio test para identificar possiveis erros com relacao ao parametro recebido
-	 * @param IDQuarto
-	 * @throws StringInvalidaException
-	 */
-	private void verificaIDQuarto(String IDQuarto) throws StringInvalidaException{
-		if (IDQuarto == null || IDQuarto.trim().isEmpty()) {
-			throw new StringInvalidaException("ID do quarto nao pode ser nulo ou vazio.");
-		}
 	}
 	
 	/**

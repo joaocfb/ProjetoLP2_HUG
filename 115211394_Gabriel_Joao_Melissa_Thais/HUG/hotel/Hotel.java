@@ -1,12 +1,9 @@
 package hotel;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-import quartos.QuartoSimples;
-import testesValores.TestaValores;
 import exception.AtualizacaoInvalidaException;
 import exception.CadastroInvalidoException;
 import exception.CheckinInvalidoException;
@@ -18,7 +15,14 @@ import exception.StringInvalidaException;
 import factorys.FactoryEstadia;
 import factorys.FactoryHospedes;
 import factorys.FactoryQuartos;
+import quartos.QuartoSimples;
 
+//import testesValores.TestaValores;
+
+import validaAtualizacao.*;
+import validaCadastro.*;
+import validaChecking.*;
+import validaRemocao.*;
 /**
  * Classe Hotel: faz o cadastro, edicao/atualizacao, busca e remove hospedes
  * atraves do email Faz checkin/checkout, atualiza o historico de lucros.
@@ -38,8 +42,8 @@ public class Hotel {
 	private String nomesHospedes;
 	private int numeroTransacoes;
 	private double valorTransacoes;
-	private TestaValores testa;
-
+	//private TestaValores testa;
+	
 	private ArrayList<Checkout> listaCheckouts;
 	private HashMap<String, QuartoSimples> quartos;
 	private HashMap<String, Hospede> meusHospedes;
@@ -94,15 +98,22 @@ public class Hotel {
 
 			case "data de nascimento":
 				
-				testa.verificaDataInvalidaAtualizacao(info);
-				testa.verificaDataNascInvalidoAtualizacao(info);
-				testa.verificaIdadeInvalidaAtualizacao(info);
+				verificaDataAtualizacao.verificaDataInvalidaAtualizacao(info);
+				verificaDataAtualizacao.verificaDataNascInvalidoAtualizacao(info);
+				verificaDataAtualizacao.verificaIdadeInvalidaAtualizacao(info);
+				
+				//testa.verificaDataInvalidaAtualizacao(info);
+				//testa.verificaDataNascInvalidoAtualizacao(info);
+				//testa.verificaIdadeInvalidaAtualizacao(info);
 				
 				meusHospedes.get(email).setDataNascimento(info);
 				return;
 
 			case "email":
-				testa.verificaEmailInvalidoAtualizacao(info);
+				
+				verificaEmailAtualizacao.verificaEmailInvalidoAtualizacao(info);
+				//testa.verificaEmailInvalidoAtualizacao(info);
+				
 				// salva as informacoes do hospede com antigo email
 				Hospede hospede = meusHospedes.get(email);
 				// altera o email
@@ -133,10 +144,8 @@ public class Hotel {
 			case "nome":
 				return meusHospedes.get(id).getNome();
 			case "data de nascimento":
-				return meusHospedes.get(id).getDataNascimento();
-				
+				return meusHospedes.get(id).getDataNascimento();				
 			case "email":
-
 				return meusHospedes.get(id).getEmail();
 
 			}
@@ -159,9 +168,14 @@ public class Hotel {
 	 * @throws TestesHospedeException
 	 */
 	public String cadastraHospede(String nome, String email, String dataNascimento)throws Exception, CadastroInvalidoException {
-		testa.verificaNomeInvalidoCadastro(nome);
-		testa.verificaDataInvalidaCadastro(dataNascimento);
-		testa.verificaFrDataInvalidaCadastro(dataNascimento);
+		
+		VerificaNomeCadastro.verificaNomeInvalidoCadastro(nome);
+		VerificaDataCadastro.verificaDataInvalidaCadastro(dataNascimento);
+		VerificaDataCadastro.verificaFrDataInvalidaCadastro(dataNascimento);
+		
+		//testa.verificaNomeInvalidoCadastro(nome);
+		//testa.verificaDataInvalidaCadastro(dataNascimento);
+		//testa.verificaFrDataInvalidaCadastro(dataNascimento);
 		
 		if (!verificaSeExisteHospede(email)) {
 			meusHospedes.put(email, factoryHospedes.criaHospede(nome, email, dataNascimento));
@@ -182,7 +196,9 @@ public class Hotel {
 	 * @throws RemocaoInvalidaException
 	 */
 	public void removeHospede(String email) throws ConsultaInvalidaException, RemocaoInvalidaException {
-		testa.verificaEmailInvalidoRemocao(email);
+		
+		verificaEmailRemocao.verificaEmailInvalidoRemocao(email);
+		//testa.verificaEmailInvalidoRemocao(email);
 		
 		if (!meusHospedes.containsKey(email)) {
 			throw new ConsultaInvalidaException("hospede. Hospede de email " + email + " nao foi cadastrado(a).");
@@ -207,12 +223,11 @@ public class Hotel {
 		return meusHospedes.containsKey(email);
 	}
 
-	// ########################################################### ESTADIA
-	// #######################################################################
+	// ########################################################### ESTADIA #####################################################
 
 	/**
 	 * Metodo que realiza o checkout de um hospede/atualiza os valores
-	 * referentes aos checkouts do hotel TODO ERRADO
+	 * referentes aos checkouts do hotel 
 	 * 
 	 * @param email
 	 * @param IDQuarto
@@ -322,12 +337,16 @@ public class Hotel {
 		if (email.trim().isEmpty()) {
 			throw new CheckinInvalidoException("Email do(a) hospede nao pode ser vazio.");
 		}
-		testa.verificaEmailInvalidoCheckin(email);
+		
+		verificaChecking.verificaEmailInvalidoCheckin(email);
+		//testa.verificaEmailInvalidoCheckin(email);
 		
 		if (!meusHospedes.containsKey(email)) {
 			throw new CheckinInvalidoException("Hospede de email "+ email + " nao foi cadastrado(a).");
 		}
-		testa.verificaQuantDiasInvalidaCheckin(quantDias);
+		
+		verificaChecking.verificaQuantDiasInvalidaCheckin(quantDias);
+		//testa.verificaQuantDiasInvalidaCheckin(quantDias);
 		if (!(tipoQuarto.equalsIgnoreCase("luxo") || tipoQuarto.equalsIgnoreCase("simples") || tipoQuarto.equalsIgnoreCase("presidencial"))) {
 			throw new CheckinInvalidoException("Tipo de quarto invalido.");
 		}

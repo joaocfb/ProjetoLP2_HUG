@@ -4,8 +4,8 @@
 package factorys;
 
 import hotel.Estadia;
-import testesValores.TestaValores;
-
+//import testesValores.TestaValores;
+import validaEstadia.*;
 /**
  * Fabrica de estadias
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -22,7 +22,8 @@ public class FactoryEstadia {
 	 * @throws Exception
 	 */
 	public Estadia criaEstadia(String IDQuarto, int quantDias) throws Exception{
-		TestaValores.verificaQuantDiasInvalidaCheckin(quantDias);
+		VerificaDias.verificaQuantDias(quantDias);
+		//TestaValores.verificaQuantDiasInvalidaCheckin(quantDias);
 		return new Estadia(IDQuarto, quantDias);
 	}
 	
