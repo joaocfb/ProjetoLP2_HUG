@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="HUG"/>
-	<classpathentry kind="src" path="Exception"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="testes"/>
-	<classpathentry kind="src" path="VerificacaoDeValores"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/thaisnat/projetolp2/ProjetoLP2_HUG/115211394_Gabriel_Joao_Melissa_Thais/lib/easyaccept.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="/home/thaisnat/projetolp2/ProjetoLP2_HUG/115211394_Gabriel_Joao_Melissa_Thais/lib/easyaccept.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
