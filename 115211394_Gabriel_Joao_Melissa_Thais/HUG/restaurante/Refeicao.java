@@ -20,10 +20,11 @@ public class Refeicao extends TiposDeRefeicoes{
 
 	}
 	
-	public double getPrecoRefeicao(){
+	@Override
+	public double getPreco(){
 		double precoRef = 0.0;
 		for (Prato prato : componentes) {
-			precoRef += prato.getPrecoPrato();
+			precoRef += prato.getPreco();
 		}
 		return precoRef * 0.9;
 	}

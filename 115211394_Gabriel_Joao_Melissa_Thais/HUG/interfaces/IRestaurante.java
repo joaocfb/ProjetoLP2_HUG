@@ -24,4 +24,6 @@ public interface IRestaurante {
 	public ArrayList<Prato> pratosRefeicao(String componentes) throws CadastroRefeicaoInvalidaException;
 	
 	public String consultaRestaurante(String chaveNome, String atributo) throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException;
+	
+	public String consultaMenuRestaurante();
 }

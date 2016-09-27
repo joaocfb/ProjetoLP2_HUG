@@ -14,8 +14,6 @@ import validaHospede.VerificaNome;
  *
  */
 public class FactoryHospedes {
-	//private TestaValores testa;
-	
 	
 	/**
 	 * Cria um hospede
@@ -35,13 +33,6 @@ public class FactoryHospedes {
 		VerificaData.verificaNascimentoVazio(dataNascimento);
 		VerificaData.verificaIdadeInvalido(dataNascimento);
 		VerificaData.verificaIdadeInvalido(dataNascimento);
-		
-
-		//verificaNomevazio(nome);
-		//verificaEmailInvalido(email);
-		//verificaNascimentoVazio(dataNascimento);
-		//verificaNascInvalido(dataNascimento);
-		//verificaIdadeInvalido(dataNascimento);
 
 		return new Hospede(nome, email, dataNascimento);
 	}

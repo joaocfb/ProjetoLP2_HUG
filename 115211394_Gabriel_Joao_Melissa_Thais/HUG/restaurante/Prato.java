@@ -9,12 +9,11 @@ package restaurante;
  */
 public class Prato extends TiposDeRefeicoes{
 	
-	private double precoPrato;
+	private double preco;
 	
-	public Prato(String nome, String descricao, double precoPrato) {
+	public Prato(String nome, String descricao, double preco) {
 		super(nome, descricao);
-		
-		this.setPrecoPrato(precoPrato);
+		this.setPreco(preco);
 		
 	}
 	
@@ -22,15 +21,15 @@ public class Prato extends TiposDeRefeicoes{
 	/**
 	 * @return the preco
 	 */
-	public double getPrecoPrato() {
-		return precoPrato;
+	public double getPreco() {
+		return preco;
 	}
 
 	/**
 	 * @param preco the preco to set
 	 */
-	public void setPrecoPrato(double precoPrato) {
-		this.precoPrato = precoPrato;
+	public void setPreco(double preco) {
+		this.preco = preco;
 	}
 
 
@@ -39,7 +38,7 @@ public class Prato extends TiposDeRefeicoes{
 	 */
 	@Override
 	public String toString() {
-		return "Prato [nomePrato=" + this.getNome() + ", precoPrato=" + this.getPrecoPrato() + ", descricaoPrato=" + this.getDescricao()
+		return "Prato [nomePrato=" + this.getNome() + ", precoPrato=" + this.getPreco() + ", descricaoPrato=" + this.getDescricao()
 				+ "]";
 	}
 	

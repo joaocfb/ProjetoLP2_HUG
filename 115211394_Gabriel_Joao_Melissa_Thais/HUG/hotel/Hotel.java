@@ -55,9 +55,10 @@ public class Hotel {
 	//private TestaValores testa;
 	
 	private ArrayList<Checkout> listaCheckouts;
-	private HashMap<String, QuartoSimples> quartos;
+	private HashMap<String, QuartoSimples> quartosLivresDoHotel;
 	private HashMap<String, Hospede> meusHospedes;
 	private ArrayList<String> lucrosDoHotel;
+	private HashMap<String, QuartoSimples> quartosOcupadosDoHotel;
 
 
 	/**
@@ -78,7 +79,8 @@ public class Hotel {
 		this.listaCheckouts = new ArrayList<>();
 		this.lucrosDoHotel = new ArrayList<String>();
 		this.meusHospedes = new HashMap<String, Hospede>();
-		this.quartos = new HashMap<>();
+		this.quartosLivresDoHotel = new HashMap<>();
+		this.quartosOcupadosDoHotel = new HashMap<>();
 	}
 
 	// #################################################CRUD HOSPEDE#################################################################
@@ -262,16 +264,20 @@ public class Hotel {
 		}
 		
 		verificaCheckin.verificaQuantDiasInvalidaCheckin(quantDias);
-		//testa.verificaQuantDiasInvalidaCheckin(quantDias);
 		
 		if (!(tipoQuarto.equalsIgnoreCase("luxo") || tipoQuarto.equalsIgnoreCase("simples") || tipoQuarto.equalsIgnoreCase("presidencial"))) {
 			throw new CheckinInvalidoException("Tipo de quarto invalido.");
 		}
 		
-		if (!quartos.containsKey(IDQuarto)) {
-			quartos.put(IDQuarto, factoryQuarto.criaQuartos(IDQuarto, tipoQuarto));
+		
+		// Se estiver disponivel.
+		// salvar / remover / adicionar
+		if (quartosLivresDoHotel.containsKey(IDQuarto)) {
 			
-			
+			QuartoSimples quartoNovo = quartosLivresDoHotel.get(IDQuarto);
+			quartosOcupadosDoHotel.put(IDQuarto, quartoNovo);
+			quartosLivresDoHotel.remove(IDQuarto);
+
 			// cria uma estadia com os parametros(Id quarto e quant Dias)
 			// Estadia
 			Estadia estadiaNova = factoryEstadia.criaEstadia(IDQuarto, quantDias);
@@ -279,27 +285,25 @@ public class Hotel {
 			// adiciona no mapa de estadias pertencente ao hospede
 			meusHospedes.get(email).getEstadias().put(IDQuarto, estadiaNova);
 
-			// altera o status do quarto
-			quartos.get(IDQuarto).setStatus(false);
-
-		} else {
-
-			// se ja existir esse quarto na lista verifica se ele ta livre
-			if (quartos.get(IDQuarto).getStatus()) {
-				// pega o hospede com o email dado
-				Hospede hospede = meusHospedes.get(email);
-
-				// cria uma estadia com os parametros(Id quato e quant Dias)
-				Estadia estadiaNova = factoryEstadia.criaEstadia(IDQuarto, quantDias);
-
-				// adiciona no mapa de estadias pertencente ao hospede
-				hospede.getEstadias().put(IDQuarto, estadiaNova);
-
-				// altera o status do quarto
-				quartos.get(IDQuarto).setStatus(false);
-			}
+		//Se estiver ocupado 
+		//Lança excessao
+		} else if (quartosOcupadosDoHotel.containsKey(IDQuarto)) {
+			
 			throw new CheckinInvalidoException("Quarto " + IDQuarto + " ja esta ocupado.");
-		}       
+			
+		//Caso não esteja nem livre nem ocupado
+		//Cria quarto e adiciona na estadia
+		} else {
+			quartosOcupadosDoHotel.put(IDQuarto, factoryQuarto.criaQuartos(IDQuarto, tipoQuarto));
+
+			// cria uma estadia com os parametros(Id quarto e quant Dias)
+			// Estadia
+			Estadia estadiaNova = factoryEstadia.criaEstadia(IDQuarto, quantDias);
+
+			// adiciona no mapa de estadias pertencente ao hospede
+			meusHospedes.get(email).getEstadias().put(IDQuarto, estadiaNova);
+		}  
+   
 
 
 	}
@@ -323,8 +327,12 @@ public class Hotel {
 			// e hospedado
 			if (meusHospedes.get(email).getEstadias().size() != 0) {
 
-				// altera o status do quarto para vago
-				quartos.get(IDQuarto).setStatus(true);
+				//Salva o quarto / remove de quartos ocupados / adiciona em quartos vagos
+				QuartoSimples quartoLivre = quartosOcupadosDoHotel.get(IDQuarto);
+				quartosLivresDoHotel.put(IDQuarto, quartoLivre);
+
+				quartosOcupadosDoHotel.remove(IDQuarto);
+
 
 				this.nomesHospedes += meusHospedes.get(email).getNome() + ";";
 				this.numeroTransacoes += 1;
@@ -533,7 +541,7 @@ public class Hotel {
 		double valorTotal = 0;
 		Hospede hospede = meusHospedes.get(email);
 		for (Estadia estadia : hospede.getEstadias().values()) {
-			valorTotal += quartos.get(estadia.getIDQuarto()).getPRECO() * estadia.getQuantDias();
+			valorTotal += quartosOcupadosDoHotel.get(estadia.getIDQuarto()).getPRECO() * estadia.getQuantDias();
 		}
 
 		return valorTotal;
@@ -551,7 +559,7 @@ public class Hotel {
 		// pega o numero de dias de hospedagem
 		int diasHospede = meusHospedes.get(email).getEstadias().get(IDQuarto).getQuantDias();
 		// pega o preco do quarto(depende do tipo)
-		double preco = quartos.get(IDQuarto).getPRECO();
+		double preco = quartosLivresDoHotel.get(IDQuarto).getPRECO();
 		// faz o calculo dos gastos
 		return diasHospede * preco;
 	}

@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="testes"/>
 	<classpathentry kind="src" path="VerificacaoDeValores"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/home/nicolly/PrrojetoLp2/ProjetoLP2_HUG/115211394_Gabriel_Joao_Melissa_Thais/lib/easyaccept.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/thaisnat/projetolp2/ProjetoLP2_HUG/115211394_Gabriel_Joao_Melissa_Thais/lib/easyaccept.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

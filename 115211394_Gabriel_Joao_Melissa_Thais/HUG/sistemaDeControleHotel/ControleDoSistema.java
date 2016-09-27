@@ -121,4 +121,9 @@ public class ControleDoSistema implements IHotel, IRestaurante {
 		return controleRestaurante.consultaRestaurante(chaveNome, atributo);
 	}
 
+	@Override
+	public String consultaMenuRestaurante() {
+		return controleRestaurante.consultaMenuRestaurante();
+	}
+
 }

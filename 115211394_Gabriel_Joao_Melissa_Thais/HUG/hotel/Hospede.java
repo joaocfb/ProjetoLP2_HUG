@@ -7,11 +7,15 @@ package hotel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import exception.VerificaNuloEVazioException;
 import factorys.FactoryEstadia;
+import factorys.FactoryPedidosDoHospede;
+import restaurante.Pedidos;
 
 /**
  * Classe Hospede: um hospede possui nome, email e data de nascimento 
@@ -25,8 +29,11 @@ public class Hospede {
 	private String email;
 	private LocalDate dataNascimento;
 	private FactoryEstadia factoryEstadia;
+	private FactoryPedidosDoHospede factoryPedidos;
+
 	private LinkedHashMap<String, Estadia> estadias;
 	private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private LinkedList<Pedidos> pedidosDoHospede;
 
 
 	/**
@@ -46,9 +53,15 @@ public class Hospede {
 		this.nome = nome;
 		this.email = email;
 		this.factoryEstadia = new FactoryEstadia();
+		this.factoryPedidos = new FactoryPedidosDoHospede();
+
 		this.estadias = new LinkedHashMap<>();
 		this.setDataNascimento(dataNascimento);
+		this.pedidosDoHospede = new LinkedList<>();
+		
 	}
+	
+	
 	
 	/**
 	 * 
