@@ -7,8 +7,8 @@ package restaurante;
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class TiposDeRefeicoes {
-	//implements Comparable<TiposDeRefeicoes>
+public class TiposDeRefeicoes implements Comparable<TiposDeRefeicoes> {
+	
 	private String nome;
 	private String descricao;
 	private double preco;
@@ -67,6 +67,17 @@ public class TiposDeRefeicoes {
 	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	@Override
+	public int compareTo(TiposDeRefeicoes outro) {
+		if (this.getPreco() > outro.getPreco()) {
+			return 1;
+		} else if (this.getPreco() == outro.getPreco()) {
+			return 0;
+		} else {
+			return -1;
+		}
 	}
 
 }

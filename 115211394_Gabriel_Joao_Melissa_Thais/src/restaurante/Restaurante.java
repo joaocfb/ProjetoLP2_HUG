@@ -2,6 +2,8 @@
 package restaurante;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,15 +26,15 @@ public class Restaurante {
 	private FactoryPrato factoryPrato;
 	private FactoryRefeicao factoryRefeicao;
 
-	private LinkedHashMap<String, TiposDeRefeicoes> refeicao;
-	private LinkedHashMap<String, TiposDeRefeicoes> pedidos;
+	private ArrayList<TiposDeRefeicoes> refeicao;
+	private ArrayList<TiposDeRefeicoes> pedidos;
 
 
 	public Restaurante() {
 		this.factoryPrato = new FactoryPrato();
 		this.factoryRefeicao = new FactoryRefeicao();
-		this.refeicao = new LinkedHashMap<>();
-		this.pedidos = new LinkedHashMap<>();
+		this.refeicao = new ArrayList<>();
+		this.pedidos = new ArrayList<>();
 
 
 	}
@@ -49,7 +51,7 @@ public class Restaurante {
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)
 			throws CadastroPratoInvalidoException {
 
-		refeicao.put(nomePrato, factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
+		refeicao.add(factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
 	}
 
 	/**
@@ -64,7 +66,7 @@ public class Restaurante {
 	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes)
 			throws CadastroRefeicaoInvalidaException {
 
-		refeicao.put(nomeRef, factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRefeicao(componentes)));
+		refeicao.add(factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRefeicao(componentes)));
 	}
 
 	/**
@@ -86,13 +88,13 @@ public class Restaurante {
 		String[] nomesComponentes = componentes.split(";");
 
 		for (String nomePrato : nomesComponentes) {
+			
+			if (getNomeRefeicao(nomePrato) instanceof Prato) {
+				Prato novoPrato = (Prato) getNomeRefeicao(nomePrato);
 
-			if (refeicao.get(nomePrato) instanceof Prato) {
-				Prato prato1 = (Prato) refeicao.get(nomePrato);
+				pratosRef.add(novoPrato);
 
-				pratosRef.add(prato1);
-
-				if (refeicao.containsKey(nomePrato)) {
+				if (ExistePratoRefeicao(nomePrato)) {
 					pratosCadastrados++;
 				}
 			}
@@ -111,13 +113,47 @@ public class Restaurante {
 		return pratosRef;
 	}
 
-	public void ordenaMenu(String tipoOrdenacao) {
+	/**
+	 * Metodo privado que busca um prato dando o retorno do tipo boolean
+	 * @param nomePrato a ser buscado
+	 * @return true or false
+	 */
+	
+	private boolean ExistePratoRefeicao(String nomePrato) {
+		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
+			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-		List<TiposDeRefeicoes> listaRefeicoes = new LinkedList<TiposDeRefeicoes>(refeicao.values());
+	/**
+	 * Metodo privado que retorna um Tipo De Refeiçao a partir de uma busca feita pelo nome do Prato
+	 * @param nomePrato
+	 * @return
+	 */
+	private TiposDeRefeicoes getNomeRefeicao(String nomePrato) {
+		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
+			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
+				return tiposDeRefeicoes;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param tipoOrdenacao
+	 */
+	
+	public void ordenaMenu(String tipoOrdenacao) {
 
 		switch (tipoOrdenacao.toLowerCase()) {
 		case "nome":
-
+			ordenaCardapioPorNome();
+		case "preco":
+			ordenaCardapioPorPreco();
 		default:
 			break;
 		}
@@ -132,10 +168,8 @@ public class Restaurante {
 	public String consultaMenuRestaurante() {
 		String retorno = "";
 
-		Set<String> ref = refeicao.keySet();
-
-		for (String chave : ref) {
-			retorno += refeicao.get(chave).getNome() + ";";
+		for (TiposDeRefeicoes nomeRef : refeicao) {
+			retorno += nomeRef.getNome() + ";";
 		}
 
 		if (retorno.length() > 0) {
@@ -157,34 +191,34 @@ public class Restaurante {
 	public String consultaRestaurante(String chaveNome, String atributo)
 			throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException {
 
-		if (refeicao.containsKey(chaveNome)) {
+		if (ExistePratoRefeicao(chaveNome)) {
 
 			switch (atributo.toLowerCase()) {
 
 			case "preco":
 				String retorno = "";
-				retorno += String.format("R$%.2f", (refeicao.get(chaveNome).getPreco()));
+				retorno += String.format("R$%.2f", (getNomeRefeicao(chaveNome).getPreco()));
 				return retorno;
 
 			case "descricao":
 
-				return refeicao.get(chaveNome).getDescricao();
+				return getNomeRefeicao(chaveNome).getDescricao();
 
 			}
 
 		}
-		if (refeicao.containsKey(chaveNome)) {
+		if (ExistePratoRefeicao((chaveNome))) {
 
 			switch (atributo.toLowerCase()) {
 
 			case "preco":
 				String retorno = "";
-				retorno += String.format("R$%.2f", refeicao.get(chaveNome).getPreco());
+				retorno += String.format("R$%.2f", getNomeRefeicao(chaveNome).getPreco());
 				return retorno;
 
 			case "descricao":
 
-				return refeicao.get(chaveNome).toString();
+				return getNomeRefeicao(chaveNome).toString();
 
 			}
 
@@ -194,7 +228,7 @@ public class Restaurante {
 	}
 
 	public double precoPedido(String nomePedido) {
-		return refeicao.get(nomePedido).getPreco();
+		return getNomeRefeicao(nomePedido).getPreco();
 	}
 
 	public void adicionaPedido(String email, String itemMenu) {
@@ -209,16 +243,19 @@ public class Restaurante {
 	/**
 	 * @return the refeicao
 	 */
-	public LinkedHashMap<String, TiposDeRefeicoes> getRefeicao() {
+	public ArrayList<TiposDeRefeicoes> getRefeicao() {
 		return refeicao;
 	}
 
 	public void ordenaCardapioPorNome() {
-
+		
+		List<TiposDeRefeicoes> listaRefeicoesPorNome = new LinkedList<>(refeicao);
+		this.refeicao = (ArrayList<TiposDeRefeicoes>) listaRefeicoesPorNome;
+		
 	}
 
 	public void ordenaCardapioPorPreco() {
-
+		Collections.sort(refeicao);
 	}
 
 }
