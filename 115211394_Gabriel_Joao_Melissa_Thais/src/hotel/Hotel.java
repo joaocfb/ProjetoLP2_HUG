@@ -326,6 +326,9 @@ public class Hotel {
 				checkout = new Checkout(meusHospedes.get(email).getNome(), calculaTotalEstadia(email, IDQuarto));
 				listaCheckouts.add(checkout);
 
+				meusHospedes.get(email).getTipoDeCartao().adicionaPontos(calculaTotalEstadia(email, IDQuarto));
+				
+				
 				// formata o valor da estadia para String
 				String retorno = "";
 				retorno += "R$";

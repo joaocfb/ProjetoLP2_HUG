@@ -11,11 +11,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
+import cartao.TipoDeCartao;
 import exception.VerificaNuloEVazioException;
 import factorys.FactoryEstadia;
 import factorys.FactoryPedidosDoHospede;
 import restaurante.Pedidos;
-
+import cartao.*;
 /**
  * Classe Hospede: um hospede possui nome, email e data de nascimento 
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -27,7 +28,9 @@ public class Hospede {
 	//atributos do hospede, cada hospede possui uma ou mais estadia
 	private String nome;
 	private String email;
+	private int pontos = 0;
 	private LocalDate dataNascimento;
+	private TipoDeCartao tipoDeCartao;
 	private FactoryEstadia factoryEstadia;
 	private FactoryPedidosDoHospede factoryPedidos;
 
@@ -51,6 +54,7 @@ public class Hospede {
 		
 		this.nome = nome;
 		this.email = email;
+		tipoDeCartao = new Padrao();
 		this.factoryEstadia = new FactoryEstadia();
 		this.factoryPedidos = new FactoryPedidosDoHospede();
 
@@ -66,7 +70,7 @@ public class Hospede {
 			throw new VerificaNuloEVazioException("Nome do hospede");
 		}
 	}
-	
+
 	//teste do construtor
 	private void testandoEmail(String email) throws VerificaNuloEVazioException{
 		if (email == null || email.trim().isEmpty()) {
@@ -87,14 +91,22 @@ public class Hospede {
 		return idade;
 	}
 	
-	
 	public String getNome() {
 		return nome;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
-
+	
+	public int getPontos() {
+		return pontos;
+	}
+	
+	public TipoDeCartao getTipoDeCartao() {
+		return tipoDeCartao;
+	}
+ 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
@@ -102,7 +114,15 @@ public class Hospede {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public void setPontos(int pontos) {
+		this.pontos = pontos;
+	}
 	
+	public void setTipoDeCartao(TipoDeCartao tipoDeCartao) {
+		this.tipoDeCartao = tipoDeCartao;
+	}
+
 	public HashMap<String, Estadia> getEstadias() {
 		return estadias;
 	}
@@ -116,7 +136,6 @@ public class Hospede {
 		this.dataNascimento = data;
 
 	}
-	
 	
 	public String getDataNascimento() {
 		String dataString = formatoData.format(dataNascimento);
