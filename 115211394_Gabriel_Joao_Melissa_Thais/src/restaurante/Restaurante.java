@@ -113,34 +113,6 @@ public class Restaurante {
 		return pratosRef;
 	}
 
-	/**
-	 * Metodo privado que busca um prato dando o retorno do tipo boolean
-	 * @param nomePrato a ser buscado
-	 * @return true or false
-	 */
-	
-	private boolean ExistePratoRefeicao(String nomePrato) {
-		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
-			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Metodo privado que retorna um Tipo De Refeiçao a partir de uma busca feita pelo nome do Prato
-	 * @param nomePrato
-	 * @return
-	 */
-	private TiposDeRefeicoes getNomeRefeicao(String nomePrato) {
-		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
-			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
-				return tiposDeRefeicoes;
-			}
-		}
-		return null;
-	}
 
 	/**
 	 * 
@@ -246,16 +218,53 @@ public class Restaurante {
 	public ArrayList<TiposDeRefeicoes> getRefeicao() {
 		return refeicao;
 	}
-
+	
+	/**
+	 * ordena os pratos pelo nome
+	 * o linkedList ja os ordena por ordem alfabetica
+	 */
 	public void ordenaCardapioPorNome() {
 		
 		List<TiposDeRefeicoes> listaRefeicoesPorNome = new LinkedList<>(refeicao);
 		this.refeicao = (ArrayList<TiposDeRefeicoes>) listaRefeicoesPorNome;
 		
 	}
-
+	
+	/**
+	 * ordena os pratos pelo preco
+	 * metodo que delega para o compareTo da classe tiposDeRefeicao
+	 */
 	public void ordenaCardapioPorPreco() {
 		Collections.sort(refeicao);
+	}
+	
+	/**
+	 * Metodo privado que busca um prato dando o retorno do tipo boolean
+	 * @param nomePrato a ser buscado
+	 * @return true or false
+	 */
+	
+	private boolean ExistePratoRefeicao(String nomePrato) {
+		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
+			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Metodo privado que retorna um Tipo De Refeiçao a partir de uma busca feita pelo nome do Prato
+	 * @param nomePrato
+	 * @return
+	 */
+	private TiposDeRefeicoes getNomeRefeicao(String nomePrato) {
+		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
+			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
+				return tiposDeRefeicoes;
+			}
+		}
+		return null;
 	}
 
 }

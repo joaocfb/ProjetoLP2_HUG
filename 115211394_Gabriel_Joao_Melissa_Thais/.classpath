@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="testes"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/gabrielvba/projeto/ProjetoLP2_HUG/115211394_Gabriel_Joao_Melissa_Thais/lib/easyaccept.jar"/>
+	<classpathentry kind="lib" path="/home/nicolly/projetolp2/ProjetoLP2_HUG/115211394_Gabriel_Joao_Melissa_Thais/lib/easyaccept.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

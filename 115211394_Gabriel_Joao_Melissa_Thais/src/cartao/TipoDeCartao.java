@@ -1,10 +1,14 @@
 package cartao;
 
+/**
+ * 
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
+ *
+ */
 public interface TipoDeCartao {
 
-	int adicionaPontos(float compra);
+	int adicionaPontos(double compra);
 	
-	float desconto(float compra);
+	double desconto(double compra);
 }
-
 

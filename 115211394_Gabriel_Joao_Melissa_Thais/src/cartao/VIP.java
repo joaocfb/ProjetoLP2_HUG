@@ -1,17 +1,30 @@
 package cartao;
 
+/**
+ * 
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
+ *
+ */
 public class VIP implements TipoDeCartao {
-
+	
+	/**
+	 * metodo que adiciona os pontos ao cartao fidelidade do hospede
+	 * @return o seu bonus
+	 */
 	@Override
-	public int adicionaPontos(float compra) {
+	public int adicionaPontos(double compra) {
 
 		return (int) (compra * 0.5) ;
 	}
-
+	
+	/**
+	 * metodo que calcula os descontos das compras do hospede
+	 * 
+	 */
 	@Override
-	public float desconto(float compra) {
+	public double desconto(double compra) {
 		
-		float compraComdesconto = 0;
+		double compraComdesconto = 0;
 		
 		//desconto de 15%
 		compraComdesconto += compra * 0.85;

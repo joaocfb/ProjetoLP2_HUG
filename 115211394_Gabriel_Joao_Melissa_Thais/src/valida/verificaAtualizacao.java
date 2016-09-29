@@ -1,7 +1,9 @@
+
 package valida;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 import exception.AtualizacaoInvalidaException;
 import exception.CadastroHospedeInvalidoException;
@@ -97,6 +99,16 @@ public class verificaAtualizacao {
 		if (!email.contains("@") || email.startsWith("@") || !email.contains(".")) {
 			throw new AtualizacaoInvalidaException("Email do(a) hospede esta invalido.");
 		}
+	}
+	
+	public static void verificaNomeInvalidoAtualizacao(String nome) throws AtualizacaoInvalidaException {
+		if (nome.trim().isEmpty()) {
+			throw new AtualizacaoInvalidaException("Nome do(a) hospede nao pode ser vazio.");
+		}
+		if (!(Pattern.matches("[a-zA-Z ]+", nome))) {
+			throw new AtualizacaoInvalidaException("Nome do(a) hospede esta invalido.");
+		}
+
 	}
 
 }

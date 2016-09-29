@@ -142,6 +142,10 @@ public class Hospede {
 		return dataString;
 	}
 
+	public void adicionaPontos(int pontos){
+		this.pontos += pontos;
+	}
+	
 	//toString
 	@Override
 	public String toString() {
