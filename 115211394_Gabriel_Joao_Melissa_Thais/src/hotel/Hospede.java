@@ -64,6 +64,19 @@ public class Hospede {
 		
 	}
 	
+	public void alteraTipoDeCartao(){
+		
+		if(this.pontos < 350){
+			setTipoDeCartao(new Padrao());
+			
+		}else if(this.pontos >= 350 && this.pontos <= 1000){
+			setTipoDeCartao(new VIP());	
+			
+		}else{
+			setTipoDeCartao(new Premium());	
+		}
+	}
+	
 	//teste do construtor
 	private void testandoNome(String nome) throws VerificaNuloEVazioException {
 		if (nome == null || nome.trim().isEmpty()) {

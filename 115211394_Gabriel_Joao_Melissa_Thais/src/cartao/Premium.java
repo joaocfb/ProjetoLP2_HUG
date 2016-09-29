@@ -1,18 +1,10 @@
 package cartao;
 
-/**
- * 
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
- */
+
 public class Premium implements TipoDeCartao {
 
-	/**
-	 * metodo que adiciona os pontos ao cartao fidelidade do hospede
-	 * @return o seu bonus
-	 */
 	@Override
-	public int adicionaPontos(double compra) {
+	public int bonusPontos(double compra) {
 		
 		if (compra > 100){
 			
@@ -34,17 +26,14 @@ public class Premium implements TipoDeCartao {
 		}
 		
 	}
-	
-	/**
-	 *  metodo que calcula os descontos das compras do hospede
-	 */
+
 	@Override
 	public double desconto(double compra) {
 
 		double compraComdesconto  = 0;
 		
 		//desconto de 10% do valor da compra
-		compraComdesconto += compra * 0.9;
+		compraComdesconto += compra * 0.1;
 		
 		
 		return compraComdesconto;

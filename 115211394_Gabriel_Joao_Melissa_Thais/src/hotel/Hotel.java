@@ -321,34 +321,36 @@ public class Hotel {
 
 				quartosOcupadosDoHotel.remove(IDQuarto);
 
-
-				this.nomesHospedes += meusHospedes.get(email).getNome() + ";";
-				this.numeroTransacoes += 1;
-				this.valorTransacoes += calculaTotalEstadia(email, IDQuarto);
-
+				
 				//calcula o total dessa estadia
 				double precoDaEstadia =  calculaTotalEstadia(email, IDQuarto);
-			
-                System.out.println("preco estadia");
-                System.out.println(precoDaEstadia);
-                
-				checkout = new Checkout(meusHospedes.get(email).getNome(), precoDaEstadia);
-				listaCheckouts.add(checkout);
-	
-				recompensaPontos(email, precoDaEstadia);
+				
+				//Verifica se a quantidade de pontos de hospede ja e o suficiente para mudar o tipo de cartao
+				meusHospedes.get(email).alteraTipoDeCartao();
+				
+				//calcula valor do desconto a ser aplicado
 				double valorDesconto = meusHospedes.get(email).getTipoDeCartao().desconto(precoDaEstadia);
-		
-				System.out.println("valor desconto");
-				System.out.println(valorDesconto);
-				System.out.println("estadia com desconto");
-				System.out.println(precoDaEstadia-valorDesconto);
+				
+				//aplica desconto
+				double precoComDesconto = precoDaEstadia - valorDesconto;
+				
+				
+				this.nomesHospedes += meusHospedes.get(email).getNome() + ";";
+				this.numeroTransacoes += 1;
+				this.valorTransacoes +=  precoComDesconto ;
+
+				checkout = new Checkout(meusHospedes.get(email).getNome(),  precoComDesconto );
+				listaCheckouts.add(checkout);
 				
 				// formata o valor da estadia para String
 				String retorno = "";
 				retorno += "R$";
-				retorno += String.format("%.2f", precoDaEstadia-valorDesconto);
+				retorno += String.format("%.2f",  precoComDesconto );
 				meusHospedes.get(email).getEstadias().remove(IDQuarto);
 
+				//Adiciona no hospede os pontos gerado no chekout 
+				recompensaPontos(email, precoDaEstadia);
+				
 				return retorno;
 			}
 		}
@@ -360,7 +362,7 @@ public class Hotel {
 	public void recompensaPontos(String email,double precoDaEstadia){
 		
 		//calcula os pontos gerado com o chekout dessa estadia
-        int pontos = meusHospedes.get(email).getTipoDeCartao().adicionaPontos(precoDaEstadia);
+        int pontos = meusHospedes.get(email).getTipoDeCartao().bonusPontos(precoDaEstadia);
         
     	//adiciona os pontos no hospede
 		meusHospedes.get(email).adicionaPontos(pontos);

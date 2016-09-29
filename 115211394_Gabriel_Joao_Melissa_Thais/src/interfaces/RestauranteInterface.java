@@ -25,4 +25,6 @@ public interface RestauranteInterface {
 	public String consultaRestaurante(String chaveNome, String atributo) throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException;
 	
 	public String consultaMenuRestaurante();
+	
+	public String ordenaMenu(String tipoOrdenacao);
 }

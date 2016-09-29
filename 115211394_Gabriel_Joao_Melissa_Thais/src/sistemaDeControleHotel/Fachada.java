@@ -34,7 +34,7 @@ import interfaces.RestauranteInterface;
  *
  */
 
-public class Fachada implements HotelInterface, RestauranteInterface {
+public class Fachada {
 	
 	private ControleDoSistema controller;
 	
@@ -110,7 +110,6 @@ public class Fachada implements HotelInterface, RestauranteInterface {
 		
 	}
 	
-	@Override
 	public ArrayList<Prato> pratosRefeicao(String componentes) throws CadastroRefeicaoInvalidaException {
 		return controller.pratosRefeicao(componentes);
 	}
@@ -119,16 +118,12 @@ public class Fachada implements HotelInterface, RestauranteInterface {
 		return controller.consultaRestaurante(chaveNome, atributo);
 		
 	}
-	
-	// main
-	public static void main(String[] args) {
-		//, "testes/easy/testes_uc3.txt", "testes/easy/testes_uc4.txt", "testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc4_exception.txt"
-	    args = new String[] {"sistemaDeControleHotel.Fachada", "testes/easy/testes_uc1.txt","testes/easy/testes_uc1_exception.txt", "testes/easy/testes_uc2.txt","testes/easy/testes_uc2_exception.txt", "testes/easy/testes_uc3.txt", "testes/easy/testes_uc3_exception.txt", "testes/easy/testes_uc4.txt","testes/easy/testes_uc4_exception.txt", "testes/easy/testes_uc5.txt"}; //separe cada script de teste por virgula.
-	    EasyAccept.main(args);
-	}
 
-	@Override
 	public String consultaMenuRestaurante() {
 		return controller.consultaMenuRestaurante();
+	}
+
+	public String ordenaMenu(String tipoOrdenacao) {
+		return controller.ordenaMenu(tipoOrdenacao);
 	}
 }

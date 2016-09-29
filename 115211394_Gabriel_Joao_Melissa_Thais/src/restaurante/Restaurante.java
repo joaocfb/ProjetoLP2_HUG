@@ -29,13 +29,11 @@ public class Restaurante {
 	private ArrayList<TiposDeRefeicoes> refeicao;
 	private ArrayList<TiposDeRefeicoes> pedidos;
 
-
 	public Restaurante() {
 		this.factoryPrato = new FactoryPrato();
 		this.factoryRefeicao = new FactoryRefeicao();
 		this.refeicao = new ArrayList<>();
 		this.pedidos = new ArrayList<>();
-
 
 	}
 
@@ -50,8 +48,10 @@ public class Restaurante {
 	 */
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)
 			throws CadastroPratoInvalidoException {
-
-		refeicao.add(factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
+		if (!ExistePratoRefeicao(nomePrato)) {
+			refeicao.add(factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
+			
+		}
 	}
 
 	/**
@@ -65,8 +65,11 @@ public class Restaurante {
 	 */
 	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes)
 			throws CadastroRefeicaoInvalidaException {
+		if (!ExistePratoRefeicao(nomeRef)) {
+			refeicao.add(factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRefeicao(componentes)));
 
-		refeicao.add(factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRefeicao(componentes)));
+		}
+		throw new CadastroRefeicaoInvalidaException("ooi");
 	}
 
 	/**
@@ -88,7 +91,7 @@ public class Restaurante {
 		String[] nomesComponentes = componentes.split(";");
 
 		for (String nomePrato : nomesComponentes) {
-			
+
 			if (getNomeRefeicao(nomePrato) instanceof Prato) {
 				Prato novoPrato = (Prato) getNomeRefeicao(nomePrato);
 
@@ -111,25 +114,6 @@ public class Restaurante {
 		}
 
 		return pratosRef;
-	}
-
-
-	/**
-	 * 
-	 * @param tipoOrdenacao
-	 */
-	
-	public void ordenaMenu(String tipoOrdenacao) {
-
-		switch (tipoOrdenacao.toLowerCase()) {
-		case "nome":
-			ordenaCardapioPorNome();
-		case "preco":
-			ordenaCardapioPorPreco();
-		default:
-			break;
-		}
-
 	}
 
 	/**
@@ -204,9 +188,7 @@ public class Restaurante {
 	}
 
 	public void adicionaPedido(String email, String itemMenu) {
-		
-		
-		
+
 		// Pedidos pedido = factoryPedidos.criaPedido(nomePedido,
 		// precoPedido(nomePedido));
 
@@ -219,31 +201,99 @@ public class Restaurante {
 		return refeicao;
 	}
 	
+	// ########### metodos da ordenacao ###########
+	
+	/**
+	 * Ordena as refeicoes de acordo a qual deseja no atributo
+	 * @param tipo de ordenacao que deseja (ordem alfabetica ou preco)
+	 * @return
+	 */
+	public String ordenaMenu(String tipo){
+		
+		switch (tipo.toLowerCase()) {
+		case "nome":
+			ordenaMenuPorNome();
+			return imprimeStringOrdem();
+		case "preco":
+			ordenaMenuPorPreco();
+			System.out.println(imprimeStringOrdem());
+			return imprimeStringOrdem();
+		default:
+			break;
+		}
+		return tipo;
+	}
+
 	/**
 	 * ordena os pratos pelo nome
-	 * o linkedList ja os ordena por ordem alfabetica
 	 */
-	public void ordenaCardapioPorNome() {
-		
-		List<TiposDeRefeicoes> listaRefeicoesPorNome = new LinkedList<>(refeicao);
-		this.refeicao = (ArrayList<TiposDeRefeicoes>) listaRefeicoesPorNome;
+	public void ordenaMenuPorNome() {
+		Collections.sort(refeicao,new OrdenaPorNome());
 		
 	}
 	
 	/**
 	 * ordena os pratos pelo preco
-	 * metodo que delega para o compareTo da classe tiposDeRefeicao
 	 */
-	public void ordenaCardapioPorPreco() {
-		Collections.sort(refeicao);
+	public void ordenaMenuPorPreco() {
+		Collections.sort(refeicao, new OrdenaPorPreco());
 	}
 	
+	// ########### metodos da ordenacao ###########
+	
+	/**
+	public double realizaPedido(String email, String itemMenu)throws PedidosInvalidoException {
+		double preco = 0;
+	
+		if (hotel.getMeusHospedes().containsKey(email)) {
+			
+			for (TiposDeRefeicoes p : refeicao) {
+				if (p.getNome().equalsIgnoreCase(itemMenu)) {
+					preco = p.getPreco();
+				}
+			}
+		}
+		
+		
+
+		Pedidos pedido = new FactoryPedidosDoHospede().criaPedido(email, preco);
+		
+		Hospede hospede = hotel.getMeusHospedes().get(email);
+		hospede.getPedidosDoHospede().add(pedido);
+		
+		pedidosDoRestaurante.add(pedido);
+		return preco;
+	}
+	*/
+	
+	// ########## metodos privados ##########
+	
+	/**
+	 * Metodo que imprime a lista na formatacao adequada 
+	 * @return a lista com as refeicoes ordenada
+	 */
+	private String imprimeStringOrdem() {
+		String retorno = "";
+		for (TiposDeRefeicoes element : refeicao) {
+			retorno += element.getNome() + ";";
+
+		}
+		if (retorno.length() > 0) {
+			retorno = retorno.substring(0, retorno.length() - 1);
+		}
+
+		return retorno;
+	}
+
+
 	/**
 	 * Metodo privado que busca um prato dando o retorno do tipo boolean
-	 * @param nomePrato a ser buscado
+	 * 
+	 * @param nomePrato
+	 *            a ser buscado
 	 * @return true or false
 	 */
-	
+
 	private boolean ExistePratoRefeicao(String nomePrato) {
 		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
 			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
@@ -254,7 +304,9 @@ public class Restaurante {
 	}
 
 	/**
-	 * Metodo privado que retorna um Tipo De Refeiçao a partir de uma busca feita pelo nome do Prato
+	 * Metodo privado que retorna um Tipo De Refeiçao a partir de uma busca
+	 * feita pelo nome do Prato
+	 * 
 	 * @param nomePrato
 	 * @return
 	 */

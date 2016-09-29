@@ -126,4 +126,9 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 		return controleRestaurante.consultaMenuRestaurante();
 	}
 
+	@Override
+	public String ordenaMenu(String tipoOrdenacao) {
+		return controleRestaurante.ordenaMenu(tipoOrdenacao);
+	}
+
 }
