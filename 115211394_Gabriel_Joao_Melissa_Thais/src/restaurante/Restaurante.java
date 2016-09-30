@@ -4,12 +4,14 @@ package restaurante;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
+import exception.CadastroHospedeInvalidoException;
 import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
 import exception.ConsultaRestauranteInvalidoException;
+import exception.ErroOrdenacaoException;
 import factorys.FactoryPrato;
 import factorys.FactoryRefeicao;
+import valida.VerificaCadastro;
 
 /**
  * Classe Restaurante
@@ -18,13 +20,6 @@ import factorys.FactoryRefeicao;
  *
  */
 public class Restaurante {
-
-	/**
-	 * @return the pedidos
-	 */
-	public ArrayList<Pedidos> getPedidos() {
-		return pedidos;
-	}
 
 	private FactoryPrato factoryPrato;
 	private FactoryRefeicao factoryRefeicao;
@@ -51,6 +46,10 @@ public class Restaurante {
 	 */
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)throws CadastroPratoInvalidoException {
 		
+		VerificaCadastro.verificaNomePratoInvalido(nomePrato);
+		VerificaCadastro.verificaPrecoInvalido(precoPrato);
+		VerificaCadastro.verificaDescricaoPratoInvalido(descricaoPrato);
+		
 		if (!ExistePratoRefeicao(nomePrato)) {
 			refeicao.add(factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
 
@@ -66,13 +65,21 @@ public class Restaurante {
 	 * @throws CadastroRefeicaoInvalidaException
 	 * @throws Exception
 	 */
-	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes)
-			throws CadastroRefeicaoInvalidaException {
+	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws CadastroRefeicaoInvalidaException{
+		
+		VerificaCadastro.verificaNomeRefeicaoInvalida(nomeRef);
+		VerificaCadastro.verificaDescricaoRefeicaoInvalida(descricaoRef);
+		VerificaCadastro.verificaComponentesVazio(componentes);
+		verificaQuantidadePratos(componentes);
+		verificaExistePratoCadastrado(componentes);
+		verificaQuantidadePratos(componentes);
+		
+		
+		
 		if (!ExistePratoRefeicao(nomeRef)) {
 			refeicao.add(factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRefeicao(componentes)));
 
 		}
-		throw new CadastroRefeicaoInvalidaException("ooi");
 	}
 
 	/**
@@ -106,15 +113,8 @@ public class Restaurante {
 			}
 		}
 
-		if (!(pratosCadastrados == pratosRef.size())) {
-			throw new CadastroRefeicaoInvalidaException(
-					". So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
-		}
-
-		if (pratosRef.size() > 4 || pratosRef.size() < 3) {
-			throw new CadastroRefeicaoInvalidaException(
-					" completa. Uma refeicao completa deve possuir no minimo 3 e no maximo 4 pratos.");
-		}
+		verificaExistePratoCadastrado(componentes);
+		verificaQuantidadePratos(componentes);
 
 		return pratosRef;
 	}
@@ -149,7 +149,8 @@ public class Restaurante {
 	 */
 	public String consultaRestaurante(String chaveNome, String atributo)
 			throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException {
-
+		
+		
 		if (ExistePratoRefeicao(chaveNome)) {
 
 			switch (atributo.toLowerCase()) {
@@ -183,9 +184,9 @@ public class Restaurante {
 
 		}
 
-		throw new ConsultaRestauranteInvalidoException(" Nome do prato esto vazio.");
+		throw new ConsultaRestauranteInvalidoException(" Nome do prato esta vazio.");
 	}
-
+	
 	public double precoPedido(String nomePedido) {
 		double preco = 0;
 		for (TiposDeRefeicoes pedido : refeicao) {
@@ -203,17 +204,23 @@ public class Restaurante {
 	public ArrayList<TiposDeRefeicoes> getRefeicao() {
 		return refeicao;
 	}
+	
+	/**
+	 * @return the pedidos
+	 */
+	public ArrayList<Pedidos> getPedidos() {
+		return pedidos;
+	}
 
 	// ########### metodos da ordenacao ###########
 
 	/**
 	 * Ordena as refeicoes de acordo a qual deseja no atributo
 	 * 
-	 * @param tipo
-	 *            de ordenacao que deseja (ordem alfabetica ou preco)
-	 * @return
+	 * @param tipo de ordenacao que deseja (ordem alfabetica ou preco)
+	 * @return a string formatada com a lista de ordenada
 	 */
-	public String ordenaMenu(String tipo) throws Exception {
+	public String ordenaMenu(String tipo) throws ErroOrdenacaoException {
 
 		switch (tipo.toLowerCase()) {
 
@@ -227,7 +234,7 @@ public class Restaurante {
 			return imprimeStringOrdem();
 
 		}
-		throw new Exception("Erro ordem");
+		throw new ErroOrdenacaoException("");
 	}
 
 	/**
@@ -300,6 +307,30 @@ public class Restaurante {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * metodo privado que verifica se existe pratos cadastrados na lista de refeicoes
+	 * @param nome dos pratos a serem verificados
+	 * @throws CadastroRefeicaoInvalidaException
+	 */
+	private void verificaExistePratoCadastrado(String nomePrato) throws CadastroRefeicaoInvalidaException{
+		if(!ExistePratoRefeicao(nomePrato)){
+			throw new CadastroRefeicaoInvalidaException(". So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
+		}
+	}
+	
+	/**
+	 * metodo privado que verifica se a quantidade de pratos na refeicao eh valida
+	 * @param componentes da lista de refeicoes
+	 * @throws CadastroRefeicaoInvalidaException
+	 */
+	private void verificaQuantidadePratos(String componentes) throws CadastroRefeicaoInvalidaException{
+		ArrayList<Prato> pratosRef = new ArrayList<>();
+		if (pratosRef.size() <= 4 || pratosRef.size() >= 3) {
+			throw new CadastroRefeicaoInvalidaException(
+					" completa. Uma refeicao completa deve possuir no minimo 3 e no maximo 4 pratos.");
+		}
 	}
 
 }

@@ -3,9 +3,13 @@ package valida;
 import java.util.regex.Pattern;
 
 import exception.CadastroHospedeInvalidoException;
+import exception.CadastroPratoInvalidoException;
+import exception.CadastroRefeicaoInvalidaException;
 
 public class VerificaCadastro {
-
+	
+	
+	// ########################## Cadastro do Hospede ##########################
 	/**
 	 * verifica se a data eh vazia no cadastro 
 	 * @param dataNascimento
@@ -48,5 +52,47 @@ public class VerificaCadastro {
 		}
 
 	}
+	
+	// ########################## Cadastro do Prato ##########################
+	
+	public static void verificaNomePratoInvalido(String nome) throws CadastroPratoInvalidoException{
+		if (nome.trim().isEmpty()) {
+			throw new CadastroPratoInvalidoException("Nome do prato esta vazio.");
+		}
+	}
+	
+	public static void verificaPrecoInvalido(double preco) throws CadastroPratoInvalidoException{
+		if(preco <= 0.0){
+			throw new CadastroPratoInvalidoException("Preco do prato eh invalido.");
+		}
+	}
+	
+	public static void verificaDescricaoPratoInvalido(String descricao) throws CadastroPratoInvalidoException{
+		if (descricao.trim().isEmpty()) {
+			throw new CadastroPratoInvalidoException("Descricao do prato esta vazia.");
+		}
+	}
+	
+	// ########################## Cadastro de Refeicao ##########################
+	
+	public static void verificaNomeRefeicaoInvalida(String nome) throws CadastroRefeicaoInvalidaException{
+		if (nome.trim().isEmpty()) {
+			throw new CadastroRefeicaoInvalidaException(". Nome da refeicao esta vazio.");
+		}
+	}
+	
+	public static void verificaDescricaoRefeicaoInvalida(String descricao) throws CadastroRefeicaoInvalidaException{
+		if (descricao.trim().isEmpty()) {
+			throw new CadastroRefeicaoInvalidaException(". Descricao da refeicao esta vazia.");
+		}
+	}
+	
+	public static void verificaComponentesVazio(String componentes) throws CadastroRefeicaoInvalidaException{
+		if (componentes.trim().isEmpty()) {
+			throw new CadastroRefeicaoInvalidaException(". Componente(s) esta(o) vazio(s).");
+		}
+	}
+	
+	
 	
 }

@@ -93,44 +93,7 @@ public class Hotel {
 		this.quartosOcupadosDoHotel = new HashMap<>();
 	}
 
-	public String realizaPedido(String email, String itemMenu) throws PedidosInvalidoException {
-		//pega o preco de uma refeicao/prato
-		double preco = restaurante.precoPedido(itemMenu);
-		
-		//cria um pedido com o email do hospede e o valor do prato
-		Pedidos pedido = factoryPedidos.criaPedido(email, preco);
-
-		//atualiza a quantidade de transacoes do hotel
-		this.setNumeroTransacoes(this.getNumeroTransacoes() + 1);
-
-		// APLICAR DESCONTO NESSE VALOR --- atualiza o valor das transacoes do hotel
-		this.setValorTransacoes(this.getValorTransacoes() + preco);
-
-		//adiciona o nome do hospede que fez pedido
-		this.setNomesHospedes(this.getNomesHospedes() + hospedesDoHotel.get(email).getNome() + ";"); 
-
-		//adiciona o pedido na lista de pedidos do hospede
-		hospedesDoHotel.get(email).getPedidosDoHospede().add(pedido);
-		
-		//adiciona na lista de pedidos do restaurante
-		restaurante.getPedidos().add(pedido);
-
-		//cria a transacao
-		Transacao transacaoAtual = new Transacao(preco, pedido.getNome(), hospedesDoHotel.get(email).getNome());
-		
-		//adiciona o obj transacao
-		transacoes.add(transacaoAtual);
-		
-		// formata o preco para String
-		String retorno = "";
-		return retorno += String.format("R$%.2f", preco);
-
-	}
-
-	public Restaurante getRestaurante() {
-		return restaurante;
-	}
-
+	
 	// #################################################CRUD HOSPEDE#######################################################
 
 	/**
@@ -267,23 +230,7 @@ public class Hotel {
 		}
 	}
 
-	// metodos privados
-	/**
-	 * Metodo que verifica se um email ja esta cadastrado
-	 * 
-	 * @param email
-	 * @return boolean
-	 */
-	private boolean verificaSeExisteHospede(String email) {
-		// verifica se ja existe um email sendo usado como chave no map
-		if (hospedesDoHotel.size() == 0) {
-			return false;
-		}
-		return hospedesDoHotel.containsKey(email);
-	}
-
-	// ########################################################### ESTADIA
-	// #####################################################
+	// ############################### ESTADIA ###############################
 
 	/**
 	 * Metodos que realiza o checkin de um hospede no hotel
@@ -418,16 +365,6 @@ public class Hotel {
 
 	}
 
-	public void recompensaPontos(String email, double precoDaEstadia) {
-
-		// calcula os pontos gerado com o chekout dessa estadia
-		int pontos = hospedesDoHotel.get(email).getTipoDeCartao().bonusPontos(precoDaEstadia);
-
-		// adiciona os pontos no hospede
-		hospedesDoHotel.get(email).adicionaPontos(pontos);
-
-	}
-
 	/**
 	 * Metodo que recupera as informacoes da hospedagem de um hospede
 	 * 
@@ -553,9 +490,82 @@ public class Hotel {
 
 	}
 	
-	
+	public void recompensaPontos(String email, double precoDaEstadia) {
 
-	// metodos privados
+		// calcula os pontos gerado com o chekout dessa estadia
+		int pontos = hospedesDoHotel.get(email).getTipoDeCartao().bonusPontos(precoDaEstadia);
+
+		// adiciona os pontos no hospede
+		hospedesDoHotel.get(email).adicionaPontos(pontos);
+
+	}
+	
+	
+	// ######################## RESTAURANTE ########################
+	
+	/**
+	 * 
+	 * @param email
+	 * @param itemMenu
+	 * @return
+	 * @throws PedidosInvalidoException
+	 */
+	public String realizaPedido(String email, String itemMenu) throws PedidosInvalidoException {
+		
+		//pega o preco de uma refeicao/prato
+		double preco = restaurante.precoPedido(itemMenu);
+		
+		//cria um pedido com o email do hospede e o valor do prato
+		Pedidos pedido = factoryPedidos.criaPedido(email, preco);
+
+		//atualiza a quantidade de transacoes do hotel
+		this.setNumeroTransacoes(this.getNumeroTransacoes() + 1);
+
+		// APLICAR DESCONTO NESSE VALOR --- atualiza o valor das transacoes do hotel
+		this.setValorTransacoes(this.getValorTransacoes() + preco);
+
+		//adiciona o nome do hospede que fez pedido
+		this.setNomesHospedes(this.getNomesHospedes() + hospedesDoHotel.get(email).getNome() + ";"); 
+
+		//adiciona o pedido na lista de pedidos do hospede
+		hospedesDoHotel.get(email).getPedidosDoHospede().add(pedido);
+		
+		//adiciona na lista de pedidos do restaurante
+		restaurante.getPedidos().add(pedido);
+
+		//cria a transacao
+		Transacao transacaoAtual = new Transacao(preco, pedido.getNome(), hospedesDoHotel.get(email).getNome());
+		
+		//adiciona o obj transacao
+		transacoes.add(transacaoAtual);
+		
+		// formata o preco para String
+		String retorno = "";
+		return retorno += String.format("R$%.2f", preco);
+
+	}
+	
+	
+	public Restaurante getRestaurante() {
+		return restaurante;
+	}
+
+
+	// ############# metodos privados #############
+		/**
+		 * Metodo que verifica se um email ja esta cadastrado
+		 * 
+		 * @param email
+		 * @return boolean
+		 */
+		private boolean verificaSeExisteHospede(String email) {
+			// verifica se ja existe um email sendo usado como chave no map
+			if (hospedesDoHotel.size() == 0) {
+				return false;
+			}
+			return hospedesDoHotel.containsKey(email);
+		}
+	
 	/**
 	 * Metodo que percorre as estadias e recupera o id dos quartos
 	 * 

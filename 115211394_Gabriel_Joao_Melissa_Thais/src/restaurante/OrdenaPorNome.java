@@ -6,7 +6,7 @@ package restaurante;
 import java.util.Comparator;
 
 /**
- * @author thaisnat
+ *@author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
 public class OrdenaPorNome implements Comparator<Object>{
@@ -18,28 +18,3 @@ public class OrdenaPorNome implements Comparator<Object>{
 	}
 
 }
-
-/**
-public enum OrdenarAlimentacao implements Comparator<Alimentacao>{
-	
-	PorNome(){
-		@Override
-		public int compare(Alimentacao um, Alimentacao dois) {
-			return um.getNome().compareTo(dois.getNome());
-		}
-		
-	},
-	
-	PorPreco(){
-
-		@Override
-		public int compare(Alimentacao um, Alimentacao dois) {
-			if (um.getPreco()>dois.getPreco()) return 1;
-			if (um.getPreco()<dois.getPreco()) return -1;
-			return 0;
-		}
-		
-	}
-
-}
-*/

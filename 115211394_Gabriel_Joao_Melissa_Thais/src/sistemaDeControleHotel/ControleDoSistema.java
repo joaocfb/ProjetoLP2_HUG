@@ -128,7 +128,7 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 	}
 
 	@Override
-	public String ordenaMenu(String tipoOrdenacao)throws Exception {
+	public String ordenaMenu(String tipoOrdenacao) throws Exception{
 		return controleHotel.getRestaurante().ordenaMenu(tipoOrdenacao);
 	}
 

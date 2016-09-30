@@ -6,7 +6,7 @@ package restaurante;
 import java.util.Comparator;
 
 /**
- * @author thaisnat
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
 public class OrdenaPorPreco implements Comparator<Object>{
