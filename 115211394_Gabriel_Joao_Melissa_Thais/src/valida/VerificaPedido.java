@@ -3,8 +3,7 @@
  */
 package valida;
 
-import exception.PedidosNomeInvalidoException;
-import exception.PedidosPrecoInvalidoException;
+import exception.PedidosInvalidoException;
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
@@ -12,16 +11,16 @@ import exception.PedidosPrecoInvalidoException;
  */
 public class VerificaPedido {
 	
-	public static void verificaPrecoInvalidoPedido(double preco) throws PedidosPrecoInvalidoException{
+	public static void verificaPrecoInvalidoPedido(double preco) throws PedidosInvalidoException{
 		if (preco < 0) {
-			throw new PedidosPrecoInvalidoException("Preco invalido.");
+			throw new PedidosInvalidoException("Preco invalido.");
 		}
 	}
 	
 	
-	public static void verificaNomeInvalidoPedido(String nome) throws PedidosNomeInvalidoException{
+	public static void verificaNomeInvalidoPedido(String nome) throws PedidosInvalidoException{
 		if (nome.trim().isEmpty()) {
-			throw new PedidosNomeInvalidoException("Nome invalido.");
+			throw new PedidosInvalidoException("Nome invalido.");
 		}
 	}
 

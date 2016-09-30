@@ -8,9 +8,9 @@ package exception;
  *
  */
 @SuppressWarnings("serial")
-public class PedidosPrecoInvalidoException extends Exception{
+public class PedidosInvalidoException extends Exception{
 
-	public PedidosPrecoInvalidoException(String erro){
+	public PedidosInvalidoException(String erro){
 		super("Erro no pedido," + erro);
 	}
 }

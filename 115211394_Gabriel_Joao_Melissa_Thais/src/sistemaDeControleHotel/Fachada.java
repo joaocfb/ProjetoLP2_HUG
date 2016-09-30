@@ -19,6 +19,7 @@ import exception.CriacaoQuartoInvalidoException;
 import exception.HospedagemAtivaInvalidaException;
 import exception.IndiceInvalidoException;
 import exception.MensagemErroException;
+import exception.PedidosInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.VerificaNuloEVazioException;
 
@@ -123,7 +124,11 @@ public class Fachada {
 		return controller.consultaMenuRestaurante();
 	}
 
-	public String ordenaMenu(String tipoOrdenacao) {
+	public String ordenaMenu(String tipoOrdenacao)throws Exception {
 		return controller.ordenaMenu(tipoOrdenacao);
+	}
+	
+	public String realizaPedido(String email, String item)throws PedidosInvalidoException {
+		return controller.realizaPedido(email, item);
 	}
 }

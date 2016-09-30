@@ -7,6 +7,7 @@ package hotel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -36,8 +37,15 @@ public class Hospede {
 
 	private LinkedHashMap<String, Estadia> estadias;
 	private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	private LinkedList<Pedidos> pedidosDoHospede;
+	private ArrayList<Pedidos> pedidosDoHospede;
 
+
+	/**
+	 * @return the pedidosDoHospede
+	 */
+	public ArrayList<Pedidos> getPedidosDoHospede() {
+		return pedidosDoHospede;
+	}
 
 	/**
 	 * Construtor do hospede
@@ -60,7 +68,7 @@ public class Hospede {
 
 		this.estadias = new LinkedHashMap<>();
 		this.setDataNascimento(dataNascimento);
-		this.pedidosDoHospede = new LinkedList<>();
+		this.pedidosDoHospede = new ArrayList<>();
 		
 	}
 	

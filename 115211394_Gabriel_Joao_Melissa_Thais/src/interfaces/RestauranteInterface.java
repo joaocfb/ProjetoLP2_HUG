@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
 import exception.ConsultaRestauranteInvalidoException;
+import exception.PedidosInvalidoException;
 import restaurante.Prato;
 
 /**
@@ -26,5 +27,7 @@ public interface RestauranteInterface {
 	
 	public String consultaMenuRestaurante();
 	
-	public String ordenaMenu(String tipoOrdenacao);
+	public String ordenaMenu(String tipoOrdenacao) throws Exception;
+	
+	public String realizaPedido(String email, String item)throws PedidosInvalidoException;
 }

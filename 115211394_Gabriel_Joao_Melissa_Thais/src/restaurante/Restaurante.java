@@ -2,12 +2,8 @@
 package restaurante;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+
 
 import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
@@ -23,18 +19,25 @@ import factorys.FactoryRefeicao;
  */
 public class Restaurante {
 
+	/**
+	 * @return the pedidos
+	 */
+	public ArrayList<Pedidos> getPedidos() {
+		return pedidos;
+	}
+
 	private FactoryPrato factoryPrato;
 	private FactoryRefeicao factoryRefeicao;
-
 	private ArrayList<TiposDeRefeicoes> refeicao;
-	private ArrayList<TiposDeRefeicoes> pedidos;
+	private ArrayList<Pedidos> pedidos;
 
 	public Restaurante() {
 		this.factoryPrato = new FactoryPrato();
 		this.factoryRefeicao = new FactoryRefeicao();
 		this.refeicao = new ArrayList<>();
 		this.pedidos = new ArrayList<>();
-
+		
+		
 	}
 
 	/**
@@ -46,11 +49,11 @@ public class Restaurante {
 	 * @throws CadastroPratoInvalidoException
 	 * @throws Exception
 	 */
-	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)
-			throws CadastroPratoInvalidoException {
+	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)throws CadastroPratoInvalidoException {
+		
 		if (!ExistePratoRefeicao(nomePrato)) {
 			refeicao.add(factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
-			
+
 		}
 	}
 
@@ -184,14 +187,14 @@ public class Restaurante {
 	}
 
 	public double precoPedido(String nomePedido) {
-		return getNomeRefeicao(nomePedido).getPreco();
-	}
+		double preco = 0;
+		for (TiposDeRefeicoes pedido : refeicao) {
+			if (pedido.getNome().equalsIgnoreCase(nomePedido)) {
+				preco = pedido.getPreco();
+			}
+		}
 
-	public void adicionaPedido(String email, String itemMenu) {
-
-		// Pedidos pedido = factoryPedidos.criaPedido(nomePedido,
-		// precoPedido(nomePedido));
-
+		return preco;
 	}
 
 	/**
@@ -200,76 +203,57 @@ public class Restaurante {
 	public ArrayList<TiposDeRefeicoes> getRefeicao() {
 		return refeicao;
 	}
-	
+
 	// ########### metodos da ordenacao ###########
-	
+
 	/**
 	 * Ordena as refeicoes de acordo a qual deseja no atributo
-	 * @param tipo de ordenacao que deseja (ordem alfabetica ou preco)
+	 * 
+	 * @param tipo
+	 *            de ordenacao que deseja (ordem alfabetica ou preco)
 	 * @return
 	 */
-	public String ordenaMenu(String tipo){
-		
+	public String ordenaMenu(String tipo) throws Exception {
+
 		switch (tipo.toLowerCase()) {
+
 		case "nome":
 			ordenaMenuPorNome();
 			return imprimeStringOrdem();
+
 		case "preco":
 			ordenaMenuPorPreco();
 			System.out.println(imprimeStringOrdem());
 			return imprimeStringOrdem();
-		default:
-			break;
+
 		}
-		return tipo;
+		throw new Exception("Erro ordem");
 	}
 
 	/**
 	 * ordena os pratos pelo nome
 	 */
 	public void ordenaMenuPorNome() {
-		Collections.sort(refeicao,new OrdenaPorNome());
-		
+		Collections.sort(refeicao, new OrdenaPorNome());
+
 	}
-	
+
 	/**
 	 * ordena os pratos pelo preco
 	 */
 	public void ordenaMenuPorPreco() {
 		Collections.sort(refeicao, new OrdenaPorPreco());
 	}
-	
-	// ########### metodos da ordenacao ###########
-	
-	/**
-	public double realizaPedido(String email, String itemMenu)throws PedidosInvalidoException {
-		double preco = 0;
-	
-		if (hotel.getMeusHospedes().containsKey(email)) {
-			
-			for (TiposDeRefeicoes p : refeicao) {
-				if (p.getNome().equalsIgnoreCase(itemMenu)) {
-					preco = p.getPreco();
-				}
-			}
-		}
-		
-		
 
-		Pedidos pedido = new FactoryPedidosDoHospede().criaPedido(email, preco);
-		
-		Hospede hospede = hotel.getMeusHospedes().get(email);
-		hospede.getPedidosDoHospede().add(pedido);
-		
-		pedidosDoRestaurante.add(pedido);
-		return preco;
-	}
-	*/
-	
+	// ########### metodos da ordenacao ###########
+
+
+
 	// ########## metodos privados ##########
-	
+
 	/**
-	 * Metodo que imprime a lista na formatacao adequada 
+	 * Metodo que imprime a lista na formatacao adequada
+	 * 
 	 * @return a lista com as refeicoes ordenada
 	 */
 	private String imprimeStringOrdem() {
@@ -284,7 +268,6 @@ public class Restaurante {
 
 		return retorno;
 	}
-
 
 	/**
 	 * Metodo privado que busca um prato dando o retorno do tipo boolean

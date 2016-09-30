@@ -15,6 +15,7 @@ import exception.CriacaoQuartoInvalidoException;
 import exception.HospedagemAtivaInvalidaException;
 import exception.IndiceInvalidoException;
 import exception.MensagemErroException;
+import exception.PedidosInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.VerificaNuloEVazioException;
 
@@ -36,8 +37,8 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 	private Restaurante controleRestaurante;
 	
 	public ControleDoSistema() throws Exception {
+		
 		this.controleHotel = new Hotel();
-		this.controleRestaurante = new Restaurante();
 	}
 
 	public void iniciaSistema() {
@@ -102,33 +103,38 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 	// #####################################  Controle do Restaurante ##################################### 
 	@Override
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException  {
-		controleRestaurante.cadastraPrato(nomePrato, precoPrato, descricaoPrato);
+		controleHotel.getRestaurante().cadastraPrato(nomePrato, precoPrato, descricaoPrato);
 		
 	}
 
 	@Override
 	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws CadastroRefeicaoInvalidaException {
-		controleRestaurante.cadastraRefeicao(nomeRef, descricaoRef, componentes);
+		controleHotel.getRestaurante().cadastraRefeicao(nomeRef, descricaoRef, componentes);
 	}
 
 	@Override
 	public ArrayList<Prato> pratosRefeicao(String componentes) throws CadastroRefeicaoInvalidaException {
-		return controleRestaurante.pratosRefeicao(componentes);
+		return controleHotel.getRestaurante().pratosRefeicao(componentes);
 	}
 	
 	@Override
 	public String consultaRestaurante(String chaveNome, String atributo) throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException  {
-		return controleRestaurante.consultaRestaurante(chaveNome, atributo);
+		return controleHotel.getRestaurante().consultaRestaurante(chaveNome, atributo);
 	}
 
 	@Override
 	public String consultaMenuRestaurante() {
-		return controleRestaurante.consultaMenuRestaurante();
+		return controleHotel.getRestaurante().consultaMenuRestaurante();
 	}
 
 	@Override
-	public String ordenaMenu(String tipoOrdenacao) {
-		return controleRestaurante.ordenaMenu(tipoOrdenacao);
+	public String ordenaMenu(String tipoOrdenacao)throws Exception {
+		return controleHotel.getRestaurante().ordenaMenu(tipoOrdenacao);
+	}
+
+	@Override
+	public String realizaPedido(String email, String item)throws PedidosInvalidoException {
+		return controleHotel.realizaPedido(email, item);
 	}
 
 }

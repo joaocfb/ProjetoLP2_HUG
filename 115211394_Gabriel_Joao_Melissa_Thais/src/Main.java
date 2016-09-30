@@ -24,10 +24,3 @@ public class Main {
 		EasyAccept.main(args);
 	}
 }
-// Rapadura;Espresso;Tapioca;Pudim de leite;Bresaola com rucula e parmesao;Bruschetta;
-//Tiramisu;Kanelbullar;Galeto com farofa;Artsoppa com panquecas;Penne ao pesto;Kotbullar com lingon;
-//Delicia da serra;Carne de sol com fritas;Pasto italiano;Algkot com vegetais;Svensk mat
-// *************************
-// "Rapadura;Espresso;Tapioca;Pudim de Leite;Bruschetta;Bresaola com rucula e parmesao;
-//Tiramisu;Kanelbullar;Galeto com farofa;Artsoppa com panquecas;Penne ao pesto;Kotbullar com lingon;
-//Delicia da serra;Carne de sol com fritas;Pasto italiano;Algkot com vegetais;Svensk mat"

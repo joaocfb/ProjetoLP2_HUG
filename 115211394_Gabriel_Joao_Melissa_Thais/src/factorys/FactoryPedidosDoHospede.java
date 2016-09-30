@@ -21,9 +21,7 @@ public class FactoryPedidosDoHospede {
 	 * @return O Pedido do Hospede
 	 * @throws CadastroHospedeInvalidoException 
 	 */
-	public Pedidos criaPedido(String nome, double preco) throws CadastroHospedeInvalidoException{
-		VerificaHospede.verificaNomevazio(nome);
-		
+	public Pedidos criaPedido(String nome, double preco) {
 		return new Pedidos(nome, preco);
 		
 	}

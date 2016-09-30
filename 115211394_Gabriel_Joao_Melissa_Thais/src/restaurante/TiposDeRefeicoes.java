@@ -20,19 +20,7 @@ public class TiposDeRefeicoes implements Comparable<TiposDeRefeicoes> {
 		this.nome = nome;
 		this.setDescricao(descricao);
 	}
-	/*
-	@Override
-	public int compareTo(TiposDeRefeicoes ref) {
-		
-		if (ref.getNome() > this.nome) {
-			return 1;
-		} else if (ref.getNome() < this.nome){
-			return -1;
-		} else {
-			return 0;
-		}
-	}
-	*/
+
 	public String getNome() {
 		return nome;
 	}
