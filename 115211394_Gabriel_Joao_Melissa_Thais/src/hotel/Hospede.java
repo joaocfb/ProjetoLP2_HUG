@@ -10,7 +10,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 
 import cartao.TipoDeCartao;
 import exception.VerificaNuloEVazioException;
@@ -78,10 +77,10 @@ public class Hospede {
 			setTipoDeCartao(new Padrao());
 			
 		}else if(this.pontos >= 350 && this.pontos <= 1000){
-			setTipoDeCartao(new VIP());	
+			setTipoDeCartao(new Premium());	
 			
 		}else{
-			setTipoDeCartao(new Premium());	
+			setTipoDeCartao(new VIP());	
 		}
 	}
 	
@@ -163,9 +162,6 @@ public class Hospede {
 		return dataString;
 	}
 
-	public void adicionaPontos(int pontos){
-		this.pontos += pontos;
-	}
 	
 	//toString
 	@Override

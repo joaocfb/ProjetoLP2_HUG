@@ -327,12 +327,13 @@ public class Hotel {
 
 				quartosOcupadosDoHotel.remove(IDQuarto);
 
-				// calcula o total dessa estadia
-				double precoDaEstadia = calculaTotalEstadia(email, IDQuarto);
-
 				// Verifica se a quantidade de pontos de hospede ja e o
 				// suficiente para mudar o tipo de cartao
 				hospedesDoHotel.get(email).alteraTipoDeCartao();
+
+				
+				// calcula o total dessa estadia
+				double precoDaEstadia = calculaTotalEstadia(email, IDQuarto);
 
 				// calcula valor do desconto a ser aplicado
 				double valorDesconto = hospedesDoHotel.get(email).getTipoDeCartao().desconto(precoDaEstadia);
@@ -495,7 +496,7 @@ public class Hotel {
 		int pontos = hospedesDoHotel.get(email).getTipoDeCartao().bonusPontos(precoDaEstadia);
 
 		// adiciona os pontos no hospede
-		hospedesDoHotel.get(email).adicionaPontos(pontos);
+		hospedesDoHotel.get(email).setPontos(hospedesDoHotel.get(email).getPontos() + pontos);
 
 	}
 	
@@ -511,6 +512,7 @@ public class Hotel {
 	 */
 	public String realizaPedido(String email, String itemMenu) throws PedidosInvalidoException {
 		
+		
 		//pega o preco de uma refeicao/prato
 		double preco = restaurante.precoPedido(itemMenu);
 		
@@ -519,9 +521,16 @@ public class Hotel {
 
 		//atualiza a quantidade de transacoes do hotel
 		this.setNumeroTransacoes(this.getNumeroTransacoes() + 1);
+		
+		// Verifica se a quantidade de pontos de hospede ja e o
+		// suficiente para mudar o tipo de cartao
+		hospedesDoHotel.get(email).alteraTipoDeCartao();
 
+		//calcula o valor do desconto
+		double valorDesconto = hospedesDoHotel.get(email).getTipoDeCartao().desconto(preco);
+		
 		// APLICAR DESCONTO NESSE VALOR --- atualiza o valor das transacoes do hotel
-		this.setValorTransacoes(this.getValorTransacoes() + preco);
+		this.setValorTransacoes(this.getValorTransacoes() + (preco - valorDesconto));
 
 		//adiciona o nome do hospede que fez pedido
 		this.setNomesHospedes(this.getNomesHospedes() + hospedesDoHotel.get(email).getNome() + ";"); 
@@ -533,16 +542,23 @@ public class Hotel {
 		restaurante.getPedidos().add(pedido);
 
 		//cria a transacao
-		Transacao transacaoAtual = new Transacao(preco, pedido.getNome(), hospedesDoHotel.get(email).getNome());
+		Transacao transacaoAtual = new Transacao((preco - valorDesconto), pedido.getNome(), hospedesDoHotel.get(email).getNome());
 		
 		//adiciona o obj transacao
 		transacoes.add(transacaoAtual);
 		
+		//adiciona os pontos em hospede
+		recompensaPontos(email, preco);
+		
 		// formata o preco para String
 		String retorno = "";
-		return retorno += String.format("R$%.2f", preco);
+		return retorno += String.format("R$%.2f", (preco - valorDesconto));
 
+		
 	}
+	
+
+
 	
 	
 	public Restaurante getRestaurante() {

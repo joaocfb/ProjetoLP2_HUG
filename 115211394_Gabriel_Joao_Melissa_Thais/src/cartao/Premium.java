@@ -5,7 +5,8 @@ public class Premium implements TipoDeCartao {
 
 	@Override
 	public int bonusPontos(double compra) {
-		
+
+
 		if (compra > 100){
 			
 			int bonus = 0;
@@ -23,20 +24,14 @@ public class Premium implements TipoDeCartao {
 			
 			//bonus de 30% do valor da compra
 			return (int) (compra * 0.3);
-		}
-		
+		}	
 	}
 
 	@Override
 	public double desconto(double compra) {
-
-		double compraComdesconto  = 0;
 		
-		//desconto de 10% do valor da compra
-		compraComdesconto += compra * 0.1;
-		
-		
-		return compraComdesconto;
+		//desconto de 10%
+		return  (compra * 0.1);
 	}
 
 }
