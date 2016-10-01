@@ -13,6 +13,7 @@ public class OrdenaPorNome implements Comparator<Object>{
 	
 	@Override
 	public int compare(Object refeicao1, Object refeicao2) {
+		
 		return ((TiposDeRefeicoes) refeicao1).getNome().compareTo(((TiposDeRefeicoes) refeicao2).getNome());
 
 	}

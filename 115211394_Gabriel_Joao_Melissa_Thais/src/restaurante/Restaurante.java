@@ -189,6 +189,7 @@ public class Restaurante {
 
 	public double precoPedido(String nomePedido) {
 		double preco = 0;
+		
 		for (TiposDeRefeicoes pedido : refeicao) {
 			if (pedido.getNome().equalsIgnoreCase(nomePedido)) {
 				preco = pedido.getPreco();
@@ -231,7 +232,6 @@ public class Restaurante {
 
 		case "preco":
 			ordenaMenuPorPreco();
-			System.out.println(imprimeStringOrdem());
 			return imprimeStringOrdem();
 
 		}
@@ -292,16 +292,7 @@ public class Restaurante {
 		return false;
 	}
 
-	private boolean ExistePratoRefeicaoCompleta(ArrayList<Prato> pratosRef) {
-		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
-			for (Prato prato : pratosRef) {
-				if (tiposDeRefeicoes.getNome().equalsIgnoreCase(prato.getNome())) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+
 
 	/**
 	 * Metodo privado que retorna um Tipo De Refeiçao a partir de uma busca
@@ -319,35 +310,5 @@ public class Restaurante {
 		return null;
 	}
 
-	/**
-	 * metodo privado que verifica se existe pratos cadastrados na lista de
-	 * refeicoes
-	 * 
-	 * @param nome
-	 *            dos pratos a serem verificados
-	 * @throws CadastroRefeicaoInvalidaException
-	 */
-	private void verificaExistePratoCadastrado(ArrayList<Prato> pratosRef) throws CadastroRefeicaoInvalidaException {
-		if (!ExistePratoRefeicaoCompleta(pratosRef)) {
-			throw new CadastroRefeicaoInvalidaException(
-					". So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
-		}
-	}
-
-	/**
-	 * metodo privado que verifica se a quantidade de pratos na refeicao eh
-	 * valida
-	 * 
-	 * @param componentes
-	 *            da lista de refeicoes
-	 * @throws CadastroRefeicaoInvalidaException
-	 */
-	private void verificaQuantidadePratos(ArrayList<Prato> pratosRef) throws CadastroRefeicaoInvalidaException {
-		System.out.println(pratosRef.size());
-		if (pratosRef.size() >= 3 || pratosRef.size() <= 4) {
-			throw new CadastroRefeicaoInvalidaException(
-					" completa. Uma refeicao completa deve possuir no minimo 3 e no maximo 4 pratos.");
-		}
-	}
 
 }

@@ -7,7 +7,6 @@ import exception.CadastroPratoInvalidoException;
 import restaurante.Prato;
 import valida.VerificaPrato;
 
-
 /**
  * Fabrica de Pratos
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly

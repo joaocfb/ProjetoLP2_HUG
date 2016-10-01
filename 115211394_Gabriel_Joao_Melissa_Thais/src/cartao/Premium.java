@@ -1,11 +1,17 @@
 package cartao;
 
-
+/**
+ * Classe que define o cartao tipo PREMIUM
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
+ *
+ */
 public class Premium implements TipoDeCartao {
 
+	/**
+	 * Metodo que calcula o bonus aplicado no cartao, sobrescrita
+	 */
 	@Override
 	public int bonusPontos(double compra) {
-
 
 		if (compra > 100){
 			
@@ -27,6 +33,9 @@ public class Premium implements TipoDeCartao {
 		}	
 	}
 
+	/**
+	 * Metodo que aplica o desconto, sobrescrita
+	 */
 	@Override
 	public double desconto(double compra) {
 		
@@ -34,10 +43,14 @@ public class Premium implements TipoDeCartao {
 		return  (compra * 0.1);
 	}
 
+	/**
+	 * Metodo que converte os pontos do hospede em dinheiro, sobrescrita
+	 */
 	@Override
 	public double convertePontos(int qtdPontos) {
 		
 		double valor = 0;
+		//faz o calculo da conversao dos pontos em dinheiro
 		valor += (qtdPontos/10) * 0.2;
 		valor += qtdPontos*0.3;
 		

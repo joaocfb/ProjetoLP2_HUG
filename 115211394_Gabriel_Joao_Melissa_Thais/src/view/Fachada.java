@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sistemaDeControleHotel;
+package view;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import exception.RemocaoInvalidaException;
 import exception.VerificaNuloEVazioException;
 
 import restaurante.Prato;
-
+import sistemaDeControleHotel.ControleDoSistema;
 import interfaces.HotelInterface;
 import interfaces.RestauranteInterface;
 

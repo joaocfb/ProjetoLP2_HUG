@@ -4,7 +4,7 @@
 package hotel;
 
 /**
- * @author Melissa
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
 public class Transacao {

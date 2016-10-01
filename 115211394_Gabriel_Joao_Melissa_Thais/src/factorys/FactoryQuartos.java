@@ -22,9 +22,10 @@ public class FactoryQuartos {
      * @throws CriacaoQuartoInvalidoException
      */
 	public QuartoSimples criaQuartos(String ID, String tipoQuarto) throws CriacaoQuartoInvalidoException {
-
+		
+		//cria um quarto de acordo com o tipo
 		switch (tipoQuarto.toLowerCase()) {
-
+		
 		case "simples":
 			return criaQuartoSimples(ID);
 		case "presidencial":
@@ -35,14 +36,29 @@ public class FactoryQuartos {
 		throw new CriacaoQuartoInvalidoException("");
 	}
 
+	/**
+	 * Metodo que cria um quarto do tipo simples
+	 * @param ID
+	 * @return Um quarto simples
+	 */
 	private QuartoSimples criaQuartoSimples(String ID) {
 		return new QuartoSimples(ID);
 	}
 
+	/**
+	 * Metodo que cria um quarto do tipo luxo
+	 * @param ID
+	 * @return Um quarto luxo
+	 */
 	private QuartoLuxo criaQuartoLuxo(String ID) {
 		return new QuartoLuxo(ID);
 	}
 
+	/**
+	 * Metodo que cria um quarto do tipo presidencial
+	 * @param ID
+	 * @return Um quarto presidencial
+	 */
 	private QuartoPresidencial criaQuartoPresidencial(String ID) {
 		return new QuartoPresidencial(ID);
 	}

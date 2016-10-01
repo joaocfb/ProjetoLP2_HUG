@@ -40,13 +40,6 @@ public class Hospede {
 
 
 	/**
-	 * @return the pedidosDoHospede
-	 */
-	public ArrayList<Pedidos> getPedidosDoHospede() {
-		return pedidosDoHospede;
-	}
-
-	/**
 	 * Construtor do hospede
 	 * @param nome
 	 * @param email
@@ -71,23 +64,36 @@ public class Hospede {
 		
 	}
 	
+	
+	/**
+	 * Metodo que altera o tipo do cartao
+	 */
 	public void alteraTipoDeCartao(){
 		
+		//PADRAO
 		if(this.pontos < 350){
 			setTipoDeCartao(new Padrao());
 			
+		//PREMIUM
 		}else if(this.pontos >= 350 && this.pontos <= 1000){
 			setTipoDeCartao(new Premium());	
-			
+		
+		//VIP
 		}else{
 			setTipoDeCartao(new VIP());	
 		}
 	}
 
+	/**
+	 * Metodo que converte os pontos em dinheiro
+	 * @param qtdPontos
+	 * @return o valor em dinheiro convertido
+	 */
 	public double convertePontos(int qtdPontos){
 		
 		alteraTipoDeCartao();
 		pontos -= qtdPontos;
+		
 		return getTipoDeCartao().convertePontos(qtdPontos);
 	}
 	
@@ -112,63 +118,126 @@ public class Hospede {
 		}
 	}
 	
+	/**
+	 * @return the pedidosDoHospede
+	 */
+	public ArrayList<Pedidos> getPedidosDoHospede() {
+		return pedidosDoHospede;
+	}
+
+	/**
+	 * @param pedidosDoHospede the pedidosDoHospede to set
+	 */
+	public void setPedidosDoHospede(ArrayList<Pedidos> pedidosDoHospede) {
+		this.pedidosDoHospede = pedidosDoHospede;
+	}
 	
+	/**
+	 * @return
+	 */
 	public int getIdade(){
 		int idade = (int)ChronoUnit.YEARS.between(dataNascimento, LocalDate.now());
 		return idade;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getNome() {
 		return nome;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getEmail() {
 		return email;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getPontos() {
 		return pontos;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public TipoDeCartao getTipoDeCartao() {
 		return tipoDeCartao;
 	}
  
+	/**
+	 * 
+	 * @param nome
+	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
+	/**
+	 * 
+	 * @param email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	/**
+	 * 
+	 * @param pontos
+	 */
 	public void setPontos(int pontos) {
 		this.pontos = pontos;
 	}
 	
+	/**
+	 * 
+	 * @param tipoDeCartao
+	 */
 	public void setTipoDeCartao(TipoDeCartao tipoDeCartao) {
 		this.tipoDeCartao = tipoDeCartao;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public HashMap<String, Estadia> getEstadias() {
 		return estadias;
 	}
 
+	/**
+	 * 
+	 * @param estadias
+	 */
 	public void setEstadias(LinkedHashMap<String, Estadia> estadias) {
 		this.estadias = estadias;
 	}
 
+	/**
+	 * 
+	 * @param dataNascimento
+	 */
 	public void setDataNascimento(String dataNascimento) {
 		LocalDate data = LocalDate.parse(dataNascimento, formatoData);
 		this.dataNascimento = data;
 
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDataNascimento() {
 		String dataString = formatoData.format(dataNascimento);
 		return dataString;
 	}
-
 	
 	//toString
 	@Override
@@ -189,8 +258,7 @@ public class Hospede {
 
 
 	/**
-	 * Compara dois hospedes pelo email
-	 * 
+	 * Equals hospede: dois hospedes sao iguais se o email for o mesmo
 	 */
 	@Override
 	public boolean equals(Object obj) {

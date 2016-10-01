@@ -23,6 +23,7 @@ public class FactoryHospedes {
 	 */
 	public Hospede criaHospede(String nome, String email, String dataNascimento) throws CadastroHospedeInvalidoException, VerificaNuloEVazioException {
 		
+		//testes
 		VerificaHospede.verificaNomevazio(nome);
 		VerificaHospede.verificaEmailInvalido(email);
 		VerificaHospede.verificaNascimentoVazio(dataNascimento);

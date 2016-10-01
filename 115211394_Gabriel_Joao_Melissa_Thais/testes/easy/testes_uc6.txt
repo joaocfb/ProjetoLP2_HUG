@@ -1,10 +1,11 @@
+
 iniciaSistema
 ########################
 # Status dos pontos:   #
 # Sven       : 225     #
 # Ines Brasil:  50     #
-# Agnetha    :  20     #
-# Nobel      :  50     #
+# Agnetha    :  25     #
+# Nobel      :   5     #
 ########################
 
 expect "225" getInfoHospede id="sven@sverige.se" atributo="Pontos"
@@ -15,7 +16,7 @@ expect "20" getInfoHospede id="agnetha@abba.se" atributo="Pontos"
 expect "R$1350,00" realizaCheckout email="sven@sverige.se" quarto="2A"
 expect "R$750,00" realizaCheckout email="ines@brasil.com.br" quarto="2B"
 
-#Agora apenas Sven eh VIP, e deve ganhar 30% (+ 10 p cada 100,00)
+#Agora apenas Sven eh Premium, e deve ganhar 30% (+ 10 p cada 100,00)
 expect "360" getInfoHospede id="sven@sverige.se" atributo="Pontos"
 expect "125" getInfoHospede id="ines@brasil.com.br" atributo="Pontos"
 expect "50" getInfoHospede id="nobel@got.se" atributo="Pontos"
@@ -31,7 +32,7 @@ expect "375" getInfoHospede id="sven@sverige.se" atributo="Pontos"
 #   e sven em VIP para testar o restante    #
 #   dos calculos                            #
 #############################################
-# Verificando um hospede Premium: Sven Gudmar Svensson
+# Verificando um hospede VIP: Sven Gudmar Svensson
 realizaCheckin email="sven@sverige.se" dias=4 quarto="5A" tipoQuarto="Presidencial"
 
 expect "R$1620,00" realizaCheckout email="sven@sverige.se" quarto="5A"
@@ -71,7 +72,7 @@ expect "20" getInfoHospede id="agnetha@abba.se" atributo="Pontos"
 expect "50" getInfoHospede id="nobel@got.se" atributo="Pontos"
 
 expect "17" consultaTransacoes atributo="Quantidade"
-expect "R$11302,47" consultaTransacoes atributo="Total"
+expect "R$11502,46" consultaTransacoes atributo="Total"
 expect "Sven Gudmar Svenson;Ines Brasil;Agnetha Faltskog;Alfred Nobel;Alfred Nobel;Alfred Nobel;Ines Brasil;Sven Gudmar Svenson;Ines Brasil;Sven Gudmar Svenson;Sven Gudmar Svenson;Sven Gudmar Svenson;Sven Gudmar Svenson;Ines Brasil;Ines Brasil;Ines Brasil;Ines Brasil" consultaTransacoes atributo="Nome"
 
 fechaSistema
