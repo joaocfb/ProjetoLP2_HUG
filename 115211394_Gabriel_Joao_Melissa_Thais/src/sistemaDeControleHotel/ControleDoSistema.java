@@ -137,4 +137,10 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 		return controleHotel.realizaPedido(email, item);
 	}
 
+	@Override
+	public String convertePontos(String email, int qtdPontos) {
+		
+		return controleHotel.convertePontos(email, qtdPontos);
+	}
+
 }

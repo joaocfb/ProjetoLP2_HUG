@@ -24,4 +24,14 @@ public class VIP implements TipoDeCartao {
 		return compraDesconto;
 	}
 
+	@Override
+	public double convertePontos(int qtdPontos) {
+
+		double valor = 0;
+		valor += (qtdPontos/10) * 0.5;
+		valor += qtdPontos*0.70;
+		
+		return valor;
+	}
+
 }

@@ -34,4 +34,14 @@ public class Premium implements TipoDeCartao {
 		return  (compra * 0.1);
 	}
 
+	@Override
+	public double convertePontos(int qtdPontos) {
+		
+		double valor = 0;
+		valor += (qtdPontos/10) * 0.2;
+		valor += qtdPontos*0.3;
+		
+		return valor;
+	}
+
 }

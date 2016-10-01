@@ -83,6 +83,13 @@ public class Hospede {
 			setTipoDeCartao(new VIP());	
 		}
 	}
+
+	public double convertePontos(int qtdPontos){
+		
+		alteraTipoDeCartao();
+		pontos -= qtdPontos;
+		return getTipoDeCartao().convertePontos(qtdPontos);
+	}
 	
 	//teste do construtor
 	private void testandoNome(String nome) throws VerificaNuloEVazioException {

@@ -14,6 +14,12 @@ public class Padrao implements TipoDeCartao {
 		return 0;
 	}
 
+	@Override
+	public double convertePontos(int qtdPontos) {
+		//0,10 a cada ponto
+		return qtdPontos*0.1;
+	}
+
 }
 
 

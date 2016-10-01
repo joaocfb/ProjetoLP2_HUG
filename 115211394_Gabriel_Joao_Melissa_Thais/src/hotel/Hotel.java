@@ -500,6 +500,21 @@ public class Hotel {
 
 	}
 	
+	public String convertePontos (String email,int qtdPontos){
+		
+		double pontosConvertidos = hospedesDoHotel.get(email).convertePontos(qtdPontos);
+
+		// formata a string
+		String retorno = "";
+		retorno += "R$";
+		retorno += String.format("%.2f", pontosConvertidos);
+		this.setNumeroTransacoes(this.getNumeroTransacoes() + 1);
+		this.setValorTransacoes(this.getValorTransacoes() + pontosConvertidos);
+		return retorno;
+
+		
+	}
+	
 	
 	// ######################## RESTAURANTE ########################
 	

@@ -131,4 +131,8 @@ public class Fachada {
 	public String realizaPedido(String email, String item)throws PedidosInvalidoException {
 		return controller.realizaPedido(email, item);
 	}
+	
+    public String convertePontos(String email, int qtdPontos) {
+		return controller.convertePontos(email, qtdPontos);
+	}
 }
