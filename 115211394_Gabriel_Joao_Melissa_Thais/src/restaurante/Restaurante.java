@@ -31,8 +31,7 @@ public class Restaurante {
 		this.factoryRefeicao = new FactoryRefeicao();
 		this.refeicao = new ArrayList<>();
 		this.pedidos = new ArrayList<>();
-		
-		
+
 	}
 
 	/**
@@ -44,12 +43,13 @@ public class Restaurante {
 	 * @throws CadastroPratoInvalidoException
 	 * @throws Exception
 	 */
-	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)throws CadastroPratoInvalidoException {
-		
+	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)
+			throws CadastroPratoInvalidoException {
+
 		VerificaCadastro.verificaNomePratoInvalido(nomePrato);
 		VerificaCadastro.verificaPrecoInvalido(precoPrato);
 		VerificaCadastro.verificaDescricaoPratoInvalido(descricaoPrato);
-		
+
 		if (!ExistePratoRefeicao(nomePrato)) {
 			refeicao.add(factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
 
@@ -65,19 +65,17 @@ public class Restaurante {
 	 * @throws CadastroRefeicaoInvalidaException
 	 * @throws Exception
 	 */
-	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws CadastroRefeicaoInvalidaException{
-		
-		ArrayList<Prato> pratosRef = pratosRefeicao(componentes);
-		
+	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes)
+			throws CadastroRefeicaoInvalidaException {
+
 		VerificaCadastro.verificaNomeRefeicaoInvalida(nomeRef);
 		VerificaCadastro.verificaDescricaoRefeicaoInvalida(descricaoRef);
 		VerificaCadastro.verificaComponentesVazio(componentes);
-		verificaQuantidadePratos(pratosRef);
-		verificaExistePratoCadastrado(pratosRef);
-		ExistePratoRefeicaoCompleta(pratosRef);
-	
+
+		ArrayList<Prato> pratosRef = pratosRefeicao(componentes);
+
 		if (!ExistePratoRefeicao(nomeRef)) {
-			refeicao.add(factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRefeicao(componentes)));
+			refeicao.add(factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRef));
 
 		}
 	}
@@ -89,9 +87,7 @@ public class Restaurante {
 	 * @return ArrayList
 	 * @throws CadastroRefeicaoInvalidaException
 	 */
-	public ArrayList<Prato> pratosRefeicao(String componentes) {
-
-		
+	public ArrayList<Prato> pratosRefeicao(String componentes) throws CadastroRefeicaoInvalidaException {
 
 		int pratosCadastrados = 0;
 
@@ -100,15 +96,25 @@ public class Restaurante {
 
 		for (String nomePrato : nomesComponentes) {
 
-			if (getNomeRefeicao(nomePrato) instanceof Prato) {
-				Prato novoPrato = (Prato) getNomeRefeicao(nomePrato);
+			if (getRefeicaoNome(nomePrato) instanceof Prato) {
 
+				Prato novoPrato = (Prato) getRefeicaoNome(nomePrato);
 				pratosRef.add(novoPrato);
 
 				if (ExistePratoRefeicao(nomePrato)) {
 					pratosCadastrados++;
 				}
 			}
+		}
+
+		if ((pratosCadastrados != pratosRef.size())) {
+			throw new CadastroRefeicaoInvalidaException(
+					". So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
+		}
+
+		if (pratosRef.size() < 3 || pratosRef.size() > 4) {
+			throw new CadastroRefeicaoInvalidaException(
+					" completa. Uma refeicao completa deve possuir no minimo 3 e no maximo 4 pratos.");
 		}
 
 		return pratosRef;
@@ -144,20 +150,19 @@ public class Restaurante {
 	 */
 	public String consultaRestaurante(String chaveNome, String atributo)
 			throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException {
-		
-		
+
 		if (ExistePratoRefeicao(chaveNome)) {
 
 			switch (atributo.toLowerCase()) {
 
 			case "preco":
 				String retorno = "";
-				retorno += String.format("R$%.2f", (getNomeRefeicao(chaveNome).getPreco()));
+				retorno += String.format("R$%.2f", (getRefeicaoNome(chaveNome).getPreco()));
 				return retorno;
 
 			case "descricao":
 
-				return getNomeRefeicao(chaveNome).getDescricao();
+				return getRefeicaoNome(chaveNome).getDescricao();
 
 			}
 
@@ -168,12 +173,12 @@ public class Restaurante {
 
 			case "preco":
 				String retorno = "";
-				retorno += String.format("R$%.2f", getNomeRefeicao(chaveNome).getPreco());
+				retorno += String.format("R$%.2f", getRefeicaoNome(chaveNome).getPreco());
 				return retorno;
 
 			case "descricao":
 
-				return getNomeRefeicao(chaveNome).toString();
+				return getRefeicaoNome(chaveNome).toString();
 
 			}
 
@@ -181,7 +186,7 @@ public class Restaurante {
 
 		throw new ConsultaRestauranteInvalidoException(" Nome do prato esta vazio.");
 	}
-	
+
 	public double precoPedido(String nomePedido) {
 		double preco = 0;
 		for (TiposDeRefeicoes pedido : refeicao) {
@@ -199,7 +204,7 @@ public class Restaurante {
 	public ArrayList<TiposDeRefeicoes> getRefeicao() {
 		return refeicao;
 	}
-	
+
 	/**
 	 * @return the pedidos
 	 */
@@ -212,7 +217,8 @@ public class Restaurante {
 	/**
 	 * Ordena as refeicoes de acordo a qual deseja no atributo
 	 * 
-	 * @param tipo de ordenacao que deseja (ordem alfabetica ou preco)
+	 * @param tipo
+	 *            de ordenacao que deseja (ordem alfabetica ou preco)
 	 * @return a string formatada com a lista de ordenada
 	 */
 	public String ordenaMenu(String tipo) throws ErroOrdenacaoException {
@@ -249,8 +255,6 @@ public class Restaurante {
 
 	// ########### metodos da ordenacao ###########
 
-
-
 	// ########## metodos privados ##########
 
 	/**
@@ -282,7 +286,7 @@ public class Restaurante {
 	private boolean ExistePratoRefeicao(String nomePrato) {
 		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
 			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
-				return true;
+					return true;
 			}
 		}
 		return false;
@@ -293,11 +297,12 @@ public class Restaurante {
 			for (Prato prato : pratosRef) {
 				if (tiposDeRefeicoes.getNome().equalsIgnoreCase(prato.getNome())) {
 					return true;
-				}		
+				}
 			}
 		}
 		return false;
 	}
+
 	/**
 	 * Metodo privado que retorna um Tipo De Refeiçao a partir de uma busca
 	 * feita pelo nome do Prato
@@ -305,7 +310,7 @@ public class Restaurante {
 	 * @param nomePrato
 	 * @return
 	 */
-	private TiposDeRefeicoes getNomeRefeicao(String nomePrato) {
+	private TiposDeRefeicoes getRefeicaoNome(String nomePrato) {
 		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
 			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
 				return tiposDeRefeicoes;
@@ -313,28 +318,36 @@ public class Restaurante {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * metodo privado que verifica se existe pratos cadastrados na lista de refeicoes
-	 * @param nome dos pratos a serem verificados
+	 * metodo privado que verifica se existe pratos cadastrados na lista de
+	 * refeicoes
+	 * 
+	 * @param nome
+	 *            dos pratos a serem verificados
 	 * @throws CadastroRefeicaoInvalidaException
 	 */
-	private void verificaExistePratoCadastrado(ArrayList<Prato> pratosRef) throws CadastroRefeicaoInvalidaException{
-		if(!ExistePratoRefeicaoCompleta(pratosRef)){
-			throw new CadastroRefeicaoInvalidaException(". So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
+	private void verificaExistePratoCadastrado(ArrayList<Prato> pratosRef) throws CadastroRefeicaoInvalidaException {
+		if (!ExistePratoRefeicaoCompleta(pratosRef)) {
+			throw new CadastroRefeicaoInvalidaException(
+					". So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
 		}
 	}
-	
+
 	/**
-	 * metodo privado que verifica se a quantidade de pratos na refeicao eh valida
-	 * @param componentes da lista de refeicoes
+	 * metodo privado que verifica se a quantidade de pratos na refeicao eh
+	 * valida
+	 * 
+	 * @param componentes
+	 *            da lista de refeicoes
 	 * @throws CadastroRefeicaoInvalidaException
 	 */
-	private void verificaQuantidadePratos(ArrayList<Prato> pratosRef) throws CadastroRefeicaoInvalidaException{
-		if (pratosRef.size() <= 4 || pratosRef.size() >= 3) {
+	private void verificaQuantidadePratos(ArrayList<Prato> pratosRef) throws CadastroRefeicaoInvalidaException {
+		System.out.println(pratosRef.size());
+		if (pratosRef.size() >= 3 || pratosRef.size() <= 4) {
 			throw new CadastroRefeicaoInvalidaException(
 					" completa. Uma refeicao completa deve possuir no minimo 3 e no maximo 4 pratos.");
 		}
 	}
-	
+
 }

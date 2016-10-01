@@ -457,8 +457,7 @@ public class Hotel {
 	 */
 
 	public String consultaTransacoes(String atributo, int indice)throws MensagemErroException, IndiceInvalidoException {
-		System.out.println(transacoes.toString());
-
+		System.out.println(restaurante.getRefeicao());
 		valida.verificaConsultaTransacoes.verificaIndiceInvalido(indice);
 
 		if (indice <= transacoes.size()) {

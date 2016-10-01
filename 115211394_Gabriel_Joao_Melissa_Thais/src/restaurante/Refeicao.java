@@ -29,6 +29,11 @@ public class Refeicao extends TiposDeRefeicoes{
 		return precoRef * 0.9;
 	}
 	
+	@Override
+	public String getDescricao() {
+		return super.getDescricao() + " Serao servidos: " + toStringPratos() + ".";
+	}
+	
 
 	/**
 	 * @return the componentes
