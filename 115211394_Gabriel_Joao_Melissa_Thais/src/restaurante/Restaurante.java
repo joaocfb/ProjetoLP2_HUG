@@ -35,17 +35,18 @@ public class Restaurante {
 	}
 
 	/**
-	 * Metodo que cadastra um prato
+	 * Metodo que realiza o cadastro do prato no restaurante
 	 * 
-	 * @param nomePrato
-	 * @param precoPrato
-	 * @param descricaoPrato
+	 * @param nome do Prato
+	 * @param preco do Prato
+	 * @param descricao do Prato
+	 * 
 	 * @throws CadastroPratoInvalidoException
-	 * @throws Exception
 	 */
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)
 			throws CadastroPratoInvalidoException {
-
+		
+		//validacao dos parametros - nomePrato / precoPrato / descricaoPrato
 		VerificaCadastro.verificaNomePratoInvalido(nomePrato);
 		VerificaCadastro.verificaPrecoInvalido(precoPrato);
 		VerificaCadastro.verificaDescricaoPratoInvalido(descricaoPrato);
@@ -57,17 +58,18 @@ public class Restaurante {
 	}
 
 	/**
-	 * Metodo que cadastra uma refeicao
+	 * Metodo que realiza o cadastro da refeicao no restaurante
 	 * 
-	 * @param nomeRef
-	 * @param descricaoRef
-	 * @param componentes
+	 * @param nome da Refeicao
+	 * @param descricao da Refeicao
+	 * @param componentes  - os pratos compostos na refeicao escolhida
+	 * 
 	 * @throws CadastroRefeicaoInvalidaException
-	 * @throws Exception
 	 */
 	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes)
 			throws CadastroRefeicaoInvalidaException {
-
+		
+		//validacao dos parametros - nomeRef / descricaoPrato / componentes
 		VerificaCadastro.verificaNomeRefeicaoInvalida(nomeRef);
 		VerificaCadastro.verificaDescricaoRefeicaoInvalida(descricaoRef);
 		VerificaCadastro.verificaComponentesVazio(componentes);
@@ -81,10 +83,11 @@ public class Restaurante {
 	}
 
 	/**
-	 * Metodo que retorna uma lista com os objs prato
+	 * Metodo que retorna uma lista com os pratos da refeicao
 	 * 
-	 * @param componentes
-	 * @return ArrayList
+	 * @param componentes - os pratos compostos da refeicao 
+	 * @return a lista dos pratos da refeicao
+	 * 
 	 * @throws CadastroRefeicaoInvalidaException
 	 */
 	public ArrayList<Prato> pratosRefeicao(String componentes) throws CadastroRefeicaoInvalidaException {
@@ -121,9 +124,9 @@ public class Restaurante {
 	}
 
 	/**
-	 * Metodo que imprime todos os pratos do cardapio
+	 * Metodo que imprime todos os pratos do menu
 	 * 
-	 * @return String
+	 * @return todos os pratos e refeicoes que estao no menu do restaurante
 	 */
 	public String consultaMenuRestaurante() {
 		String retorno = "";
@@ -140,13 +143,15 @@ public class Restaurante {
 	}
 
 	/**
-	 * Metodo
+	 * Metodo que realiza a consulta de pratos e refeicoes no restaurante
 	 * 
-	 * @param chaveNome
-	 * @param atributo
-	 * @return
+	 * @param chaveNome - nome do prato ou refeicao
+	 * @param atributo - informacao que deseja-se consultar (preco / descricao)
+	 * 
+	 * @return a informacao referente ao atributo que desejou consultar (preco / descricao)
+	 * 
+	 * @throws CadastroRefeicaoInvalidaException
 	 * @throws ConsultaRestauranteInvalidoException
-	 * @throws Exception
 	 */
 	public String consultaRestaurante(String chaveNome, String atributo)
 			throws CadastroRefeicaoInvalidaException, ConsultaRestauranteInvalidoException {
@@ -199,20 +204,6 @@ public class Restaurante {
 		return preco;
 	}
 
-	/**
-	 * @return the refeicao
-	 */
-	public ArrayList<TiposDeRefeicoes> getRefeicao() {
-		return refeicao;
-	}
-
-	/**
-	 * @return the pedidos
-	 */
-	public ArrayList<Pedidos> getPedidos() {
-		return pedidos;
-	}
-
 	// ########### metodos da ordenacao ###########
 
 	/**
@@ -220,7 +211,7 @@ public class Restaurante {
 	 * 
 	 * @param tipo
 	 *            de ordenacao que deseja (ordem alfabetica ou preco)
-	 * @return a string formatada com a lista de ordenada
+	 * @return a string formatada com a lista ordenada
 	 */
 	public String ordenaMenu(String tipo) throws ErroOrdenacaoException {
 
@@ -253,8 +244,6 @@ public class Restaurante {
 		Collections.sort(refeicao, new OrdenaPorPreco());
 	}
 
-	// ########### metodos da ordenacao ###########
-
 	// ########## metodos privados ##########
 
 	/**
@@ -278,11 +267,10 @@ public class Restaurante {
 	/**
 	 * Metodo privado que busca um prato dando o retorno do tipo boolean
 	 * 
-	 * @param nomePrato
+	 * @param nome do Prato
 	 *            a ser buscado
-	 * @return true or false
+	 * @return se o prato existe ou nao 
 	 */
-
 	private boolean ExistePratoRefeicao(String nomePrato) {
 		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
 			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
@@ -298,8 +286,9 @@ public class Restaurante {
 	 * Metodo privado que retorna um Tipo De Refeiçao a partir de uma busca
 	 * feita pelo nome do Prato
 	 * 
-	 * @param nomePrato
-	 * @return
+	 * @param nome do Prato
+	 * 
+	 * @return o seu tipo 
 	 */
 	private TiposDeRefeicoes getRefeicaoNome(String nomePrato) {
 		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
@@ -309,6 +298,22 @@ public class Restaurante {
 		}
 		return null;
 	}
+	
+	// Getters
+	
+		/**
+		 * @return the refeicao
+		 */
+		public ArrayList<TiposDeRefeicoes> getRefeicao() {
+			return refeicao;
+		}
+
+		/**
+		 * @return the pedidos
+		 */
+		public ArrayList<Pedidos> getPedidos() {
+			return pedidos;
+		}
 
 
 }
