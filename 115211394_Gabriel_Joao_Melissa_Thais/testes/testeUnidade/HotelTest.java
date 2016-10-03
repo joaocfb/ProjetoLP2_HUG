@@ -11,6 +11,18 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import exception.AtualizacaoInvalidaException;
+import exception.CadastroHospedeInvalidoException;
+import exception.CheckinInvalidoException;
+import exception.CheckoutInvalidoException;
+import exception.ConsultaHospedagemInvalidaException;
+import exception.ConsultaHospedeInvalidaException;
+import exception.CriacaoQuartoInvalidoException;
+import exception.HospedagemAtivaInvalidaException;
+import exception.IndiceInvalidoException;
+import exception.MensagemErroException;
+import exception.RemocaoInvalidaException;
+import exception.VerificaNuloEVazioException;
 import factorys.FactoryHospedes;
 import hotel.Hospede;
 import hotel.Hotel;
@@ -55,13 +67,15 @@ public class HotelTest {
 		}
 	}
 	
+	// testes do crud do hospede
+	
 	@Test
 	public void testCadastraHospede() {
 
 		try {
 			assertEquals("andre@lindo.br",hotel.cadastraHospede("Andre Andrade", "andre@lindo.br", "25/10/1996"));
-		} catch (Exception e) {
-			
+		} catch (CadastroHospedeInvalidoException | VerificaNuloEVazioException e) {
+			e.getMessage();
 		}
 	}
 	
@@ -76,8 +90,8 @@ public class HotelTest {
 			hotel.atualizaCadastro("isa@araujo.br", "nome", "Isabelly Carla de Araujo");	
 			assertEquals("Isabelly Carla de Araujo",hotel.getInfoHospede("isa@araujo.br", "nome"));
 			
-		} catch (Exception e) {
-			Assert.fail("excecao nao esperada");
+		}catch(CadastroHospedeInvalidoException | VerificaNuloEVazioException | AtualizacaoInvalidaException | ConsultaHospedeInvalidaException e){
+			e.getMessage();
 		}
 		
 		// testando o atualizaCadastro pela data de nascimento
@@ -87,26 +101,30 @@ public class HotelTest {
 			
 			hotel.atualizaCadastro("hektor@farias.br", "data de nascimento", "23/02/1996");
 			assertEquals("23/02/1996", hotel.getInfoHospede("hektor@farias.br", "data de nascimento"));
-		} catch (Exception e) {
-			
+		} catch (CadastroHospedeInvalidoException | VerificaNuloEVazioException | AtualizacaoInvalidaException | ConsultaHospedeInvalidaException e) {
+			e.getMessage();
 		}
 		
 		// testando o atualizaCadastro pelo email
 		
-		try {	
+		
+		try {
+			
 			hotel.cadastraHospede("Hynghrid farias", "hyn@farias.br", "20/09/1999");
-			
-			
 			hotel.atualizaCadastro("hyn@farias.br", "email", "hyn@farias.com");
+		} catch (AtualizacaoInvalidaException | CadastroHospedeInvalidoException | VerificaNuloEVazioException e) {
+			e.getMessage();
+		}
+		
+		try {
 			assertEquals("Hynghrid farias", hotel.getInfoHospede("hyn@farias.com", "nome"));
-			
-		} catch (Exception e) {
-			Assert.fail("excecao nao esperada");
+		} catch (ConsultaHospedeInvalidaException e) {
+			e.getMessage();
 		}
 	}
 	
 	@Test
-	public void testRemoveHospede(){
+	public void testRemoveHospede() {
 		
 		try {
 			
@@ -114,8 +132,8 @@ public class HotelTest {
 			assertEquals("soudiva@kardashian.eua",hotel.getInfoHospede("soudiva@kardashian.eua", "email"));
 			fail("excecao nao capturada");
 			
-		} catch (Exception e) {
-		
+		} catch (RemocaoInvalidaException | ConsultaHospedeInvalidaException e) {
+			e.getMessage();
 		}
 	}
 	
@@ -125,25 +143,26 @@ public class HotelTest {
 		// testando o getInfoHospede pelo nome
 		try {
 			assertEquals("Taylor Swift",hotel.getInfoHospede("loveme@taylor.eua", "nome"));
-		} catch (Exception e) {
-			
+		} catch (ConsultaHospedeInvalidaException e) {
+			e.getMessage();
 		}
 		
 		// testando o getInfoHospede pelo email
 		try {
 			assertEquals("loveme@taylor.eua",hotel.getInfoHospede("loveme@taylor.eua", "email"));
-		} catch (Exception e) {
-			
+		} catch (ConsultaHospedeInvalidaException e) {
+			e.getMessage();
 		}
 
 		// testando o getInfoHospede pela data de nascimento
 		try {
 			assertEquals("13/12/1989",hotel.getInfoHospede("loveme@taylor.eua", "data de nascimento"));
-		} catch (Exception e) {
-			
+		} catch (ConsultaHospedeInvalidaException e) {
+			e.getMessage();
 		}
 		
 	}
+	// ##### testes da Estadia #####
 	
 	@Test
 	public void testRealizaCheckin(){
@@ -152,44 +171,71 @@ public class HotelTest {
 		try {
 			hotel.realizaCheckin("bey@lemonade2016.eua", 5, "3A", "Presidencial");
 			assertEquals("3A", hotel.getInfoHospedagem("bey@lemonade2016.eua", "quarto"));
-		} catch (Exception e) {
-			
+		} catch (CheckinInvalidoException |CriacaoQuartoInvalidoException | VerificaNuloEVazioException | HospedagemAtivaInvalidaException | MensagemErroException | ConsultaHospedagemInvalidaException e) {
+			e.getMessage();
 		}
 		
 		// com quarto do tipo luxo
 		try {
 			hotel.realizaCheckin("thebest@riri.eua", 4, "3B", "Luxo");
 			assertEquals("3B", hotel.getInfoHospedagem("thebest@riri.eua", "quarto"));
-		} catch (Exception e) {
-			
+		} catch (CheckinInvalidoException |CriacaoQuartoInvalidoException | VerificaNuloEVazioException | HospedagemAtivaInvalidaException | MensagemErroException | ConsultaHospedagemInvalidaException e) {
+			e.getMessage();
 		}
 		
 		// com quarto do tipo simples
 		try {
 			hotel.realizaCheckin("mepasso@ariana.eua", 4, "12A", "Simples");
 			assertEquals("12A", hotel.getInfoHospedagem("mepasso@ariana.eua", "quarto"));
-		} catch (Exception e) {
-					
+		} catch (CheckinInvalidoException |CriacaoQuartoInvalidoException | VerificaNuloEVazioException | HospedagemAtivaInvalidaException | MensagemErroException | ConsultaHospedagemInvalidaException e) {
+			e.getMessage();
 		}
 	}
 	
 	@Test
 	public void testRealizaCheckout(){
 		
+		
 		try {
 			hotel.realizaCheckin("drake@mycellphone.eua",  4, "4B", "Luxo");
-			assertEquals("4B", hotel.getInfoHospedagem("drake@mycellphone.eua", "quarto"));
-		} catch (Exception e1) {
-			
-		}
-		
-		try {
 			hotel.realizaCheckout("drake@mycellphone.eua","4B");
 			assertEquals("R$1000,00",hotel.realizaCheckout("drake@mycellphone.eua","4B"));
-		} catch (Exception e) {
-		
+		} catch (CheckinInvalidoException |CriacaoQuartoInvalidoException | VerificaNuloEVazioException | CheckoutInvalidoException | ConsultaHospedagemInvalidaException e) {
+			e.getMessage();
 		}
 		
+	}
+	
+	@Test
+	public void testGetInfoHospedagem() {
+		
+		// testando pelo atributo hospedagens ativas
+		try{
+			hotel.realizaCheckin("bey@lemonade2016.eua", 5, "3A", "Presidencial");
+
+			assertEquals("1", hotel.getInfoHospedagem("bey@lemonade2016.eua", "hospedagens ativas"));
+		}catch(CheckinInvalidoException | CriacaoQuartoInvalidoException | VerificaNuloEVazioException | ConsultaHospedagemInvalidaException | HospedagemAtivaInvalidaException | MensagemErroException e){
+			e.getMessage();
+		}
+		
+		// testando pelo atributo quarto
+		try{
+			hotel.realizaCheckin("bey@lemonade2016.eua", 5, "3A", "Presidencial");
+
+			assertEquals("3A", hotel.getInfoHospedagem("bey@lemonade2016.eua", "quarto"));
+		}catch(CheckinInvalidoException | CriacaoQuartoInvalidoException | VerificaNuloEVazioException | ConsultaHospedagemInvalidaException | HospedagemAtivaInvalidaException | MensagemErroException e){
+			e.getMessage();
+		}
+		
+		// testando pelo atributo total
+		
+		try{
+			hotel.realizaCheckin("bey@lemonade2016.eua", 5, "3A", "Presidencial");
+
+			assertEquals("R$2250,00", hotel.getInfoHospedagem("bey@lemonade2016.eua", "total"));
+		}catch(CheckinInvalidoException | CriacaoQuartoInvalidoException | VerificaNuloEVazioException | ConsultaHospedagemInvalidaException | HospedagemAtivaInvalidaException | MensagemErroException e){
+			e.getMessage();
+		}
 	}
 	
 	@Test
@@ -204,8 +250,8 @@ public class HotelTest {
 			hotel.realizaCheckin("mepasso@ariana.eua", 4, "12A", "Simples");
 			
 			assertEquals("3", hotel.consultaTransacoes("quantidade"));
-		} catch (Exception e) {
-			
+		} catch (CheckinInvalidoException |CriacaoQuartoInvalidoException | VerificaNuloEVazioException | MensagemErroException e) {
+			e.getMessage();
 		}
 		
 		// consultaTransacoes, atributo total
@@ -215,8 +261,8 @@ public class HotelTest {
 			hotel.realizaCheckin("drake@mycellphone.eua",  4, "4B", "Luxo");
 			
 			assertEquals("R$2000,00", hotel.consultaTransacoes("total"));
-		} catch (Exception e) {
-			
+		} catch (CheckinInvalidoException |CriacaoQuartoInvalidoException | VerificaNuloEVazioException | MensagemErroException e) {
+			e.getMessage();
 		}
 		
 		// consultaTransacoes, atributo nome
@@ -226,13 +272,13 @@ public class HotelTest {
 			hotel.realizaCheckin("mepasso@ariana.eua", 4, "12A", "Simples");
 			
 			assertEquals("Beyoncé Giselle;Ariana Grande", hotel.consultaTransacoes("nome"));
-		} catch (Exception e) {
-
+		} catch (CheckinInvalidoException |CriacaoQuartoInvalidoException | VerificaNuloEVazioException | MensagemErroException e) {
+			e.getMessage();
 		}	
 	}
 	
 	@Test
-	public void testConsultaTransacoes2(){
+	public void testConsultaTransacoes2() {
 		
 		// teste do metodo consultaTransacoes com dois parametros
 		
@@ -242,7 +288,8 @@ public class HotelTest {
 			hotel.realizaCheckout("bey@lemonade2016.eua","3A");
 
 			assertEquals("R$2250.00", hotel.consultaTransacoes("total", 0)); 
-		} catch (Exception e) {
+		} catch (CheckinInvalidoException |CriacaoQuartoInvalidoException | VerificaNuloEVazioException | CheckoutInvalidoException | ConsultaHospedagemInvalidaException | MensagemErroException | IndiceInvalidoException e) {
+			e.getMessage();
 			
 		}
 		
@@ -253,8 +300,12 @@ public class HotelTest {
 			hotel.realizaCheckin("mepasso@ariana.eua", 4, "12A", "Simples");
 
 			assertEquals("Rihanna Fenty", hotel.consultaTransacoes("nome", 1));
-		} catch (Exception e) {
-
+		} catch (CheckinInvalidoException |CriacaoQuartoInvalidoException | VerificaNuloEVazioException | MensagemErroException | IndiceInvalidoException e) {
+			e.getMessage();
 		}
 	}
+	
+	// ##### testes do restaurante #####
+	
+	
 }

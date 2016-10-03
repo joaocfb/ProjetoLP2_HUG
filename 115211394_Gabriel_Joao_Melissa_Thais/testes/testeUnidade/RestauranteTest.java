@@ -10,6 +10,8 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import exception.CadastroRefeicaoInvalidaException;
+import exception.ConsultaRestauranteInvalidoException;
 import factorys.FactoryPrato;
 import factorys.FactoryRefeicao;
 import restaurante.Prato;
@@ -81,38 +83,38 @@ public class RestauranteTest {
 	}
 	
 	@Test
-	public void testConsultaRestaurante(){
+	public void testConsultaRestaurante() {
 		
 		// chaveNome = prato, atributo = preco
 		try {
 			restaurante.consultaRestaurante("Artsoppa com panquecas", "preco");
 			assertEquals("18.50",restaurante.consultaRestaurante("Artsoppa com panquecas", "preco"));
-		} catch (Exception e) {
-			
+		} catch (CadastroRefeicaoInvalidaException | ConsultaRestauranteInvalidoException e) {
+			e.getMessage();
 		}
 		
 		// chaveNome = prato, atributo descricao
 		try {
 			restaurante.consultaRestaurante("Kotbullar com lingon", "descricao");
 			assertEquals("Almondegas de carne feito no tradicional estilo sueco.",restaurante.consultaRestaurante("Kotbullar com lingon", "descricao"));
-		} catch (Exception e) {
-			
+		} catch (CadastroRefeicaoInvalidaException | ConsultaRestauranteInvalidoException e) {
+			e.getMessage();
 		}
 		
 		// chaveNome = refeicao, atributo preco
 		try {
 			restaurante.consultaRestaurante("Svensk mat", "preco");
 			assertEquals("97,65", restaurante.consultaRestaurante("Svensk mat", "preco"));
-		} catch (Exception e) {
-			
+		} catch (CadastroRefeicaoInvalidaException | ConsultaRestauranteInvalidoException e) {
+			e.getMessage();
 		}
 		
 		// chaveNome = refeicao, atributo descricao
 		try {
 			restaurante.consultaRestaurante("Pasto italiano", "descricao");
 			assertEquals("Varios pratos italianos para saborear.",restaurante.consultaRestaurante("Pasto italiano", "descricao"));
-		} catch (Exception e) {
-			
+		} catch (CadastroRefeicaoInvalidaException | ConsultaRestauranteInvalidoException e) {
+			e.getMessage();
 		}
 	}
 	
