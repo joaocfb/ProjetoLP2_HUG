@@ -21,6 +21,7 @@ import exception.CriacaoQuartoInvalidoException;
 import exception.HospedagemAtivaInvalidaException;
 import exception.IndiceInvalidoException;
 import exception.MensagemErroException;
+import exception.PedidosInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.VerificaNuloEVazioException;
 import factorys.FactoryHospedes;
@@ -39,6 +40,8 @@ public class HotelTest {
 	private Hotel hotel;
 	private HashMap<String, Hospede> meusHospedes;
 	private FactoryHospedes factoryHospedes;
+	
+	private RestauranteTest restaurante;
 
 	@Before
 	public void setUp() {
@@ -307,5 +310,20 @@ public class HotelTest {
 	
 	// ##### testes do restaurante #####
 	
-	
+	@Test 
+	public void testRealizaPedido(){
+		
+		try {
+			
+			restaurante.setUp();
+			
+			
+			hotel.realizaPedido("bey@lemonade2016.eua", "Kotbullar com lingon");
+			hotel.realizaPedido("bey@lemonade2016.eua", "Kanelbullar");
+			
+			assertEquals("R$43,50", hotel.consultaTransacoes("total", 3));
+		} catch (PedidosInvalidoException | MensagemErroException | IndiceInvalidoException e) {
+			e.getMessage();
+		}
+	}
 }

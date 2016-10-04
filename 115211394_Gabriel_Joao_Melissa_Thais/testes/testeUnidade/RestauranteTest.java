@@ -10,6 +10,7 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
 import exception.ConsultaRestauranteInvalidoException;
 import factorys.FactoryPrato;
@@ -55,7 +56,7 @@ public class RestauranteTest {
 			// criando refeicoes
 			refeicao.put("Svensk mat", factoryRefeicao.criaRefeicao("Svensk mat", "Uma variedade de comidas populares na Suecia.", restaurante.pratosRefeicao("Artsoppa com panquecas;Algkot com vegetais;Kanelbullar")));
 			refeicao.put("Pasto italiano", factoryRefeicao.criaRefeicao("Pasto italiano", "Varios pratos italianos para saborear.", restaurante.pratosRefeicao("Bruschetta;Bresaola com rucula e parmesao;Penne ao pesto;Tiramisu")));
-		} catch (Exception e) {
+		} catch (CadastroPratoInvalidoException | CadastroRefeicaoInvalidaException e) {
 			
 		}
 			
