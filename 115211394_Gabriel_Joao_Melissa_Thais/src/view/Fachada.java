@@ -5,7 +5,6 @@ package view;
 
 import java.util.ArrayList;
 
-import easyaccept.EasyAccept;
 import exception.AtualizacaoInvalidaException;
 import exception.CadastroHospedeInvalidoException;
 import exception.CadastroPratoInvalidoException;
@@ -25,8 +24,7 @@ import exception.VerificaNuloEVazioException;
 
 import restaurante.Prato;
 import sistemaDeControleHotel.ControleDoSistema;
-import interfaces.HotelInterface;
-import interfaces.RestauranteInterface;
+
 
 /**
  * Classe Hotel Facade que delega funcoes para o controller de Hotel

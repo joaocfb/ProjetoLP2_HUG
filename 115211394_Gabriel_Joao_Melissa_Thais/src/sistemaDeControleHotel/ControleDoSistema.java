@@ -21,7 +21,6 @@ import exception.VerificaNuloEVazioException;
 
 import hotel.Hotel;
 import restaurante.Prato;
-import restaurante.Restaurante;
 
 import interfaces.HotelInterface;
 import interfaces.RestauranteInterface;
@@ -34,7 +33,6 @@ import interfaces.RestauranteInterface;
  */
 public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 	private Hotel controleHotel;
-	private Restaurante controleRestaurante;
 	
 	public ControleDoSistema() throws Exception {
 		

@@ -5,7 +5,6 @@ package factorys;
 
 import exception.CadastroHospedeInvalidoException;
 import restaurante.Pedidos;
-import valida.VerificaHospede;
 
 /**
  * Fabrica de Pedidos

@@ -10,8 +10,7 @@ package restaurante;
 public class Pedidos {
 	private String nome;
 	private double preco;
-	
-	
+
 	/**
 	 * @param nome
 	 * @param preco
@@ -21,7 +20,6 @@ public class Pedidos {
 		this.preco = preco;
 	}
 
-
 	/**
 	 * @return the nome
 	 */
@@ -29,12 +27,52 @@ public class Pedidos {
 		return nome;
 	}
 
-
 	/**
 	 * @return the preco
 	 */
 	public double getPreco() {
 		return preco;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Pedidos [nome=" + nome + ", preco=" + preco + "]";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * Dois pedidos sao iguais se possuirem o mesmo nome
+	 */
+	@Override
+	public boolean equals(Object obj) {
+
+		if (!(obj instanceof Pedidos))
+			return false;
+
+		Pedidos other = (Pedidos) obj;
+
+		if (getNome().equals(other.getNome())) {
+			return true;
+		}
+		return false;
+	}
 }

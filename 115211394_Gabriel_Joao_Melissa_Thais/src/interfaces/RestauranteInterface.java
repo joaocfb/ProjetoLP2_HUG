@@ -12,7 +12,7 @@ import exception.PedidosInvalidoException;
 import restaurante.Prato;
 
 /**
- * @author nicolly
+ * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
 public interface RestauranteInterface {

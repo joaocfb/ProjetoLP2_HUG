@@ -11,7 +11,9 @@ import java.util.Comparator;
  */
 public class OrdenaPorPreco implements Comparator<Object>{
 
-
+	/**
+	 * Compara refeicoes pelo preco
+	 */
 	@Override
 	public int compare(Object refeicao1, Object refeicao2) {
 		if (((TiposDeRefeicoes) refeicao1).getPreco() > ((TiposDeRefeicoes) refeicao2).getPreco()) {

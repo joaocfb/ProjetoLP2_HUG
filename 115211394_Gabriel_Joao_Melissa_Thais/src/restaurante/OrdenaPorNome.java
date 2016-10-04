@@ -11,6 +11,9 @@ import java.util.Comparator;
  */
 public class OrdenaPorNome implements Comparator<Object>{
 	
+	/**
+	 * Compara refeicoes pelo nome
+	 */
 	@Override
 	public int compare(Object refeicao1, Object refeicao2) {
 		

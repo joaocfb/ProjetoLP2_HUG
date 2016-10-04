@@ -1,3 +1,4 @@
+
 iniciaSistema
 
 ############################################
@@ -7,7 +8,7 @@ iniciaSistema
 # - Sven       : 1570 (VIP)                #
 # - Ines Brasil:  905 (Premium)            #
 # - Agnetha    :   20 (Normal)             #
-# - Nobel      :   50 (Normal)             #
+# - Nobel      :   30 (Normal)             #
 #                                          #
 ############################################
 
@@ -50,7 +51,7 @@ expect "320" getInfoHospede id="ines@brasil.com.br" atributo="Pontos"
 expect "20" getInfoHospede id="agnetha@abba.se" atributo="Pontos"
 expect "20" getInfoHospede id="nobel@got.se" atributo="Pontos"
 
-expect "22" consultaTransacoes atributo="Quantidade"
-expect "R$11488,09" consultaTransacoes atributo="Total"
+expect "21" consultaTransacoes atributo="Quantidade"
+expect "R$11688,09" consultaTransacoes atributo="Total"
 
 fechaSistema

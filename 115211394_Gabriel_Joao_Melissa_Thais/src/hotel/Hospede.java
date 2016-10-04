@@ -13,8 +13,7 @@ import java.util.LinkedHashMap;
 
 import cartao.TipoDeCartao;
 import exception.VerificaNuloEVazioException;
-import factorys.FactoryEstadia;
-import factorys.FactoryPedidosDoHospede;
+
 import restaurante.Pedidos;
 import cartao.*;
 /**
@@ -31,8 +30,6 @@ public class Hospede {
 	private int pontos = 0;
 	private LocalDate dataNascimento;
 	private TipoDeCartao tipoDeCartao;
-	private FactoryEstadia factoryEstadia;
-	private FactoryPedidosDoHospede factoryPedidos;
 
 	private LinkedHashMap<String, Estadia> estadias;
 	private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -55,8 +52,6 @@ public class Hospede {
 		this.nome = nome;
 		this.email = email;
 		tipoDeCartao = new Padrao();
-		this.factoryEstadia = new FactoryEstadia();
-		this.factoryPedidos = new FactoryPedidosDoHospede();
 
 		this.estadias = new LinkedHashMap<>();
 		this.setDataNascimento(dataNascimento);
