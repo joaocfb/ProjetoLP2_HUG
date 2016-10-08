@@ -1,9 +1,13 @@
 package hotel;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import exception.AtualizacaoInvalidaException;
@@ -26,7 +30,10 @@ import factorys.FactoryQuartos;
 import factorys.FactoryTransacao;
 import quartos.QuartoSimples;
 import restaurante.Pedidos;
+import restaurante.Prato;
+import restaurante.Refeicao;
 import restaurante.Restaurante;
+import restaurante.TiposDeRefeicoes;
 import valida.VerificaCadastro;
 import valida.VerificaHospede;
 import valida.verificaAtualizacao;
@@ -299,7 +306,7 @@ public class Hotel {
 		verificaCheckin.verificaQuantDiasInvalidaCheckin(quantDias);
 		verificaTipoQuartoValido(tipoQuarto);
 
-		//livre
+		// livre
 		if (quartosLivresDoHotel.containsKey(IDQuarto)) {
 			ocupaQuarto(IDQuarto);
 
@@ -428,6 +435,7 @@ public class Hotel {
 				case "total":
 					String retorno = "";
 					retorno += String.format("R$%.2f", calculaTodasAsEstadias(email));
+
 					return retorno;
 
 				default:
@@ -438,6 +446,7 @@ public class Hotel {
 		}
 		throw new ConsultaHospedagemInvalidaException("Hospede " + nome);
 	}
+	
 
 	/**
 	 * Metodo que retorna dados sobre os checkout do hotel
@@ -470,8 +479,6 @@ public class Hotel {
 		}
 		throw new MensagemErroException("");
 	}
-	
-	  
 
 	/**
 	 * Metodo que retorna dados sobre os checkout do hotel
@@ -543,9 +550,12 @@ public class Hotel {
 	 *            que o hospede possui
 	 * 
 	 * @return a quantidade de pontos que o hospede possui em formato string
+	 * @throws IOException 
 	 */
-	public String convertePontos(String email, int qtdPontos) {
-
+	public String convertePontos(String email, int qtdPontos) throws IOException {
+		arquivoCadastroHospede();
+		arquivoTransacoesHotel();
+		arquivoCadastroTiposDeRefeicoes();
 		double pontosConvertidos = hospedesDoHotel.get(email).convertePontos(qtdPontos);
 
 		// formata a string
@@ -630,7 +640,9 @@ public class Hotel {
 	}
 
 	/**
-	 * Metodo que ocupa um quarto, retira da lista de vagos e adiciona na lista de ocupados
+	 * Metodo que ocupa um quarto, retira da lista de vagos e adiciona na lista
+	 * de ocupados
+	 * 
 	 * @param IDQuarto
 	 */
 	private void ocupaQuarto(String IDQuarto) {
@@ -638,8 +650,6 @@ public class Hotel {
 		quartosOcupadosDoHotel.put(IDQuarto, quartoNovo);
 		quartosLivresDoHotel.remove(IDQuarto);
 	}
-
-
 
 	/**
 	 * Metodo que atualiza os registro de lucro do hotel
@@ -728,7 +738,8 @@ public class Hotel {
 		restaurante.getPedidos().add(pedido);
 
 		// cria a transacao
-		Transacao transacaoAtual = factoryTransacao.criaTransacao((preco - valorDesconto), itemMenu, hospedesDoHotel.get(email).getNome());
+		Transacao transacaoAtual = factoryTransacao.criaTransacao((preco - valorDesconto), itemMenu,
+				hospedesDoHotel.get(email).getNome());
 		transacoes.add(transacaoAtual);
 		recompensaPontos(email, preco);
 
@@ -829,8 +840,10 @@ public class Hotel {
 	public void setValorTransacoes(double valorTransacoes) {
 		this.valorTransacoes = valorTransacoes;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -838,7 +851,99 @@ public class Hotel {
 		return "Hotel [nomesHospedes=" + nomesHospedes + "]";
 	}
 
-	/* (non-Javadoc)
+	public void arquivoCadastroHospede() throws IOException {
+		Collection<Hospede> h = hospedesDoHotel.values();
+		
+		String quntHospedes = String.valueOf(h.size());
+		FileWriter arquivo;
+		arquivo = new FileWriter(new File("cad_hospedes.txt"));
+		arquivo.write("Cadastro de Hospedes: " + quntHospedes + " hospedes registrados  \r\n" );
+
+		int cont = 1;
+		for (Hospede hospede : h) {
+			
+			arquivo.write("==> Hospede " +  String.valueOf(cont)+":  \r\n");
+
+			cont += 1;
+			arquivo.write("Email: " + hospede.getEmail() + " \r\n");
+			arquivo.write("Nome: " + hospede.getNome() + " \r\n");
+			arquivo.write("Data de nascimento: " + hospede.getDataNascimento() + " \r\n");
+			arquivo.write(" \r\n");
+
+
+
+		}
+
+		
+		arquivo.close();
+	}
+	
+	public void arquivoCadastroTiposDeRefeicoes() throws IOException {
+		ArrayList<TiposDeRefeicoes> h = getRestaurante().getRefeicao();
+		
+		int cont = 1;
+		String quntRefeicao = String.valueOf(h.size());
+		
+		FileWriter arquivo;
+		arquivo = new FileWriter(new File("cad_restaurante.txt"));
+		arquivo.write("Menu do Restaurante: " + quntRefeicao + " intens do cardapio  \r\n" );
+
+
+		for (TiposDeRefeicoes refeicao : h) {
+			if (refeicao.getClass().getSimpleName().equalsIgnoreCase("prato")) {
+				arquivo.write("==> Item " + String.valueOf(cont)+":  \r\n");
+
+				arquivo.write("Nome: " + refeicao.getNome() + " Preco: R$" + String.valueOf(refeicao.getPreco()) + "\r\n");
+				arquivo.write("Descricao: " + refeicao.getDescricao() + " \r\n");
+				arquivo.write(" \r\n");
+				
+			}if(refeicao.getClass().getSimpleName().equalsIgnoreCase("refeicao")) {
+				arquivo.write("==> Item " + String.valueOf(cont)+":  \r\n");
+
+				Refeicao ref = (Refeicao)(refeicao);
+				arquivo.write("Nome: " + refeicao.getNome() + " Preco: R$" + String.valueOf(refeicao.getPreco()) + "\r\n");
+				arquivo.write("Descricao: " + refeicao.getDescricao() + " \r\n");
+				
+				
+				String stringPratos = " ";
+				for (Prato prato : ref.getComponentes()) {
+					stringPratos += prato.getNome() + ", ";
+				}
+				arquivo.write("Pratos: " + stringPratos.substring(0, stringPratos.length()-2) + " \r\n");
+
+				arquivo.write(" \r\n");
+			}
+			
+
+
+			cont += 1;
+
+		}
+
+		
+		arquivo.close();
+	}
+	
+	public void arquivoTransacoesHotel() throws IOException{
+		FileWriter arquivo;
+		arquivo = new FileWriter(new File("cad_transacoes.txt"));
+		arquivo.write("Historico de Transacoes: \r\n" );
+		
+				for (Transacao t : transacoes) {
+
+			arquivo.write("==> Nome: " + t.getNome() + " Gasto: R$" + t.getTotal() + " Detalhes: " + t.getDetalhe() );
+			arquivo.write(" \r\n");
+
+		}
+		
+		arquivo.close();
+
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -848,7 +953,5 @@ public class Hotel {
 		result = prime * result + ((transacoes == null) ? 0 : transacoes.hashCode());
 		return result;
 	}
-
-	
 
 }

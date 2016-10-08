@@ -3,6 +3,8 @@
  */
 package interfaces;
 
+import java.io.IOException;
+
 import exception.AtualizacaoInvalidaException;
 import exception.CadastroHospedeInvalidoException;
 import exception.CheckinInvalidoException;
@@ -45,5 +47,5 @@ public interface HotelInterface {
 	
 	public String consultaTransacoes(String atributo, int indice) throws MensagemErroException, IndiceInvalidoException;
 
-	public String convertePontos (String email, int qtdPontos);
+	public String convertePontos (String email, int qtdPontos) throws IOException;
 }

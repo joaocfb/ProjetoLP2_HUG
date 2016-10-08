@@ -3,6 +3,7 @@
  */
 package view;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import exception.AtualizacaoInvalidaException;
@@ -131,7 +132,7 @@ public class Fachada {
 		return controller.realizaPedido(email, item);
 	}
 	
-    public String convertePontos(String email, int qtdPontos) {
+    public String convertePontos(String email, int qtdPontos) throws IOException {
 		return controller.convertePontos(email, qtdPontos);
 	}
 }

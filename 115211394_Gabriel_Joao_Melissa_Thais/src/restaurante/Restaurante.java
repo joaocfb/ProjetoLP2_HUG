@@ -322,6 +322,8 @@ public class Restaurante {
 		}
 		return false;
 	}
+	
+	
 
 	/**
 	 * Metodo privado que retorna um Tipo De Refeiçao a partir de uma busca

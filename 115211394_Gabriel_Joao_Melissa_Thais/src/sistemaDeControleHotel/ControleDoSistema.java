@@ -1,5 +1,6 @@
 package sistemaDeControleHotel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import exception.AtualizacaoInvalidaException;
@@ -137,7 +138,7 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 	}
 
 	@Override
-	public String convertePontos(String email, int qtdPontos) {
+	public String convertePontos(String email, int qtdPontos) throws IOException {
 		
 		return controleHotel.convertePontos(email, qtdPontos);
 	}
