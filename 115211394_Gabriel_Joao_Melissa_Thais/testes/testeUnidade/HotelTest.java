@@ -307,23 +307,4 @@ public class HotelTest {
 			e.getMessage();
 		}
 	}
-	
-	// ##### testes do restaurante #####
-	
-	@Test 
-	public void testRealizaPedido(){
-		
-		try {
-			
-			restaurante.setUp();
-			
-			
-			hotel.realizaPedido("bey@lemonade2016.eua", "Kotbullar com lingon");
-			hotel.realizaPedido("bey@lemonade2016.eua", "Kanelbullar");
-			
-			assertEquals("R$43,50", hotel.consultaTransacoes("total", 3));
-		} catch (PedidosInvalidoException | MensagemErroException | IndiceInvalidoException e) {
-			e.getMessage();
-		}
-	}
 }

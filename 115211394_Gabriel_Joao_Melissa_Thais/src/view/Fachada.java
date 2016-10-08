@@ -15,6 +15,7 @@ import exception.ConsultaHospedagemInvalidaException;
 import exception.ConsultaHospedeInvalidaException;
 import exception.ConsultaRestauranteInvalidoException;
 import exception.CriacaoQuartoInvalidoException;
+import exception.ErroOrdenacaoException;
 import exception.HospedagemAtivaInvalidaException;
 import exception.IndiceInvalidoException;
 import exception.MensagemErroException;
@@ -99,12 +100,12 @@ public class Fachada {
 	}
 	
 	// ## Restaurante ##
-	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException   {
+	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException, ErroOrdenacaoException   {
 		controller.cadastraPrato(nomePrato, precoPrato, descricaoPrato);
 		
 	}
 	
-	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws CadastroRefeicaoInvalidaException   {
+	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws CadastroRefeicaoInvalidaException, ErroOrdenacaoException   {
 		controller.cadastraRefeicao(nomeRef, descricaoRef, componentes);
 		
 	}

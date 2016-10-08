@@ -470,6 +470,8 @@ public class Hotel {
 		}
 		throw new MensagemErroException("");
 	}
+	
+	  
 
 	/**
 	 * Metodo que retorna dados sobre os checkout do hotel
@@ -726,8 +728,7 @@ public class Hotel {
 		restaurante.getPedidos().add(pedido);
 
 		// cria a transacao
-		Transacao transacaoAtual = factoryTransacao.criaTransacao((preco - valorDesconto), itemMenu,
-				hospedesDoHotel.get(email).getNome());
+		Transacao transacaoAtual = factoryTransacao.criaTransacao((preco - valorDesconto), itemMenu, hospedesDoHotel.get(email).getNome());
 		transacoes.add(transacaoAtual);
 		recompensaPontos(email, preco);
 

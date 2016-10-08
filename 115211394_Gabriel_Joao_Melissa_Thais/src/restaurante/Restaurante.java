@@ -4,6 +4,8 @@ package restaurante;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
 import exception.ConsultaRestauranteInvalidoException;
@@ -24,12 +26,16 @@ public class Restaurante {
 	private FactoryRefeicao factoryRefeicao;
 	private ArrayList<TiposDeRefeicoes> refeicao;
 	private ArrayList<Pedidos> pedidos;
+	private String ordenacaoDoMenu = null;
 
+	
+	
 	public Restaurante() {
 		this.factoryPrato = new FactoryPrato();
 		this.factoryRefeicao = new FactoryRefeicao();
 		this.refeicao = new ArrayList<>();
 		this.pedidos = new ArrayList<>();
+		
 
 	}
 
@@ -46,9 +52,10 @@ public class Restaurante {
 	 *            do Prato
 	 * 
 	 * @throws CadastroPratoInvalidoException
+	 * @throws ErroOrdenacaoException 
 	 */
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato)
-			throws CadastroPratoInvalidoException {
+			throws CadastroPratoInvalidoException, ErroOrdenacaoException {
 
 		// validacao dos parametros - nomePrato / precoPrato / descricaoPrato
 		VerificaCadastro.verificaNomePratoInvalido(nomePrato);
@@ -59,6 +66,16 @@ public class Restaurante {
 			refeicao.add(factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
 
 		}
+		//Mantem a ordenacao anterior apos adicionar um novo prato 
+		if (ordenacaoDoMenu != null){
+			 if (ordenacaoDoMenu.equals("nome")) {
+				  ordenaMenuPorNome();
+			 }else{
+				  ordenaMenuPorPreco();
+			  }
+			  
+		}
+		
 	}
 
 	/**
@@ -68,10 +85,11 @@ public class Restaurante {
 	 * os pratos compostos na refeicao escolhida
 	 * 
 	 * @throws CadastroRefeicaoInvalidaException @throws
+	 * @throws ErroOrdenacaoException 
 	 */
 	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes)
-			throws CadastroRefeicaoInvalidaException {
-
+			throws CadastroRefeicaoInvalidaException, ErroOrdenacaoException {
+		
 		// validacao dos parametros - nomeRef / descricaoPrato / componentes
 		VerificaCadastro.verificaNomeRefeicaoInvalida(nomeRef);
 		VerificaCadastro.verificaDescricaoRefeicaoInvalida(descricaoRef);
@@ -80,9 +98,19 @@ public class Restaurante {
 		ArrayList<Prato> pratosRef = pratosRefeicao(componentes);
 		
 		if (!ExistePratoRefeicao(nomeRef)) {
-
 			refeicao.add(factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRef));
 		}
+		
+		//Mantem a ordenacao anterior apos adicionar uma nova refeicao
+		if (ordenacaoDoMenu != null){
+		  if (ordenacaoDoMenu.equals("nome")) {
+			  ordenaMenuPorNome();
+		  }else{
+			  ordenaMenuPorPreco();
+		  }
+		  
+		}
+		
 	}
 
 	/**
@@ -100,12 +128,13 @@ public class Restaurante {
 
 		ArrayList<Prato> pratosRef = new ArrayList<>();
 		String[] nomesComponentes = componentes.split(";");
-
+		
 		for (String nomePrato : nomesComponentes) {
 
 			if (getRefeicaoNome(nomePrato) instanceof Prato) {
 
 				Prato novoPrato = (Prato) getRefeicaoNome(nomePrato);
+				
 				pratosRef.add(novoPrato);
 
 				if (ExistePratoRefeicao(nomePrato)) {
@@ -114,7 +143,7 @@ public class Restaurante {
 			}
 		}
 
-		if ((pratosCadastrados != pratosRef.size())) {
+		if ((pratosCadastrados != nomesComponentes.length)) {
 			throw new CadastroRefeicaoInvalidaException(
 					". So eh possivel cadastrar refeicoes com pratos ja cadastrados.");
 		}
@@ -231,10 +260,12 @@ public class Restaurante {
 
 		case "nome":
 			ordenaMenuPorNome();
+			this.ordenacaoDoMenu = "nome";
 			return imprimeStringOrdem();
 
 		case "preco":
 			ordenaMenuPorPreco();
+			this.ordenacaoDoMenu = "preco";
 			return imprimeStringOrdem();
 
 		}
@@ -302,9 +333,11 @@ public class Restaurante {
 	 * @return o seu tipo
 	 */
 	private TiposDeRefeicoes getRefeicaoNome(String nomePrato) {
+		
 		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
 			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
 				return tiposDeRefeicoes;
+			
 			}
 		}
 		return null;

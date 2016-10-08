@@ -12,6 +12,7 @@ import exception.ConsultaHospedagemInvalidaException;
 import exception.ConsultaHospedeInvalidaException;
 import exception.ConsultaRestauranteInvalidoException;
 import exception.CriacaoQuartoInvalidoException;
+import exception.ErroOrdenacaoException;
 import exception.HospedagemAtivaInvalidaException;
 import exception.IndiceInvalidoException;
 import exception.MensagemErroException;
@@ -100,13 +101,13 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 	
 	// #####################################  Controle do Restaurante ##################################### 
 	@Override
-	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException  {
+	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException, ErroOrdenacaoException  {
 		controleHotel.getRestaurante().cadastraPrato(nomePrato, precoPrato, descricaoPrato);
 		
 	}
 
 	@Override
-	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws CadastroRefeicaoInvalidaException {
+	public void cadastraRefeicao(String nomeRef, String descricaoRef, String componentes) throws CadastroRefeicaoInvalidaException, ErroOrdenacaoException {
 		controleHotel.getRestaurante().cadastraRefeicao(nomeRef, descricaoRef, componentes);
 	}
 

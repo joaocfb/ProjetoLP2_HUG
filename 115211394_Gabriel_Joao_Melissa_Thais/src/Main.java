@@ -1,10 +1,6 @@
 import easyaccept.EasyAccept;
 
 /**
- * 
- */
-
-/**
  * Main> executa
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
