@@ -446,7 +446,6 @@ public class Hotel {
 		}
 		throw new ConsultaHospedagemInvalidaException("Hospede " + nome);
 	}
-	
 
 	/**
 	 * Metodo que retorna dados sobre os checkout do hotel
@@ -469,7 +468,6 @@ public class Hotel {
 
 		case "total":
 			DecimalFormat df = new DecimalFormat("R$.00");
-			df.setRoundingMode(RoundingMode.UP);
 			return df.format(retornarValorDeTransacoes());
 
 		case "nome":
@@ -550,7 +548,7 @@ public class Hotel {
 	 *            que o hospede possui
 	 * 
 	 * @return a quantidade de pontos que o hospede possui em formato string
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public String convertePontos(String email, int qtdPontos) throws IOException {
 		arquivoCadastroHospede();
@@ -736,9 +734,10 @@ public class Hotel {
 
 		hospedesDoHotel.get(email).getPedidosDoHospede().add(pedido);
 		restaurante.getPedidos().add(pedido);
-
+		
+		
 		// cria a transacao
-		Transacao transacaoAtual = factoryTransacao.criaTransacao((preco - valorDesconto), itemMenu,
+		Transacao transacaoAtual = factoryTransacao.criaTransacao(imprimeValor(preco, valorDesconto), itemMenu,
 				hospedesDoHotel.get(email).getNome());
 		transacoes.add(transacaoAtual);
 		recompensaPontos(email, preco);
@@ -753,6 +752,23 @@ public class Hotel {
 
 		return df.format(x);
 
+	}
+
+	/**
+	 * Metodo que formata a impressao do valor da transacao
+	 * @param preco
+	 * @param valorDesconto
+	 * @return O valor da transacao menos o desconto
+	 */
+	private double imprimeValor(double preco, double valorDesconto) {
+		String valor = "";
+		DecimalFormat df = new DecimalFormat(".00");
+		df.setRoundingMode(RoundingMode.UP);
+		
+		valor = df.format(preco - valorDesconto);
+		valor = valor.replace(",", ".");
+		double valorDouble = Double.parseDouble(valor);
+		return valorDouble;
 	}
 
 	/**
@@ -853,16 +869,16 @@ public class Hotel {
 
 	public void arquivoCadastroHospede() throws IOException {
 		Collection<Hospede> h = hospedesDoHotel.values();
-		
+
 		String quntHospedes = String.valueOf(h.size());
 		FileWriter arquivo;
 		arquivo = new FileWriter(new File("cad_hospedes.txt"));
-		arquivo.write("Cadastro de Hospedes: " + quntHospedes + " hospedes registrados  \r\n" );
+		arquivo.write("Cadastro de Hospedes: " + quntHospedes + " hospedes registrados  \r\n");
 
 		int cont = 1;
 		for (Hospede hospede : h) {
-			
-			arquivo.write("==> Hospede " +  String.valueOf(cont)+":  \r\n");
+
+			arquivo.write("==> Hospede " + String.valueOf(cont) + ":  \r\n");
 
 			cont += 1;
 			arquivo.write("Email: " + hospede.getEmail() + " \r\n");
@@ -870,75 +886,83 @@ public class Hotel {
 			arquivo.write("Data de nascimento: " + hospede.getDataNascimento() + " \r\n");
 			arquivo.write(" \r\n");
 
-
-
 		}
 
-		
 		arquivo.close();
 	}
-	
+
 	public void arquivoCadastroTiposDeRefeicoes() throws IOException {
 		ArrayList<TiposDeRefeicoes> h = getRestaurante().getRefeicao();
-		
+
 		int cont = 1;
 		String quntRefeicao = String.valueOf(h.size());
-		
+
 		FileWriter arquivo;
 		arquivo = new FileWriter(new File("cad_restaurante.txt"));
-		arquivo.write("Menu do Restaurante: " + quntRefeicao + " intens do cardapio  \r\n" );
-
+		arquivo.write("Menu do Restaurante: " + quntRefeicao + " intens do cardapio  \r\n");
 
 		for (TiposDeRefeicoes refeicao : h) {
 			if (refeicao.getClass().getSimpleName().equalsIgnoreCase("prato")) {
-				arquivo.write("==> Item " + String.valueOf(cont)+":  \r\n");
+				arquivo.write("==> Item " + String.valueOf(cont) + ":  \r\n");
 
-				arquivo.write("Nome: " + refeicao.getNome() + " Preco: R$" + String.valueOf(refeicao.getPreco()) + "\r\n");
+				arquivo.write(
+						"Nome: " + refeicao.getNome() + " Preco: R$" + String.valueOf(refeicao.getPreco()) + "\r\n");
 				arquivo.write("Descricao: " + refeicao.getDescricao() + " \r\n");
 				arquivo.write(" \r\n");
-				
-			}if(refeicao.getClass().getSimpleName().equalsIgnoreCase("refeicao")) {
-				arquivo.write("==> Item " + String.valueOf(cont)+":  \r\n");
 
-				Refeicao ref = (Refeicao)(refeicao);
-				arquivo.write("Nome: " + refeicao.getNome() + " Preco: R$" + String.valueOf(refeicao.getPreco()) + "\r\n");
+			}
+			if (refeicao.getClass().getSimpleName().equalsIgnoreCase("refeicao")) {
+				arquivo.write("==> Item " + String.valueOf(cont) + ":  \r\n");
+
+				Refeicao ref = (Refeicao) (refeicao);
+				arquivo.write(
+						"Nome: " + refeicao.getNome() + " Preco: R$" + String.valueOf(refeicao.getPreco()) + "\r\n");
 				arquivo.write("Descricao: " + refeicao.getDescricao() + " \r\n");
-				
-				
+
 				String stringPratos = " ";
 				for (Prato prato : ref.getComponentes()) {
 					stringPratos += prato.getNome() + ", ";
 				}
-				arquivo.write("Pratos: " + stringPratos.substring(0, stringPratos.length()-2) + " \r\n");
+				arquivo.write("Pratos: " + stringPratos.substring(0, stringPratos.length() - 2) + " \r\n");
 
 				arquivo.write(" \r\n");
 			}
-			
-
 
 			cont += 1;
 
 		}
 
-		
 		arquivo.close();
 	}
-	
-	public void arquivoTransacoesHotel() throws IOException{
+
+	public void arquivoTransacoesHotel() throws IOException {
 		FileWriter arquivo;
 		arquivo = new FileWriter(new File("cad_transacoes.txt"));
-		arquivo.write("Historico de Transacoes: \r\n" );
-		
-				for (Transacao t : transacoes) {
+		arquivo.write("Historico de Transacoes: \r\n");
 
-			arquivo.write("==> Nome: " + t.getNome() + " Gasto: R$" + t.getTotal() + " Detalhes: " + t.getDetalhe() );
+		for (Transacao t : transacoes) {
+
+			arquivo.write("==> Nome: " + t.getNome() + " Gasto: R$" + imprimeTotal(t.getTotal()) + " Detalhes: " + t.getDetalhe());
+			
+
+
 			arquivo.write(" \r\n");
 
 		}
 		
+		arquivo.write("==== Resumo de transacoes ====\r\n");
+		arquivo.write("Lucro total: R$" + getValorTransacoes() + "\r\n");
+		arquivo.write("Total de transacoes: " + getNumeroTransacoes() + "\r\n");
+		arquivo.write("Lucro medio por transacao: R$" + getValorTransacoes()/getNumeroTransacoes() + "\r\n");
+
 		arquivo.close();
 
+	}
 
+	private String imprimeTotal(double total) {
+		DecimalFormat df = new DecimalFormat("R$.00");
+		df.setRoundingMode(RoundingMode.UP);
+		return df.format(total);
 	}
 
 	/*
