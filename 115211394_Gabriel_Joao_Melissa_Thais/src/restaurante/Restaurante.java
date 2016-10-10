@@ -4,7 +4,6 @@ package restaurante;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
@@ -24,17 +23,18 @@ public class Restaurante {
 
 	private FactoryPrato factoryPrato;
 	private FactoryRefeicao factoryRefeicao;
-	private ArrayList<TiposDeRefeicoes> refeicao;
-	private ArrayList<Pedidos> pedidos;
+	private ArrayList<TiposDeRefeicoes> menuRestaurante;
+	private ArrayList<Pedidos> pedidosRestaurante;
 	private String ordenacaoDoMenu = null;
 
 	
 	
 	public Restaurante() {
+		
 		this.factoryPrato = new FactoryPrato();
 		this.factoryRefeicao = new FactoryRefeicao();
-		this.refeicao = new ArrayList<>();
-		this.pedidos = new ArrayList<>();
+		this.menuRestaurante = new ArrayList<>();
+		this.pedidosRestaurante = new ArrayList<>();
 		
 
 	}
@@ -63,7 +63,7 @@ public class Restaurante {
 		VerificaCadastro.verificaDescricaoPratoInvalido(descricaoPrato);
 
 		if (!ExistePratoRefeicao(nomePrato)) {
-			refeicao.add(factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
+			menuRestaurante.add(factoryPrato.criaPrato(nomePrato, descricaoPrato, precoPrato));
 
 		}
 		//Mantem a ordenacao anterior apos adicionar um novo prato 
@@ -98,7 +98,7 @@ public class Restaurante {
 		ArrayList<Prato> pratosRef = pratosRefeicao(componentes);
 		
 		if (!ExistePratoRefeicao(nomeRef)) {
-			refeicao.add(factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRef));
+			menuRestaurante.add(factoryRefeicao.criaRefeicao(nomeRef, descricaoRef, pratosRef));
 		}
 		
 		//Mantem a ordenacao anterior apos adicionar uma nova refeicao
@@ -164,7 +164,7 @@ public class Restaurante {
 	public String consultaMenuRestaurante() {
 		String retorno = "";
 
-		for (TiposDeRefeicoes nomeRef : refeicao) {
+		for (TiposDeRefeicoes nomeRef : menuRestaurante) {
 			retorno += nomeRef.getNome() + ";";
 		}
 
@@ -236,7 +236,7 @@ public class Restaurante {
 	public double precoPedido(String nomePedido) {
 		double preco = 0;
 
-		for (TiposDeRefeicoes pedido : refeicao) {
+		for (TiposDeRefeicoes pedido : menuRestaurante) {
 			if (pedido.getNome().equalsIgnoreCase(nomePedido)) {
 				preco = pedido.getPreco();
 			}
@@ -276,7 +276,7 @@ public class Restaurante {
 	 * ordena os pratos pelo nome
 	 */
 	public void ordenaMenuPorNome() {
-		Collections.sort(refeicao, new OrdenaPorNome());
+		Collections.sort(menuRestaurante, new OrdenaPorNome());
 
 	}
 
@@ -284,7 +284,7 @@ public class Restaurante {
 	 * ordena os pratos pelo preco
 	 */
 	public void ordenaMenuPorPreco() {
-		Collections.sort(refeicao, new OrdenaPorPreco());
+		Collections.sort(menuRestaurante, new OrdenaPorPreco());
 	}
 
 	// ########## metodos privados ##########
@@ -296,7 +296,7 @@ public class Restaurante {
 	 */
 	private String imprimeStringOrdem() {
 		String retorno = "";
-		for (TiposDeRefeicoes element : refeicao) {
+		for (TiposDeRefeicoes element : menuRestaurante) {
 			retorno += element.getNome() + ";";
 
 		}
@@ -315,7 +315,7 @@ public class Restaurante {
 	 * @return se o prato existe ou nao
 	 */
 	private boolean ExistePratoRefeicao(String nomePrato) {
-		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
+		for (TiposDeRefeicoes tiposDeRefeicoes : menuRestaurante) {
 			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
 				return true;
 			}
@@ -336,7 +336,7 @@ public class Restaurante {
 	 */
 	private TiposDeRefeicoes getRefeicaoNome(String nomePrato) {
 		
-		for (TiposDeRefeicoes tiposDeRefeicoes : refeicao) {
+		for (TiposDeRefeicoes tiposDeRefeicoes : menuRestaurante) {
 			if (tiposDeRefeicoes.getNome().equalsIgnoreCase(nomePrato)) {
 				return tiposDeRefeicoes;
 			
@@ -351,14 +351,14 @@ public class Restaurante {
 	 * @return the refeicao
 	 */
 	public ArrayList<TiposDeRefeicoes> getRefeicao() {
-		return refeicao;
+		return menuRestaurante;
 	}
 
 	/**
 	 * @return the pedidos
 	 */
 	public ArrayList<Pedidos> getPedidos() {
-		return pedidos;
+		return pedidosRestaurante;
 	}
 	
 	/* (non-Javadoc)
@@ -366,7 +366,55 @@ public class Restaurante {
 	 */
 	@Override
 	public String toString() {
-		return "Restaurante [refeicao=" + refeicao + "]";
+		return "Restaurante [refeicao=" + menuRestaurante + "]";
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((menuRestaurante == null) ? 0 : menuRestaurante.hashCode());
+		result = prime * result + ((pedidosRestaurante == null) ? 0 : pedidosRestaurante.hashCode());
+		return result;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Restaurante)) {
+			return false;
+		}
+		
+		Restaurante outro = (Restaurante) obj;
+		
+		if (menuRestaurante == null) {
+			if (outro.menuRestaurante != null) {
+				return false;
+			}
+		} else if (!menuRestaurante.equals(outro.menuRestaurante)) {
+			return false;
+		}
+		if (pedidosRestaurante == null) {
+			if (outro.pedidosRestaurante != null) {
+				return false;
+			}
+		} else if (!pedidosRestaurante.equals(outro.pedidosRestaurante)) {
+			return false;
+		}
+		return true;
 	}
 
 }

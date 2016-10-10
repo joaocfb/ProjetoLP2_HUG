@@ -28,6 +28,7 @@ public class Hospede {
 	private String nome;
 	private String email;
 	private int pontos = 0;
+	
 	private LocalDate dataNascimento;
 	private TipoDeCartao tipoDeCartao;
 
@@ -45,9 +46,6 @@ public class Hospede {
 	 */
 	public Hospede(String nome, String email, String dataNascimento) throws VerificaNuloEVazioException  {
 		
-		testandoNome(nome);
-		testandoEmail(email);
-		testandoDataNascimento(dataNascimento);
 		
 		this.nome = nome;
 		this.email = email;
@@ -92,27 +90,7 @@ public class Hospede {
 		return getTipoDeCartao().convertePontos(qtdPontos);
 	}
 	
-	//teste do construtor
-	private void testandoNome(String nome) throws VerificaNuloEVazioException {
-		if (nome == null || nome.trim().isEmpty()) {
-			throw new VerificaNuloEVazioException("Nome do hospede");
-		}
-	}
 
-	//teste do construtor
-	private void testandoEmail(String email) throws VerificaNuloEVazioException{
-		if (email == null || email.trim().isEmpty()) {
-			throw new VerificaNuloEVazioException("Email do hospede");
-		}
-	}
-	
-	//teste do construtor
-	private void testandoDataNascimento(String dataNascimento) throws VerificaNuloEVazioException{
-		if (dataNascimento == null || dataNascimento.trim().isEmpty()) {
-			throw new VerificaNuloEVazioException("Data de Nascimento do hospede");
-		}
-	}
-	
 	/**
 	 * @return the pedidosDoHospede
 	 */
@@ -225,6 +203,7 @@ public class Hospede {
 
 	}
 	
+	
 	/**
 	 * 
 	 * @return
@@ -233,6 +212,7 @@ public class Hospede {
 		String dataString = formatoData.format(dataNascimento);
 		return dataString;
 	}
+	
 	
 	//toString
 	@Override
