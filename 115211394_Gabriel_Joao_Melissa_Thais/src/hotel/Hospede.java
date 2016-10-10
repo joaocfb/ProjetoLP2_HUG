@@ -214,10 +214,10 @@ public class Hospede {
 	}
 	
 	
-	//toString
 	@Override
 	public String toString() {
-		return "Hospede [nome=" + nome + ", email=" + email + ", dataNascimento=" + dataNascimento + "]";
+		return "Nome: " + getNome() + "\r\n" + "Email: " + getEmail() + "\r\n" + "Data de Nascimento: "
+				+ getDataNascimento() + "\r\n";
 	}
 
 	//Hashcode

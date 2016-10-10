@@ -370,7 +370,6 @@ public class Hotel {
 				Transacao transacaoAtual = factoryTransacao.criaTransacao(precoComDesconto, IDQuarto,
 						hospedesDoHotel.get(email).getNome());
 				transacoes.add(transacaoAtual);
-
 				atualizaValoresTransacoes(precoComDesconto, email);
 
 				// formata o valor da estadia para String
@@ -382,6 +381,7 @@ public class Hotel {
 				// Adiciona no hospede os pontos gerado no chekout
 				recompensaPontos(email, precoDaEstadia);
 
+				
 				return retorno;
 			}
 		}
@@ -475,6 +475,7 @@ public class Hotel {
 			String modificada = nomesHospedes.substring(0, nomesHospedes.length() - 1);
 			return modificada;
 		}
+		
 		throw new MensagemErroException("");
 	}
 
@@ -551,16 +552,18 @@ public class Hotel {
 	 * @throws IOException
 	 */
 	public String convertePontos(String email, int qtdPontos) throws IOException {
-		arquivoCadastroHospede();
-		arquivoTransacoesHotel();
-		arquivoCadastroTiposDeRefeicoes();
+		arquivoCadastroHospede("cad_hospedes.txt");
+		arquivoTransacoesHotel("cad_transacoes.txt");
+		arquivoCadastroTiposDeRefeicoes("cad_restaurante.txt");
+		arquivoCompletoHotel();
 		double pontosConvertidos = hospedesDoHotel.get(email).convertePontos(qtdPontos);
 
 		// formata a string
 		String retorno = "";
 		retorno += String.format("R$%.2f", pontosConvertidos);
-		this.setValorTransacoes(this.getValorTransacoes() + pontosConvertidos);
+		
 		return retorno;
+		
 
 	}
 
@@ -722,13 +725,13 @@ public class Hotel {
 	 */
 	public String realizaPedido(String email, String itemMenu) throws PedidosInvalidoException {
 
+		// Verifica se a quantidade de pontos de hospede ja e o
+		// suficiente para mudar o tipo de cartao
+		hospedesDoHotel.get(email).alteraTipoDeCartao();
 		double preco = restaurante.precoPedido(itemMenu);
 
 		Pedidos pedido = factoryPedidos.criaPedido(email, preco);
 
-		// Verifica se a quantidade de pontos de hospede ja e o
-		// suficiente para mudar o tipo de cartao
-		hospedesDoHotel.get(email).alteraTipoDeCartao();
 
 		double valorDesconto = hospedesDoHotel.get(email).getTipoDeCartao().desconto(preco);
 
@@ -739,7 +742,9 @@ public class Hotel {
 		// cria a transacao
 		Transacao transacaoAtual = factoryTransacao.criaTransacao(imprimeValor(preco, valorDesconto), itemMenu,
 				hospedesDoHotel.get(email).getNome());
+		
 		transacoes.add(transacaoAtual);
+		
 		recompensaPontos(email, preco);
 
 		// atualiza os dados das transacoes do hotel
@@ -749,7 +754,8 @@ public class Hotel {
 
 		DecimalFormat df = new DecimalFormat("R$.00");
 		df.setRoundingMode(RoundingMode.UP);
-
+		
+		
 		return df.format(x);
 
 	}
@@ -803,7 +809,7 @@ public class Hotel {
 		return hospedesDoHotel;
 	}
 
-	/**
+	/**+1
 	 * @return the numeroTransacoes
 	 */
 	public int getNumeroTransacoes() {
@@ -867,12 +873,12 @@ public class Hotel {
 		return "Hotel [nomesHospedes=" + nomesHospedes + "]";
 	}
 
-	public void arquivoCadastroHospede() throws IOException {
+	public void arquivoCadastroHospede(String path) throws IOException {
 		Collection<Hospede> h = hospedesDoHotel.values();
 
 		String quntHospedes = String.valueOf(h.size());
 		FileWriter arquivo;
-		arquivo = new FileWriter(new File("cad_hospedes.txt"));
+		arquivo = new FileWriter(new File(path));
 		arquivo.write("Cadastro de Hospedes: " + quntHospedes + " hospedes registrados  \r\n");
 
 		int cont = 1;
@@ -881,32 +887,29 @@ public class Hotel {
 			arquivo.write("==> Hospede " + String.valueOf(cont) + ":  \r\n");
 
 			cont += 1;
-			arquivo.write("Email: " + hospede.getEmail() + " \r\n");
-			arquivo.write("Nome: " + hospede.getNome() + " \r\n");
-			arquivo.write("Data de nascimento: " + hospede.getDataNascimento() + " \r\n");
-			arquivo.write(" \r\n");
-
+			arquivo.write(hospede.toString());
+			
 		}
 
 		arquivo.close();
 	}
 
-	public void arquivoCadastroTiposDeRefeicoes() throws IOException {
+	public void arquivoCadastroTiposDeRefeicoes(String path) throws IOException {
 		ArrayList<TiposDeRefeicoes> h = getRestaurante().getRefeicao();
 
 		int cont = 1;
 		String quntRefeicao = String.valueOf(h.size());
 
 		FileWriter arquivo;
-		arquivo = new FileWriter(new File("cad_restaurante.txt"));
-		arquivo.write("Menu do Restaurante: " + quntRefeicao + " intens do cardapio  \r\n");
+		arquivo = new FileWriter(new File(path));
+		arquivo.write("Menu do Restaurante: " + quntRefeicao + " itens do cardapio  \r\n");
 
 		for (TiposDeRefeicoes refeicao : h) {
 			if (refeicao.getClass().getSimpleName().equalsIgnoreCase("prato")) {
 				arquivo.write("==> Item " + String.valueOf(cont) + ":  \r\n");
 
 				arquivo.write(
-						"Nome: " + refeicao.getNome() + " Preco: R$" + String.valueOf(refeicao.getPreco()) + "\r\n");
+						"Nome: " + refeicao.getNome() + " Preco: R$" + refeicao.getPrecoFormatado() + "\r\n");
 				arquivo.write("Descricao: " + refeicao.getDescricao() + " \r\n");
 				arquivo.write(" \r\n");
 
@@ -916,7 +919,7 @@ public class Hotel {
 
 				Refeicao ref = (Refeicao) (refeicao);
 				arquivo.write(
-						"Nome: " + refeicao.getNome() + " Preco: R$" + String.valueOf(refeicao.getPreco()) + "\r\n");
+						"Nome: " + refeicao.getNome() + " Preco: R$" + refeicao.getPrecoFormatado() + "\r\n");
 				arquivo.write("Descricao: " + refeicao.getDescricao() + " \r\n");
 
 				String stringPratos = " ";
@@ -934,30 +937,43 @@ public class Hotel {
 
 		arquivo.close();
 	}
+	
+	public void arquivoCompletoHotel() throws IOException {
 
-	public void arquivoTransacoesHotel() throws IOException {
 		FileWriter arquivo;
-		arquivo = new FileWriter(new File("cad_transacoes.txt"));
+		arquivo = new FileWriter(new File("hotel_principal.txt"));
+		arquivo.write("======================================================  \r\n");
+		arquivoCadastroHospede("hotel_principal.txt");
+		arquivo.write("\r\n");
+		arquivo.write("======================================================  \r\n");
+		arquivoCadastroTiposDeRefeicoes("hotel_principal.txt");
+		arquivo.write("\r\n");
+		arquivo.write("======================================================  \r\n");
+		arquivoTransacoesHotel("hotel_principal.txt");
+	}
+
+	public void arquivoTransacoesHotel(String path) throws IOException {
+		FileWriter arquivo;
+		arquivo = new FileWriter(new File(path));
 		arquivo.write("Historico de Transacoes: \r\n");
 
 		for (Transacao t : transacoes) {
 
 			arquivo.write("==> Nome: " + t.getNome() + " Gasto: R$" + imprimeTotal(t.getTotal()) + " Detalhes: " + t.getDetalhe());
-			
-
-
 			arquivo.write(" \r\n");
 
 		}
 		
 		arquivo.write("==== Resumo de transacoes ====\r\n");
-		arquivo.write("Lucro total: R$" + getValorTransacoes() + "\r\n");
+		arquivo.write("Lucro total: R$" + retornarValorDeTransacoes() + "\r\n");
 		arquivo.write("Total de transacoes: " + getNumeroTransacoes() + "\r\n");
-		arquivo.write("Lucro medio por transacao: R$" + getValorTransacoes()/getNumeroTransacoes() + "\r\n");
+		arquivo.write("Lucro medio por transacao: R$" + retornarValorDeTransacoes()/transacoes.size() + "\r\n");
 
 		arquivo.close();
 
 	}
+	
+	
 
 	private String imprimeTotal(double total) {
 		DecimalFormat df = new DecimalFormat("R$.00");

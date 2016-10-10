@@ -3,6 +3,9 @@
  */
 package restaurante;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
@@ -36,6 +39,12 @@ public class TiposDeRefeicoes implements Comparable<TiposDeRefeicoes> {
 		return preco;
 	}
 
+	public String getPrecoFormatado() {
+		DecimalFormat df = new DecimalFormat("R$0.00");
+		df.setRoundingMode(RoundingMode.HALF_UP);
+		return df.format(this.getPreco());
+	}
+	
 	/**
 	 * @param preco the preco to set
 	 */

@@ -1,0 +1,17 @@
+Cadastro de Hospedes: 4 hospedes registrados  
+==> Hospede 1:  
+Nome: Ines Brasil
+Email: ines@brasil.com.br
+Data de Nascimento: 25/10/1969
+==> Hospede 2:  
+Nome: Alfred Nobel
+Email: nobel@got.se
+Data de Nascimento: 21/10/1983
+==> Hospede 3:  
+Nome: Sven Gudmar Svenson
+Email: sven@sverige.se
+Data de Nascimento: 10/02/1978
+==> Hospede 4:  
+Nome: Agnetha Faltskog
+Email: agnetha@abba.se
+Data de Nascimento: 05/04/1950
