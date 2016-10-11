@@ -47,7 +47,7 @@ public class Fachada {
 		controller.iniciaSistema();
 	}
 	
-	public void fechaSistema() {
+	public void fechaSistema() throws IOException {
 		controller.fechaSistema();
 	}
 	// ## Hotel ## 

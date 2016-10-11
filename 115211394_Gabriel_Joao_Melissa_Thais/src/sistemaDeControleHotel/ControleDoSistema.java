@@ -45,8 +45,8 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 		//NAO IMPLEMENTADO AINDA.
 	}
 	
-	public void fechaSistema() {
-		//NAO IMPLEMENTADO AINDA.
+	public void fechaSistema() throws IOException {
+		controleHotel.fechaSistema();
 	}
 	
 	// ##################################### Controle do Hotel #####################################

@@ -16,6 +16,18 @@ public class verificaCheckin {
 		}
 	}
 	
+	/**
+	 * Metodo que verifica se o tipo passado do quarto eh valido
+	 * 
+	 * @param tipoQuarto
+	 * @throws CheckinInvalidoException
+	 */
+	public static void verificaTipoQuartoValido(String tipoQuarto) throws CheckinInvalidoException {
+		if (!(tipoQuarto.equalsIgnoreCase("luxo") || tipoQuarto.equalsIgnoreCase("simples")
+				|| tipoQuarto.equalsIgnoreCase("presidencial"))) {
+			throw new CheckinInvalidoException("Tipo de quarto invalido.");
+		}
+	}
 
 	public static void verificaEmailFrmInvalidoCheckin(String email) throws CheckinInvalidoException  {
 

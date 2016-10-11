@@ -106,6 +106,17 @@ public class Hotel {
 		this.quartosOcupadosDoHotel = new HashMap<>();
 	}
 
+	
+	public void fechaSistema() throws IOException{
+		
+		arquivoCadastroHospede("cad_hospedes.txt");
+		arquivoTransacoesHotel("cad_transacoes.txt");
+		arquivoCadastroTiposDeRefeicoes("cad_restaurante.txt");
+		arquivoCompletoHotel();
+		
+	}
+	
+	
 	// #################################################CRUD
 	// HOSPEDE#######################################################
 
@@ -304,7 +315,7 @@ public class Hotel {
 		}
 
 		verificaCheckin.verificaQuantDiasInvalidaCheckin(quantDias);
-		verificaTipoQuartoValido(tipoQuarto);
+		verificaCheckin.verificaTipoQuartoValido(tipoQuarto);
 
 		// livre
 		if (quartosLivresDoHotel.containsKey(IDQuarto)) {
@@ -552,10 +563,7 @@ public class Hotel {
 	 * @throws IOException
 	 */
 	public String convertePontos(String email, int qtdPontos) throws IOException {
-		arquivoCadastroHospede("cad_hospedes.txt");
-		arquivoTransacoesHotel("cad_transacoes.txt");
-		arquivoCadastroTiposDeRefeicoes("cad_restaurante.txt");
-		arquivoCompletoHotel();
+		
 		double pontosConvertidos = hospedesDoHotel.get(email).convertePontos(qtdPontos);
 
 		// formata a string
@@ -583,18 +591,7 @@ public class Hotel {
 		return preco;
 	}
 
-	/**
-	 * Metodo que verifica se o tipo passado do quarto eh valido
-	 * 
-	 * @param tipoQuarto
-	 * @throws CheckinInvalidoException
-	 */
-	private void verificaTipoQuartoValido(String tipoQuarto) throws CheckinInvalidoException {
-		if (!(tipoQuarto.equalsIgnoreCase("luxo") || tipoQuarto.equalsIgnoreCase("simples")
-				|| tipoQuarto.equalsIgnoreCase("presidencial"))) {
-			throw new CheckinInvalidoException("Tipo de quarto invalido.");
-		}
-	}
+
 
 	/**
 	 * Metodo que percorre as estadias e recupera o id dos quartos
