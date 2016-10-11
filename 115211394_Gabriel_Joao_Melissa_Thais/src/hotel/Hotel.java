@@ -45,7 +45,10 @@ import valida.verificaRemocao;
  * Remove hospedes atraves do email; Checkin/Checkout; Atualiza o historico de
  * lucros.
  * 
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
+ * @author Gabriel Alves 
+ * @author Joao Carlos 
+ * @author Melissa Diniz 
+ * @author Thais Nicoly
  *
  */
 public class Hotel {
@@ -587,7 +590,7 @@ public class Hotel {
 		for (Transacao c : transacoes) {
 			preco += c.getTotal();
 		}
-
+		
 		return preco;
 	}
 
@@ -960,13 +963,18 @@ public class Hotel {
 			arquivo.write(" \r\n");
 
 		}
-		
+
+		DecimalFormat df = new DecimalFormat("R$.00");
+		df.setRoundingMode(RoundingMode.HALF_EVEN);
+
 		arquivo.write("==== Resumo de transacoes ====\r\n");
-		arquivo.write("Lucro total: R$" + retornarValorDeTransacoes() + "\r\n");
-		arquivo.write("Total de transacoes: " + getNumeroTransacoes() + "\r\n");
-		arquivo.write("Lucro medio por transacao: R$" + retornarValorDeTransacoes()/transacoes.size() + "\r\n");
+		arquivo.write("Lucro total: R$" + df.format(retornarValorDeTransacoes()) + "\r\n");
+		arquivo.write("Total de transacoes: " + numeroTransacoes + "\r\n");
+		arquivo.write(
+				"Lucro medio por transacao: R$" + df.format(retornarValorDeTransacoes() / transacoes.size()) + "\r\n");
 
 		arquivo.close();
+
 
 	}
 	

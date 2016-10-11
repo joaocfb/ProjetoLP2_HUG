@@ -2,7 +2,10 @@ import easyaccept.EasyAccept;
 
 /**
  * Main> executa
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
+ * @author Gabriel Alves 
+ * @author Joao Carlos 
+ * @author Melissa Diniz 
+ * @author Thais Nicoly
  *
  */
 public class Main {

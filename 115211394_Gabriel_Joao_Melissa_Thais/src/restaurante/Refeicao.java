@@ -3,8 +3,6 @@
  */
 package restaurante;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +20,9 @@ public class Refeicao extends TiposDeRefeicoes{
 
 	}
 	
+	/**
+	 * Metodo que faz o calculo do preco de uma refeicao
+	 */
 	@Override
 	public double getPreco(){
 		double precoRef = 0.0;
@@ -30,6 +31,9 @@ public class Refeicao extends TiposDeRefeicoes{
 		}
 		return precoRef * 0.9;
 	}
+	
+
+
 	
 	@Override
 	public String getDescricao() {

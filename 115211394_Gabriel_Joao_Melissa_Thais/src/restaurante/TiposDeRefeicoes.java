@@ -7,8 +7,10 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 /**
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * @author Gabriel Alves 
+ * @author Joao Carlos 
+ * @author Melissa Diniz 
+ * @author Thais Nicoly
  */
 public class TiposDeRefeicoes implements Comparable<TiposDeRefeicoes> {
 	

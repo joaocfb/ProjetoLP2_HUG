@@ -3,11 +3,16 @@
  */
 package hotel;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 /**
  * Define o objeto transacao
  * 
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * @author Gabriel Alves 
+ * @author Joao Carlos 
+ * @author Melissa Diniz 
+ * @author Thais Nicoly
  */
 public class Transacao {
 	double total;
@@ -30,8 +35,17 @@ public class Transacao {
 	 * @return the total
 	 */
 	public double getTotal() {
+		
 		return total;
 	}
+	
+	public String getPrecoFormatado() {
+		DecimalFormat df = new DecimalFormat("R$0.00");
+		df.setRoundingMode(RoundingMode.HALF_UP);
+		return df.format(this.getTotal());
+	}
+
+
 
 	/**
 	 * @param total

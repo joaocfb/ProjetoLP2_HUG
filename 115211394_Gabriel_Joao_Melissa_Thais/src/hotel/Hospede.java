@@ -34,6 +34,7 @@ public class Hospede {
 
 	private LinkedHashMap<String, Estadia> estadias;
 	private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
 	private ArrayList<Pedidos> pedidosDoHospede;
 
 
@@ -54,10 +55,18 @@ public class Hospede {
 		this.estadias = new LinkedHashMap<>();
 		this.setDataNascimento(dataNascimento);
 		this.pedidosDoHospede = new ArrayList<>();
-		
+		outroFormatoData();
+	
 	}
 	
-	
+	public String outroFormatoData(){
+		String retorno = "";
+		
+		 LocalDate hoje = this.dataNascimento;
+		 retorno = hoje.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		return retorno;
+		
+	}
 	/**
 	 * Metodo que altera o tipo do cartao
 	 */
@@ -203,6 +212,7 @@ public class Hospede {
 
 	}
 	
+
 	
 	/**
 	 * 
@@ -214,10 +224,11 @@ public class Hospede {
 	}
 	
 	
+	
 	@Override
 	public String toString() {
 		return "Nome: " + getNome() + "\r\n" + "Email: " + getEmail() + "\r\n" + "Data de Nascimento: "
-				+ getDataNascimento() + "\r\n";
+				+ outroFormatoData() + "\r\n";
 	}
 
 	//Hashcode
