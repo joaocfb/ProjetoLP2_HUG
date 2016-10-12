@@ -3,13 +3,17 @@
  */
 package restaurante;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class OrdenaPorPreco implements Comparator<Object>{
+public class OrdenaPorPreco implements Comparator<Object>,Serializable{
+
+	
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Compara refeicoes pelo preco

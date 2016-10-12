@@ -1,13 +1,17 @@
 package cartao;
 
+import java.io.Serializable;
 
 /**
  * Classe que define o cartao tipo PADRAO
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class Padrao implements TipoDeCartao {
+public class Padrao implements TipoDeCartao, Serializable {
 	
+	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Metodo que calcula o bonus aplicado no cartao, sobrescrita
 	 */

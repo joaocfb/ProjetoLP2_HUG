@@ -3,11 +3,15 @@
  */
 package quartos;
 
+import java.io.Serializable;
+
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class QuartoPresidencial extends QuartoSimples{
+public class QuartoPresidencial extends QuartoSimples implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private double PRECO = 450.0; 
 	
 	public QuartoPresidencial(String iD) {
@@ -22,11 +26,5 @@ public class QuartoPresidencial extends QuartoSimples{
 		return PRECO;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "QuartoLuxo [PRECO=" + PRECO + ", status=" + getStatus() + ", ID=" + getID() + "]";
-	}
+	
 }

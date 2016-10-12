@@ -3,13 +3,17 @@ package testeUnidade;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.Serializable;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import hotel.Estadia;
 
-public class EstadiaTest {
-	
+public class EstadiaTest implements Serializable {
+
+
+	private static final long serialVersionUID = 1L;
 	private Estadia estadia1;
 	private Estadia estadia2;
 	private Estadia estadia3;

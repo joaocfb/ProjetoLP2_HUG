@@ -3,12 +3,16 @@
  */
 package hotel;
 
+import java.io.Serializable;
+
 /**
  * Classe que definine o tipo checkout 
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class Checkout {
+public class Checkout implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private String idCheckout;
 	private double valor;
 	

@@ -4,6 +4,8 @@
 package hotel;
 
 
+import java.io.Serializable;
+
 import exception.VerificaNuloEVazioException;
 
 /**
@@ -12,7 +14,9 @@ import exception.VerificaNuloEVazioException;
  * 
  */
 
-public class Estadia {
+public class Estadia implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private int quantDias;
 	private String IDQuarto;
 	

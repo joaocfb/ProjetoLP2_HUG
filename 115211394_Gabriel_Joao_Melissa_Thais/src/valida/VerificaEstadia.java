@@ -1,8 +1,17 @@
 package valida;
 
+import java.io.Serializable;
+
 import exception.CheckinInvalidoException;
 
-public class VerificaEstadia {
+/**
+ * 
+ * @author Melissa
+ *
+ */
+public class VerificaEstadia implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	public static void verificaQuantDias(int quant) throws CheckinInvalidoException  {
 		if (quant <= 0) {

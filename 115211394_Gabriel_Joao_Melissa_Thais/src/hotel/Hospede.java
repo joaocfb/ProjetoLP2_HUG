@@ -4,6 +4,7 @@
 package hotel;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -22,8 +23,10 @@ import cartao.*;
  *
  */
 
-public class Hospede {
+public class Hospede implements Serializable{
 	
+
+	private static final long serialVersionUID = 1L;
 	//atributos do hospede, cada hospede possui uma ou mais estadia
 	private String nome;
 	private String email;

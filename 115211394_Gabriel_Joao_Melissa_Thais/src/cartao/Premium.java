@@ -1,11 +1,16 @@
 package cartao;
 
+import java.io.Serializable;
+
 /**
  * Classe que define o cartao tipo PREMIUM
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class Premium implements TipoDeCartao {
+public class Premium implements TipoDeCartao, Serializable {
+
+	
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Metodo que calcula o bonus aplicado no cartao, sobrescrita

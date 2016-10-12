@@ -1,15 +1,17 @@
 package valida;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
 import exception.CadastroHospedeInvalidoException;
 import exception.CadastroPratoInvalidoException;
 import exception.CadastroRefeicaoInvalidaException;
 
-public class VerificaCadastro {
+public class VerificaCadastro implements Serializable{
 	
 	
-	// ########################## Cadastro do Hospede ##########################
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * verifica se a data eh vazia no cadastro 
 	 * @param dataNascimento

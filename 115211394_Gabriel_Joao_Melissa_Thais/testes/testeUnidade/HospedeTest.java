@@ -5,6 +5,9 @@ package testeUnidade;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
+import java.io.Serializable;
+
 import hotel.Hospede;
 
 import org.junit.Assert;
@@ -17,8 +20,10 @@ import exception.VerificaNuloEVazioException;
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class HospedeTest {
+public class HospedeTest implements Serializable{
 	
+	
+	private static final long serialVersionUID = 1L;
 	private Hospede hospedePamela;
 	private Hospede hospedeLucas;
 	private Hospede hospedeJustin;

@@ -3,6 +3,7 @@
  */
 package restaurante;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -12,8 +13,10 @@ import java.text.DecimalFormat;
  * @author Melissa Diniz 
  * @author Thais Nicoly
  */
-public class TiposDeRefeicoes implements Comparable<TiposDeRefeicoes> {
+public class TiposDeRefeicoes implements Comparable<TiposDeRefeicoes>, Serializable {
 	
+	
+	private static final long serialVersionUID = 1L;
 	private String nome;
 	private String descricao;
 	private double preco;

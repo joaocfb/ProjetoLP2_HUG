@@ -3,14 +3,17 @@
  */
 package restaurante;
 
+import java.io.Serializable;
+
 /**
  * @author Gabriel Alves 
  * @author Joao Carlos 
  * @author Melissa Diniz 
  * @author Thais Nicoly
  */
-public class Prato extends TiposDeRefeicoes{
+public class Prato extends TiposDeRefeicoes implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private double preco;
 	
 	public Prato(String nome, String descricao, double preco) {

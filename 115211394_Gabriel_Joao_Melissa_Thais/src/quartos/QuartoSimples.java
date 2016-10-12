@@ -3,52 +3,26 @@
  */
 package quartos;
 
+import java.io.Serializable;
+
 /**
  * Classe Quarto
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class QuartoSimples {
+public class QuartoSimples implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private String ID;
-	//representa se o quarto esta vago(true) ou nao(false)
-	private boolean status;
 	private double PRECO = 100.0;
 	
 	public QuartoSimples(String iD) {
 		this.ID = iD;
-		//quarto comeca livre
-		this.status = true;
+		
 	}
 	
-	
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "QuartoSimples [ID=" + ID + ", status=" + getStatus() + ", PRECO=" + PRECO + "]";
-	}
-
-
-
 	/**
-	 * @return the status
-	 */
-	public boolean getStatus() {
-		return status;
-	}
-
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
-
-	/**
-	 * @return the iD
+	 * @return the iD do quarto
 	 */
 	public String getID() {
 		return ID;
@@ -59,6 +33,54 @@ public class QuartoSimples {
 	 */
 	public double getPRECO() {
 		return PRECO;
+	}
+
+
+
+	/**
+	 * ToString do objeto tipo quarto
+	 */
+	@Override
+	public String toString() {
+		return "QuartoSimples [ID=" + ID + ", PRECO=" + PRECO + "]";
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ID == null) ? 0 : ID.hashCode());
+		return result;
+	}
+
+
+
+	/**
+	 * Dois quartos sao iguais se possuirem mesmo ID
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof QuartoSimples)) {
+			return false;
+		}
+		QuartoSimples other = (QuartoSimples) obj;
+		if (ID == null) {
+			if (other.ID != null) {
+				return false;
+			}
+		} else if (!ID.equals(other.ID)) {
+			return false;
+		}
+		return true;
 	}
 	
 	

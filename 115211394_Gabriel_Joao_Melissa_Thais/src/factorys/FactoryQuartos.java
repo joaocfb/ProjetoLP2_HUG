@@ -3,6 +3,8 @@
  */
 package factorys;
 
+import java.io.Serializable;
+
 import exception.CriacaoQuartoInvalidoException;
 import quartos.QuartoLuxo;
 import quartos.QuartoPresidencial;
@@ -12,9 +14,12 @@ import quartos.QuartoSimples;
  * Fabrica de Quartos
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly *
  */
-public class FactoryQuartos {
+public class FactoryQuartos implements Serializable {
 
-    /**
+   
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Cria um novo quarto do tipo dado
      * @param ID do Quarto
      * @param Tipo do Quarto

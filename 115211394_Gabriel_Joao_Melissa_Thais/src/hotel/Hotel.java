@@ -107,15 +107,18 @@ public class Hotel {
 		this.hospedesDoHotel = new HashMap<String, Hospede>();
 		this.quartosLivresDoHotel = new HashMap<>();
 		this.quartosOcupadosDoHotel = new HashMap<>();
+		
+		
 	}
 
-	
-	public void fechaSistema() throws IOException{
-		
-		arquivoCadastroHospede("cad_hospedes.txt");
-		arquivoTransacoesHotel("cad_transacoes.txt");
-		arquivoCadastroTiposDeRefeicoes("cad_restaurante.txt");
-		arquivoCompletoHotel();
+	public void iniciaArquivoSistema() throws IOException{
+
+		File sub = new File("arquivos_sistema"+File.separator+"relatorios");
+		sub.mkdirs();
+		arquivoCadastroHospede("arquivos_sistema/relatorios/cad_hospedes.txt");
+		arquivoTransacoesHotel("arquivos_sistema/relatorios/cad_transacoes.txt");
+		arquivoCadastroTiposDeRefeicoes("arquivos_sistema/relatorios/cad_restaurante.txt");
+		arquivoCompletoHotel("arquivos_sistema/relatorios/hotel_principal.txt");
 		
 	}
 	
@@ -669,6 +672,7 @@ public class Hotel {
 		dados.append(calculaTotalEstadia(email, IDQuarto));
 
 		lucrosDoHotel.add(dados.toString());
+		System.out.println(dados);
 		return dados.toString();
 	}
 
@@ -755,7 +759,6 @@ public class Hotel {
 		DecimalFormat df = new DecimalFormat("R$.00");
 		df.setRoundingMode(RoundingMode.UP);
 		
-		
 		return df.format(x);
 
 	}
@@ -791,6 +794,18 @@ public class Hotel {
 		this.setNomesHospedes(this.getNomesHospedes() + hospedesDoHotel.get(email).getNome() + ";");
 
 	}
+	
+	/**
+	 * Metodo que imprime o total de uma transacao formatada 
+	 * @param total
+	 * @return
+	 */
+	private String imprimeTotal(double total) {
+		DecimalFormat df = new DecimalFormat("R$.00");
+		df.setRoundingMode(RoundingMode.UP);
+		return df.format(total);
+	}
+
 
 	// Getters
 
@@ -873,6 +888,8 @@ public class Hotel {
 		return "Hotel [nomesHospedes=" + nomesHospedes + "]";
 	}
 
+	//###################################### ARQUIVOS ##########################################################
+	
 	public void arquivoCadastroHospede(String path) throws IOException {
 		Collection<Hospede> h = hospedesDoHotel.values();
 
@@ -894,6 +911,11 @@ public class Hotel {
 		arquivo.close();
 	}
 
+	/**
+	 * Metodo que cria um arquivo e escreve nele dados do restaurante
+	 * @param path
+	 * @throws IOException
+	 */
 	public void arquivoCadastroTiposDeRefeicoes(String path) throws IOException {
 		ArrayList<TiposDeRefeicoes> h = getRestaurante().getRefeicao();
 
@@ -938,20 +960,30 @@ public class Hotel {
 		arquivo.close();
 	}
 	
-	public void arquivoCompletoHotel() throws IOException {
+	/**
+	 * Metodo que cria um arquivo e escreve nele dados dos hospedes do hotel
+	 * @param path
+	 * @throws IOException
+	 */
+	public void arquivoCompletoHotel(String path) throws IOException {
 
-		FileWriter arquivo;
-		arquivo = new FileWriter(new File("hotel_principal.txt"));
+		FileWriter arquivo = new FileWriter(new File(path));
+		
 		arquivo.write("======================================================  \r\n");
-		arquivoCadastroHospede("hotel_principal.txt");
+		arquivoCadastroHospede("arquivos_sistema/relatorios/hotel_principal.txt");
 		arquivo.write("\r\n");
 		arquivo.write("======================================================  \r\n");
-		arquivoCadastroTiposDeRefeicoes("hotel_principal.txt");
+		arquivoCadastroTiposDeRefeicoes("arquivos_sistema/relatorios/hotel_principal.txt");
 		arquivo.write("\r\n");
 		arquivo.write("======================================================  \r\n");
-		arquivoTransacoesHotel("hotel_principal.txt");
+		arquivoTransacoesHotel("arquivos_sistema/relatorios/hotel_principal.txt");
 	}
 
+	/**
+	 * Metodo que cria um arquivo e escreve nele dados das transacoes
+	 * @param path
+	 * @throws IOException
+	 */
 	public void arquivoTransacoesHotel(String path) throws IOException {
 		FileWriter arquivo;
 		arquivo = new FileWriter(new File(path));
@@ -978,13 +1010,6 @@ public class Hotel {
 
 	}
 	
-	
-
-	private String imprimeTotal(double total) {
-		DecimalFormat df = new DecimalFormat("R$.00");
-		df.setRoundingMode(RoundingMode.UP);
-		return df.format(total);
-	}
 
 	/*
 	 * (non-Javadoc)

@@ -1,5 +1,7 @@
 package factorys;
 
+import java.io.Serializable;
+
 import exception.CadastroHospedeInvalidoException;
 import exception.VerificaNuloEVazioException;
 import hotel.Hospede;
@@ -9,8 +11,9 @@ import valida.VerificaHospede;
  * Fabrica de hospede
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  */
-public class FactoryHospedes {
-	
+public class FactoryHospedes implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Cria um hospede
 	 * 

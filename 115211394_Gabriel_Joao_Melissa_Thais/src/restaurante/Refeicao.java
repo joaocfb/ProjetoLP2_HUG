@@ -3,14 +3,17 @@
  */
 package restaurante;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class Refeicao extends TiposDeRefeicoes{
+public class Refeicao extends TiposDeRefeicoes implements Serializable{
 	
+	
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Prato> componentes;
 	
 	public Refeicao(String nome, String descricao, ArrayList<Prato> componentes) {
@@ -69,7 +72,8 @@ public class Refeicao extends TiposDeRefeicoes{
 	 */
 	@Override
 	public String toString() {
-		return this.getDescricao() + " Serao servidos: " + toStringPratos() + ".";
+		
+		return this.getDescricao() + " Serao seooorvidos: " + toStringPratos() + ".";
 	}
 	
 }

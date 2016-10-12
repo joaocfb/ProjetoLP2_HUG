@@ -3,6 +3,8 @@
  */
 package factorys;
 
+import java.io.Serializable;
+
 import exception.CadastroPratoInvalidoException;
 import restaurante.Prato;
 import valida.VerificaPrato;
@@ -11,8 +13,9 @@ import valida.VerificaPrato;
  * Fabrica de Pratos
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  */
-public class FactoryPrato {
-	
+public class FactoryPrato implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Cria um novo Prato
 	 * @param Nome do Prato

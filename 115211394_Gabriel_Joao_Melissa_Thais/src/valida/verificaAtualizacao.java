@@ -1,6 +1,7 @@
 
 package valida;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
@@ -8,7 +9,10 @@ import java.util.regex.Pattern;
 import exception.AtualizacaoInvalidaException;
 import exception.CadastroHospedeInvalidoException;
 
-public class verificaAtualizacao {
+public class verificaAtualizacao implements Serializable{
+
+	
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * verifica se a data esta vazia 

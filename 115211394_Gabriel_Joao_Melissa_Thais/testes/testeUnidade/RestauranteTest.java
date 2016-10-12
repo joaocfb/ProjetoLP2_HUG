@@ -5,6 +5,7 @@ package testeUnidade;
 
 import static org.junit.Assert.*;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import org.junit.Before;
@@ -23,8 +24,10 @@ import restaurante.Restaurante;
  *  @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class RestauranteTest {
+public class RestauranteTest implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	private Restaurante restaurante;
 	
 	private FactoryPrato factoryPrato;

@@ -1,9 +1,12 @@
 package valida;
 
+import java.io.Serializable;
+
 import exception.CadastroPratoInvalidoException;
 
-public class VerificaPrato {
+public class VerificaPrato implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 
 	public static void verificaNomePratovazio(String nomePrato) throws CadastroPratoInvalidoException {
 		if (nomePrato.trim().isEmpty()) {

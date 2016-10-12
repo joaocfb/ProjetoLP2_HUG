@@ -6,6 +6,7 @@ package testeUnidade;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import org.junit.Before;
@@ -21,13 +22,11 @@ import exception.CriacaoQuartoInvalidoException;
 import exception.HospedagemAtivaInvalidaException;
 import exception.IndiceInvalidoException;
 import exception.MensagemErroException;
-import exception.PedidosInvalidoException;
 import exception.RemocaoInvalidaException;
 import exception.VerificaNuloEVazioException;
 import factorys.FactoryHospedes;
 import hotel.Hospede;
 import hotel.Hotel;
-import junit.framework.Assert;
 
 
 /**
@@ -35,8 +34,9 @@ import junit.framework.Assert;
  *
  */
 
-public class HotelTest {
+public class HotelTest implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private Hotel hotel;
 	private HashMap<String, Hospede> meusHospedes;
 	private FactoryHospedes factoryHospedes;

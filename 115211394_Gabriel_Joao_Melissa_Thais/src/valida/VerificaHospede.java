@@ -1,13 +1,22 @@
 package valida;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 import exception.CadastroHospedeInvalidoException;
 
-public class VerificaHospede {
+/**
+ * 
+ * @author Melissa
+ *
+ */
+public class VerificaHospede implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
+
 	public static void verificaEmailInvalido(String email) throws CadastroHospedeInvalidoException {
 		if (email.trim().isEmpty()) {
 			throw new CadastroHospedeInvalidoException("Email do(a) hospede nao pode ser vazio.");

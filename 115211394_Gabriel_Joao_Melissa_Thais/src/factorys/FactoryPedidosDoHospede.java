@@ -3,6 +3,8 @@
  */
 package factorys;
 
+import java.io.Serializable;
+
 import exception.CadastroHospedeInvalidoException;
 import restaurante.Pedidos;
 
@@ -10,7 +12,10 @@ import restaurante.Pedidos;
  * Fabrica de Pedidos
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  */
-public class FactoryPedidosDoHospede {
+public class FactoryPedidosDoHospede implements Serializable {
+
+	
+	private static final long serialVersionUID = 1L;
 
 	//testar nome valido e preco valido
 	/**

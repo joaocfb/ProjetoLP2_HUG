@@ -1,6 +1,7 @@
 
 package restaurante;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -21,8 +22,10 @@ import valida.VerificaCadastro;
  * @author Melissa Diniz 
  * @author Thais Nicoly
  */
-public class Restaurante {
+public class Restaurante implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	private FactoryPrato factoryPrato;
 	private FactoryRefeicao factoryRefeicao;
 	private ArrayList<TiposDeRefeicoes> menuRestaurante;

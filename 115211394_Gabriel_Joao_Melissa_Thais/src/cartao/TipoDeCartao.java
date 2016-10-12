@@ -5,7 +5,7 @@ package cartao;
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public interface TipoDeCartao {
+public interface TipoDeCartao{
 
 	/**
 	 * Metodo que calcula o bonus aplicado no cartao

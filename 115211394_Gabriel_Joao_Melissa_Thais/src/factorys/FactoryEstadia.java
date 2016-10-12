@@ -3,6 +3,8 @@
  */
 package factorys;
 
+import java.io.Serializable;
+
 import exception.CheckinInvalidoException;
 import exception.VerificaNuloEVazioException;
 import hotel.Estadia;
@@ -12,7 +14,9 @@ import valida.VerificaEstadia;
  * Fabrica de estadias
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  */
-public class FactoryEstadia {
+public class FactoryEstadia implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Cria uma estadia com id do quarto e uma quantidade de dias

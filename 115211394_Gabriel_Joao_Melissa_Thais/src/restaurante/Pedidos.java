@@ -3,11 +3,15 @@
  */
 package restaurante;
 
+import java.io.Serializable;
+
 /**
  * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
  *
  */
-public class Pedidos {
+public class Pedidos implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private String nome;
 	private double preco;
 

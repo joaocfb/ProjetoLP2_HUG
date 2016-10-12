@@ -3,6 +3,7 @@
  */
 package hotel;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -14,10 +15,12 @@ import java.text.DecimalFormat;
  * @author Melissa Diniz 
  * @author Thais Nicoly
  */
-public class Transacao {
-	double total;
-	String detalhe;
-	String nome;
+public class Transacao implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	private double total;
+	private String detalhe;
+	private String nome;
 
 	/**
 	 * 
