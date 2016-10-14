@@ -6,8 +6,10 @@ package quartos;
 import java.io.Serializable;
 
 /**
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  */
 public class QuartoPresidencial extends QuartoSimples implements Serializable{
 	

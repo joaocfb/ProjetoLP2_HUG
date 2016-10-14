@@ -43,9 +43,9 @@ public class Prato extends TiposDeRefeicoes implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return this.getNome();
+		return "Nome: " + getNome() + " Preco: R$" + getPrecoFormatado() + "\r\n" + "Descricao: " +
+	getDescricao() + " \r\n";
 	}
-
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -61,8 +61,8 @@ public class Prato extends TiposDeRefeicoes implements Serializable{
 	}
 
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * Equals prato - sao iguais se possuirem o mesmo preco
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -70,11 +70,12 @@ public class Prato extends TiposDeRefeicoes implements Serializable{
 		if (!(obj instanceof Prato)){
 			return false;
 		}
-		Prato other = (Prato) obj;
+		Prato outro = (Prato) obj;
 		
-		if (Double.doubleToLongBits(preco) != Double.doubleToLongBits(other.preco))
-			return false;
-		return true;
+		if (getPreco() == outro.getPreco()){
+			return true;
+		}
+		return false;
 	}
 	
 	

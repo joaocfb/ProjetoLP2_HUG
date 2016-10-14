@@ -15,7 +15,11 @@ import java.io.Serializable;
 import sistemaDeControleHotel.ControleDoSistema;
 
 /**
- * @author Melissa
+ * Classe que gerencia a leitura e gravacao de dados no arquivo
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  *
  */
 public class ArmazenaSistema implements Serializable{
@@ -24,9 +28,13 @@ public class ArmazenaSistema implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String CAMINHO_ARQUIVO = "arquivos_sistema/hug.dat";
 
-
 	
 	
+	/**
+	 * Metodo que grava o controler no arquivo
+	 * @param objeto controller
+	 * @throws Exception
+	 */
 	public void fechaSistema(ControleDoSistema controller) throws Exception {
 
 		File arquivo = new File(CAMINHO_ARQUIVO);
@@ -49,6 +57,11 @@ public class ArmazenaSistema implements Serializable{
 
 	}
 
+	/**
+	 * Metodo que faz a leitura do arquivo
+	 * @return o controller
+	 * @throws Exception
+	 */
 	public ControleDoSistema iniciaSistema() throws Exception {
 
 		File arquivo = new File(CAMINHO_ARQUIVO);

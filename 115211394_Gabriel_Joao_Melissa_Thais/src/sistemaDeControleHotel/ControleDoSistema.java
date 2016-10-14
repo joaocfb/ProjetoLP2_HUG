@@ -38,6 +38,7 @@ import interfaces.RestauranteInterface;
 public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 	private Hotel controleHotel;
 	
+	
 	public ControleDoSistema() throws Exception {
 		this.controleHotel = new Hotel();
 	}

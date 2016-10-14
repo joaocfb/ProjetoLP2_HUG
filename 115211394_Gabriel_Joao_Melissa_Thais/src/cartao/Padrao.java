@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 /**
  * Classe que define o cartao tipo PADRAO
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  */
 public class Padrao implements TipoDeCartao, Serializable {
 	

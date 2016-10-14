@@ -7,8 +7,10 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  */
 public class OrdenaPorPreco implements Comparator<Object>,Serializable{
 

@@ -31,8 +31,6 @@ import factorys.FactoryQuartos;
 import factorys.FactoryTransacao;
 import quartos.QuartoSimples;
 import restaurante.Pedidos;
-import restaurante.Prato;
-import restaurante.Refeicao;
 import restaurante.Restaurante;
 import restaurante.TiposDeRefeicoes;
 import valida.VerificaCadastro;
@@ -156,12 +154,9 @@ public class Hotel implements Serializable{
 			throws AtualizacaoInvalidaException, CadastroHospedeInvalidoException {
 
 		switch (valor.toLowerCase().trim()) {
-
 		case "nome":
 
-			// validacao do parametro - nome
 			verificaAtualizacao.verificaNomeInvalidoAtualizacao(info);
-
 			hospedesDoHotel.get(email).setNome(info);
 			return;
 
@@ -176,7 +171,6 @@ public class Hotel implements Serializable{
 			return;
 
 		case "email":
-
 			// validacao do parametro - email
 			verificaAtualizacao.verificaEmailInvalidoAtualizacao(info);
 
@@ -269,7 +263,7 @@ public class Hotel implements Serializable{
 		return hospedesDoHotel.containsKey(email);
 	}
 
-	// ############################### ESTADIA ###############################
+	// CRUD Estadia
 
 	/**
 	 * Metodo que realiza o checkin do hospede no hotel
@@ -342,7 +336,6 @@ public class Hotel implements Serializable{
 	public String realizaCheckout(String email, String IDQuarto)
 			throws CheckoutInvalidoException, ConsultaHospedagemInvalidaException {
 
-		// verifica a validade do email e do id do quarto
 		valida.VerificaCheckout.verificaEmailInvalido(email);
 		valida.VerificaCheckout.verificaIdInvalidaCheckout(IDQuarto);
 
@@ -377,14 +370,10 @@ public class Hotel implements Serializable{
 
 				// Adiciona no hospede os pontos gerado no chekout
 				recompensaPontos(email, precoDaEstadia);
-
-				
 				return retorno;
 			}
 		}
-
 		throw new ConsultaHospedagemInvalidaException(hospedesDoHotel.get(email).getNome());
-
 	}
 
 	/**
@@ -410,6 +399,7 @@ public class Hotel implements Serializable{
 
 		}
 
+		//valida email
 		if (!email.matches("[a-zA-Z]+@[a-z]+\\.[a-z|\\.a-z+\\.a-z]+")) {
 			throw new HospedagemAtivaInvalidaException("esta invalido.");
 		}
@@ -439,7 +429,6 @@ public class Hotel implements Serializable{
 					throw new MensagemErroException("");
 				}
 			}
-
 		}
 		throw new ConsultaHospedagemInvalidaException("Hospede " + nome);
 	}
@@ -468,7 +457,6 @@ public class Hotel implements Serializable{
 			return df.format(retornarValorDeTransacoes());
 
 		case "nome":
-			// apaga o ; no final da string
 			String modificada = nomesHospedes.substring(0, nomesHospedes.length() - 1);
 			return modificada;
 		}
@@ -494,13 +482,11 @@ public class Hotel implements Serializable{
 	public String consultaTransacoes(String atributo, int indice)
 			throws MensagemErroException, IndiceInvalidoException {
 
-		// validacao do parametro - indice
 		valida.verificaConsultaTransacoes.verificaIndiceInvalido(indice);
 
 		if (indice <= transacoes.size()) {
 
 			switch (atributo.toLowerCase()) {
-
 			case "quantidade":
 				return Integer.toString(transacoes.size());
 
@@ -552,10 +538,8 @@ public class Hotel implements Serializable{
 		
 		double pontosConvertidos = hospedesDoHotel.get(email).convertePontos(qtdPontos);
 
-		// formata a string
 		String retorno = "";
 		retorno += String.format("R$%.2f", pontosConvertidos);
-		
 		return retorno;
 		
 
@@ -573,7 +557,6 @@ public class Hotel implements Serializable{
 		for (Transacao c : transacoes) {
 			preco += c.getTotal();
 		}
-		
 		return preco;
 	}
 
@@ -599,7 +582,6 @@ public class Hotel implements Serializable{
 			meusIds = meusIds + "," + string;
 		}
 
-		// retira a , da frente
 		if (!meusIds.isEmpty()) {
 			meusIds = meusIds.substring(1);
 		}
@@ -611,23 +593,19 @@ public class Hotel implements Serializable{
 	 * Metodo que libera um quarto, retira da lista de ocupados e adiciona na
 	 * lista de vagos
 	 * 
-	 * @param IDQuarto
+	 * @param ID do quarto
 	 */
 	private void liberaQuarto(String IDQuarto) {
-		// Salva o quarto / remove de quartos ocupados / adiciona em
-		// quartos vagos
 		QuartoSimples quartoLivre = quartosOcupadosDoHotel.get(IDQuarto);
 		quartosLivresDoHotel.put(IDQuarto, quartoLivre);
-
 		quartosOcupadosDoHotel.remove(IDQuarto);
-
 	}
 
 	/**
 	 * Metodo que ocupa um quarto, retira da lista de vagos e adiciona na lista
 	 * de ocupados
 	 * 
-	 * @param IDQuarto
+	 * @param ID do quarto
 	 */
 	private void ocupaQuarto(String IDQuarto) {
 		QuartoSimples quartoNovo = quartosLivresDoHotel.get(IDQuarto);
@@ -671,8 +649,7 @@ public class Hotel implements Serializable{
 		return diasHospede * preco;
 	}
 
-	// ######################## RESTAURANTE ########################
-
+	//Restaurante
 	/**
 	 * Metodo que realiza um pedido do hospede ao restauante
 	 * 
@@ -708,6 +685,8 @@ public class Hotel implements Serializable{
 
 		DecimalFormat df = new DecimalFormat("R$.00");
 		df.setRoundingMode(RoundingMode.UP);
+		
+
 		return df.format(x);
 
 	}
@@ -744,18 +723,6 @@ public class Hotel implements Serializable{
 
 	}
 	
-	/**
-	 * Metodo que imprime o total de uma transacao formatada 
-	 * @param total
-	 * @return
-	 */
-	private String imprimeTotal(double total) {
-		DecimalFormat df = new DecimalFormat("R$.00");
-		df.setRoundingMode(RoundingMode.UP);
-		return df.format(total);
-	}
-
-
 	// Getters
 
 	/**
@@ -827,19 +794,22 @@ public class Hotel implements Serializable{
 		this.valorTransacoes = valorTransacoes;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * Representacao String do hotel
 	 */
 	@Override
 	public String toString() {
 		return "Hotel [nomesHospedes=" + nomesHospedes + "]";
 	}
 
-	//###################################### ARQUIVOS ##########################################################
 	
+	//Arquivos
 	
+	/**
+	 * Metodo que escreve os dados dos hospedes no arquivo
+	 * @param arquivo que sera escrito
+	 * @throws IOException
+	 */
 	public void arquivoCadastroHospede(FileWriter arquivo) throws IOException {
 		Collection<Hospede> h = hospedesDoHotel.values();
 
@@ -848,18 +818,15 @@ public class Hotel implements Serializable{
 
 		int cont = 1;
 		for (Hospede hospede : h) {
-
 			arquivo.write("==> Hospede " + String.valueOf(cont) + ":  \r\n");
-
 			cont += 1;
 			arquivo.write(hospede.toString());
-			
 		}
 	}
 
 	/**
 	 * Metodo que cria um arquivo e escreve nele dados do restaurante
-	 * @param path
+	 * @param arquivo que sera escrito
 	 * @throws IOException
 	 */
 	public void arquivoCadastroTiposDeRefeicoes(FileWriter arquivo) throws IOException {
@@ -867,36 +834,11 @@ public class Hotel implements Serializable{
 
 		int cont = 1;
 		String quntRefeicao = String.valueOf(h.size());
-
 		arquivo.write("Menu do Restaurante: " + quntRefeicao + " itens do cardapio  \r\n");
 
 		for (TiposDeRefeicoes refeicao : h) {
-			if (refeicao.getClass().getSimpleName().equalsIgnoreCase("prato")) {
-				arquivo.write("==> Item " + String.valueOf(cont) + ":  \r\n");
-
-				arquivo.write(
-						"Nome: " + refeicao.getNome() + " Preco: R$" + refeicao.getPrecoFormatado() + "\r\n");
-				arquivo.write("Descricao: " + refeicao.getDescricao() + " \r\n");
-				arquivo.write(" \r\n");
-
-			}
-			if (refeicao.getClass().getSimpleName().equalsIgnoreCase("refeicao")) {
-				arquivo.write("==> Item " + String.valueOf(cont) + ":  \r\n");
-
-				Refeicao ref = (Refeicao) (refeicao);
-				arquivo.write(
-						"Nome: " + refeicao.getNome() + " Preco: R$" + refeicao.getPrecoFormatado() + "\r\n");
-				arquivo.write("Descricao: " + refeicao.getDescricao() + " \r\n");
-
-				String stringPratos = " ";
-				for (Prato prato : ref.getComponentes()) {
-					stringPratos += prato.getNome() + ", ";
-				}
-				arquivo.write("Pratos: " + stringPratos.substring(0, stringPratos.length() - 2) + " \r\n");
-
-				arquivo.write(" \r\n");
-			}
-
+			arquivo.write("==> Item " + String.valueOf(cont) + ":  \r\n");
+			arquivo.write(refeicao.toString());
 			cont += 1;
 
 		}
@@ -928,10 +870,8 @@ public class Hotel implements Serializable{
 		arquivo.write("Historico de Transacoes: \r\n");
 
 		for (Transacao t : transacoes) {
-
-			arquivo.write("==> Nome: " + t.getNome() + " Gasto: R$" + imprimeTotal(t.getTotal()) + " Detalhes: " + t.getDetalhe());
+			arquivo.write(t.toString());
 			arquivo.write(" \r\n");
-
 		}
 
 		DecimalFormat df = new DecimalFormat("R$.00");
@@ -940,15 +880,18 @@ public class Hotel implements Serializable{
 		arquivo.write("==== Resumo de transacoes ====\r\n");
 		arquivo.write("Lucro total: R$" + df.format(retornarValorDeTransacoes()) + "\r\n");
 		arquivo.write("Total de transacoes: " + numeroTransacoes + "\r\n");
-		arquivo.write(
-				"Lucro medio por transacao: R$" + df.format(retornarValorDeTransacoes() / transacoes.size()) + "\r\n");
-
+		arquivo.write("Lucro medio por transacao: R$" + df.format(retornarValorDeTransacoes() / transacoes.size()) + "\r\n");
 	}
 	
+	/**
+	 * Metodo que inicia os arquivos
+	 * @throws IOException
+	 */
 	public void iniciaArquivoSistema() throws IOException{
 
 		File sub = new File("arquivos_sistema"+File.separator+"relatorios");
 		sub.mkdirs();
+		
 		FileWriter arquivoCadastraHospede = new FileWriter("arquivos_sistema/relatorios/cad_hospedes.txt");
 		FileWriter arquivoCadastraTransacoes = new FileWriter("arquivos_sistema/relatorios/cad_transacoes.txt");
 		FileWriter arquivoCadastraRefeicoes = new FileWriter("arquivos_sistema/relatorios/cad_restaurante.txt");

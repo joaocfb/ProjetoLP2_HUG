@@ -10,8 +10,10 @@ import exception.VerificaNuloEVazioException;
 
 /**
  * Classe que define uma estadia
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- * 
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  */
 
 public class Estadia implements Serializable {

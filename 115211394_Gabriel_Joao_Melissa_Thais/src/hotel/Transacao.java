@@ -94,7 +94,18 @@ public class Transacao implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "[total=" + total + ", detalhe=" + detalhe + ", nome=" + nome + "]";
+		return "==> Nome: " + getNome() + " Gasto: R$" + imprimeTotal(getTotal()) + " Detalhes: " + getDetalhe();
+	}
+	
+	/**
+	 * Metodo que imprime o total de uma transacao formatada 
+	 * @param total
+	 * @return
+	 */
+	private String imprimeTotal(double total) {
+		DecimalFormat df = new DecimalFormat("R$.00");
+		df.setRoundingMode(RoundingMode.UP);
+		return df.format(total);
 	}
 
 	/*

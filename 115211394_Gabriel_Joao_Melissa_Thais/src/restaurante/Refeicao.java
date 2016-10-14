@@ -7,8 +7,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  */
 public class Refeicao extends TiposDeRefeicoes implements Serializable{
 	
@@ -58,6 +60,10 @@ public class Refeicao extends TiposDeRefeicoes implements Serializable{
 		this.componentes = componentes;
 	}
 	
+	/**
+	 * 
+	 * @return Strind de pratos
+	 */
 	private String toStringPratos(){
 		String toPratos = "";
 		for (int i = 0; i < componentes.size(); i++) {
@@ -73,7 +79,18 @@ public class Refeicao extends TiposDeRefeicoes implements Serializable{
 	@Override
 	public String toString() {
 		
-		return this.getDescricao() + " Serao seooorvidos: " + toStringPratos() + ".";
+		return "Nome: " + getNome() + " Preco: R$" + getPrecoFormatado() + "\r\n" + "Descricao: " + 
+		getDescricao() + " \r\n" + imprimePratos();
 	}
+	
+	private String imprimePratos(){
+	String stringPratos = " ";
+	for (Prato prato : this.getComponentes()) {
+		stringPratos += prato.getNome() + ", ";
+	}
+	return "Pratos: " + stringPratos.substring(0, stringPratos.length() - 2) + " \r\n";
+
+	}
+
 	
 }

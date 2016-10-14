@@ -2,8 +2,10 @@ package cartao;
 
 /**
  * Interface que implementa o tipo do cartao
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  */
 public interface TipoDeCartao{
 

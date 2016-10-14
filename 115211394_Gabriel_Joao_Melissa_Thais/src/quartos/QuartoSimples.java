@@ -7,8 +7,11 @@ import java.io.Serializable;
 
 /**
  * Classe Quarto
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * 
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  */
 public class QuartoSimples implements Serializable{
 	
@@ -35,8 +38,6 @@ public class QuartoSimples implements Serializable{
 		return PRECO;
 	}
 
-
-
 	/**
 	 * ToString do objeto tipo quarto
 	 */
@@ -57,30 +58,21 @@ public class QuartoSimples implements Serializable{
 	}
 
 
-
 	/**
 	 * Dois quartos sao iguais se possuirem mesmo ID
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
+		
 		if (!(obj instanceof QuartoSimples)) {
 			return false;
 		}
 		QuartoSimples other = (QuartoSimples) obj;
-		if (ID == null) {
-			if (other.ID != null) {
-				return false;
-			}
-		} else if (!ID.equals(other.ID)) {
-			return false;
+		
+		if (getID().equalsIgnoreCase(other.getID())) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	

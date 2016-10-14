@@ -41,9 +41,7 @@ public class Restaurante implements Serializable {
 		this.menuRestaurante = new ArrayList<>();
 		this.pedidosRestaurante = new ArrayList<>();
 		
-
 	}
-
 
 
 	/**
@@ -78,9 +76,7 @@ public class Restaurante implements Serializable {
 			 }else{
 				  ordenaMenuPorPreco();
 			  }
-			  
 		}
-		
 	}
 
 	/**

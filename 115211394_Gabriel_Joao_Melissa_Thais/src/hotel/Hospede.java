@@ -19,15 +19,16 @@ import restaurante.Pedidos;
 import cartao.*;
 /**
  * Classe Hospede: um hospede possui nome, email e data de nascimento 
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  */
 
 public class Hospede implements Serializable{
 	
 
 	private static final long serialVersionUID = 1L;
-	//atributos do hospede, cada hospede possui uma ou mais estadia
 	private String nome;
 	private String email;
 	private int pontos = 0;
@@ -62,6 +63,10 @@ public class Hospede implements Serializable{
 	
 	}
 	
+	/**
+	 * Modifica o formato da data para ser gravado no arquivo
+	 * @return
+	 */
 	public String outroFormatoData(){
 		String retorno = "";
 		
