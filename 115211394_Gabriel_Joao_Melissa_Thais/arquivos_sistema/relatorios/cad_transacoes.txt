@@ -1,0 +1,22 @@
+Historico de Transacoes: 
+==> Nome: Sven Gudmar Svenson Gasto: R$R$2250,00 Detalhes: 1A 
+==> Nome: Ines Brasil Gasto: R$R$500,00 Detalhes: 1B 
+==> Nome: Agnetha Faltskog Gasto: R$R$200,00 Detalhes: 15A 
+==> Nome: Alfred Nobel Gasto: R$R$450,00 Detalhes: 1A 
+==> Nome: Alfred Nobel Gasto: R$R$50,85 Detalhes: Delicia da serra 
+==> Nome: Alfred Nobel Gasto: R$R$3,00 Detalhes: Tapioca 
+==> Nome: Ines Brasil Gasto: R$R$3,00 Detalhes: Tapioca 
+==> Nome: Sven Gudmar Svenson Gasto: R$R$1350,00 Detalhes: 2A 
+==> Nome: Ines Brasil Gasto: R$R$750,00 Detalhes: 2B 
+==> Nome: Sven Gudmar Svenson Gasto: R$R$45,77 Detalhes: Delicia da serra 
+==> Nome: Sven Gudmar Svenson Gasto: R$R$1620,00 Detalhes: 5A 
+==> Nome: Sven Gudmar Svenson Gasto: R$R$43,23 Detalhes: Delicia da serra 
+==> Nome: Sven Gudmar Svenson Gasto: R$R$675,00 Detalhes: 5A 
+==> Nome: Ines Brasil Gasto: R$R$50,85 Detalhes: Delicia da serra 
+==> Nome: Ines Brasil Gasto: R$R$2250,00 Detalhes: 5B 
+==> Nome: Ines Brasil Gasto: R$R$45,77 Detalhes: Delicia da serra 
+==> Nome: Ines Brasil Gasto: R$R$1215,00 Detalhes: 5B 
+==== Resumo de transacoes ====
+Lucro total: R$R$11502,47
+Total de transacoes: 17
+Lucro medio por transacao: R$R$676,62
