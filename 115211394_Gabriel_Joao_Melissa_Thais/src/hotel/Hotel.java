@@ -3,6 +3,7 @@ package hotel;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -51,8 +52,9 @@ import valida.verificaRemocao;
  * @author Thais Nicoly
  *
  */
-public class Hotel {
+public class Hotel implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	// fabricas
 	private FactoryHospedes factoryHospedes;
 	private FactoryEstadia factoryEstadia;
@@ -115,10 +117,20 @@ public class Hotel {
 
 		File sub = new File("arquivos_sistema"+File.separator+"relatorios");
 		sub.mkdirs();
-		arquivoCadastroHospede("arquivos_sistema/relatorios/cad_hospedes.txt");
-		arquivoTransacoesHotel("arquivos_sistema/relatorios/cad_transacoes.txt");
-		arquivoCadastroTiposDeRefeicoes("arquivos_sistema/relatorios/cad_restaurante.txt");
-		arquivoCompletoHotel("arquivos_sistema/relatorios/hotel_principal.txt");
+		FileWriter arquivoCadastraHospede = new FileWriter("arquivos_sistema/relatorios/cad_hospedes.txt");
+		FileWriter arquivoCadastraTransacoes = new FileWriter("arquivos_sistema/relatorios/cad_transacoes.txt");
+		FileWriter arquivoCadastraRefeicoes = new FileWriter("arquivos_sistema/relatorios/cad_restaurante.txt");
+		FileWriter arquivoHotel = new FileWriter("arquivos_sistema/relatorios/hotel_principal.txt");
+
+		
+		arquivoCadastroHospede(arquivoCadastraHospede);
+		arquivoTransacoesHotel(arquivoCadastraTransacoes);
+		arquivoCadastroTiposDeRefeicoes(arquivoCadastraRefeicoes);
+		arquivoCompletoHotel(arquivoHotel);
+		arquivoCadastraHospede.close();
+		arquivoCadastraTransacoes.close();
+		arquivoCadastraRefeicoes.close();
+		arquivoHotel.close();
 		
 	}
 	
@@ -890,12 +902,11 @@ public class Hotel {
 
 	//###################################### ARQUIVOS ##########################################################
 	
-	public void arquivoCadastroHospede(String path) throws IOException {
+	
+	public void arquivoCadastroHospede(FileWriter arquivo) throws IOException {
 		Collection<Hospede> h = hospedesDoHotel.values();
 
 		String quntHospedes = String.valueOf(h.size());
-		FileWriter arquivo;
-		arquivo = new FileWriter(new File(path));
 		arquivo.write("Cadastro de Hospedes: " + quntHospedes + " hospedes registrados  \r\n");
 
 		int cont = 1;
@@ -907,8 +918,6 @@ public class Hotel {
 			arquivo.write(hospede.toString());
 			
 		}
-
-		arquivo.close();
 	}
 
 	/**
@@ -916,14 +925,12 @@ public class Hotel {
 	 * @param path
 	 * @throws IOException
 	 */
-	public void arquivoCadastroTiposDeRefeicoes(String path) throws IOException {
+	public void arquivoCadastroTiposDeRefeicoes(FileWriter arquivo) throws IOException {
 		ArrayList<TiposDeRefeicoes> h = getRestaurante().getRefeicao();
 
 		int cont = 1;
 		String quntRefeicao = String.valueOf(h.size());
 
-		FileWriter arquivo;
-		arquivo = new FileWriter(new File(path));
 		arquivo.write("Menu do Restaurante: " + quntRefeicao + " itens do cardapio  \r\n");
 
 		for (TiposDeRefeicoes refeicao : h) {
@@ -956,8 +963,6 @@ public class Hotel {
 			cont += 1;
 
 		}
-
-		arquivo.close();
 	}
 	
 	/**
@@ -965,28 +970,24 @@ public class Hotel {
 	 * @param path
 	 * @throws IOException
 	 */
-	public void arquivoCompletoHotel(String path) throws IOException {
+	public void arquivoCompletoHotel(FileWriter arquivo) throws IOException {
 
-		FileWriter arquivo = new FileWriter(new File(path));
-		
 		arquivo.write("======================================================  \r\n");
-		arquivoCadastroHospede("arquivos_sistema/relatorios/hotel_principal.txt");
+		arquivoCadastroHospede(arquivo);
 		arquivo.write("\r\n");
 		arquivo.write("======================================================  \r\n");
-		arquivoCadastroTiposDeRefeicoes("arquivos_sistema/relatorios/hotel_principal.txt");
+		arquivoCadastroTiposDeRefeicoes(arquivo);
 		arquivo.write("\r\n");
 		arquivo.write("======================================================  \r\n");
-		arquivoTransacoesHotel("arquivos_sistema/relatorios/hotel_principal.txt");
+		arquivoTransacoesHotel(arquivo);
 	}
-
+	
 	/**
 	 * Metodo que cria um arquivo e escreve nele dados das transacoes
 	 * @param path
 	 * @throws IOException
 	 */
-	public void arquivoTransacoesHotel(String path) throws IOException {
-		FileWriter arquivo;
-		arquivo = new FileWriter(new File(path));
+	public void arquivoTransacoesHotel(FileWriter arquivo) throws IOException {
 		arquivo.write("Historico de Transacoes: \r\n");
 
 		for (Transacao t : transacoes) {
@@ -1005,11 +1006,7 @@ public class Hotel {
 		arquivo.write(
 				"Lucro medio por transacao: R$" + df.format(retornarValorDeTransacoes() / transacoes.size()) + "\r\n");
 
-		arquivo.close();
-
-
 	}
-	
 
 	/*
 	 * (non-Javadoc)
