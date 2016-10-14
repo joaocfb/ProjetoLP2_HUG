@@ -29,29 +29,25 @@ import interfaces.RestauranteInterface;
 
 /**
  * Classe que controla as funcionalidades do hotel e do restaurante
- * 
- * @author Gabriel Alves - Joao Carlos - Melissa Diniz - Thais Nicoly
- *
+ * Delega funcionalidades ao hotel
+ * @author Gabriel Alves
+ * @author Joao Carlos
+ * @author Melissa Diniz
+ * @author Thais Nicoly
  */
 public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 	private Hotel controleHotel;
 	
 	public ControleDoSistema() throws Exception {
-		
 		this.controleHotel = new Hotel();
 	}
 
-	public void iniciaSistema() {
-		//NAO IMPLEMENTADO AINDA.
-	}
-	
-	public void fechaSistema() throws IOException {
+	public void iniciaSistema() throws IOException {
 		controleHotel.iniciaArquivoSistema();
 	}
 	
-	// ##################################### Controle do Hotel #####################################
+	//Controle do Hotel
 	
-	// ######## Hospede ########
 	@Override
 	public String cadastraHospede(String nome, String email, String dataNascimento)	throws CadastroHospedeInvalidoException, VerificaNuloEVazioException {
 		return controleHotel.cadastraHospede(nome, email, dataNascimento);
@@ -73,11 +69,10 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 			controleHotel.removeHospede(email);
 	}
 	
-	// ######## Estadia ########
+	//Estadia
 	@Override
 	public void realizaCheckin(String email, int quantDias, String IDQuarto, String tipoQuarto) throws CheckinInvalidoException, CriacaoQuartoInvalidoException, VerificaNuloEVazioException  {
 			controleHotel.realizaCheckin(email, quantDias, IDQuarto, tipoQuarto);
-			
 	}
 
 	@Override
@@ -100,11 +95,10 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 		return controleHotel.consultaTransacoes(atributo, indice);
 	}
 	
-	// #####################################  Controle do Restaurante ##################################### 
+	//Restaurante 
 	@Override
 	public void cadastraPrato(String nomePrato, double precoPrato, String descricaoPrato) throws CadastroPratoInvalidoException, ErroOrdenacaoException  {
 		controleHotel.getRestaurante().cadastraPrato(nomePrato, precoPrato, descricaoPrato);
-		
 	}
 
 	@Override
@@ -139,7 +133,6 @@ public class ControleDoSistema implements HotelInterface, RestauranteInterface {
 
 	@Override
 	public String convertePontos(String email, int qtdPontos) throws IOException {
-		
 		return controleHotel.convertePontos(email, qtdPontos);
 	}
 

@@ -55,23 +55,17 @@ import valida.verificaRemocao;
 public class Hotel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	// fabricas
 	private FactoryHospedes factoryHospedes;
 	private FactoryEstadia factoryEstadia;
 	private FactoryQuartos factoryQuarto;
 	private FactoryPedidosDoHospede factoryPedidos;
 	private FactoryTransacao factoryTransacao;
 
-	// variaveis
 	private Checkout checkout;
 	private String nomesHospedes;
 	private int numeroTransacoes;
 	private double valorTransacoes;
-
-	// instancia do restaurante
 	private Restaurante restaurante;
-
-	// listas e mapas
 	private ArrayList<Transacao> transacoes;
 	private ArrayList<String> listaIdsCheckout;
 	private ArrayList<Checkout> listaCheckouts;
@@ -81,12 +75,10 @@ public class Hotel implements Serializable{
 	private HashMap<String, QuartoSimples> quartosOcupadosDoHotel;
 
 	/**
-	 * Construtor que define o hotel
-	 * 
+	 * Inicia todos os atributos do hotel
 	 */
 	public Hotel() {
 
-		// Inicia as factorys
 		this.factoryQuarto = new FactoryQuartos();
 		this.factoryHospedes = new FactoryHospedes();
 		this.factoryEstadia = new FactoryEstadia();
@@ -101,7 +93,6 @@ public class Hotel implements Serializable{
 		this.valorTransacoes = 0;
 		this.numeroTransacoes = 0;
 
-		// Inicia as colecoes
 		this.listaIdsCheckout = new ArrayList<>();
 		this.transacoes = new ArrayList<>();
 		this.listaCheckouts = new ArrayList<>();
@@ -113,31 +104,8 @@ public class Hotel implements Serializable{
 		
 	}
 
-	public void iniciaArquivoSistema() throws IOException{
-
-		File sub = new File("arquivos_sistema"+File.separator+"relatorios");
-		sub.mkdirs();
-		FileWriter arquivoCadastraHospede = new FileWriter("arquivos_sistema/relatorios/cad_hospedes.txt");
-		FileWriter arquivoCadastraTransacoes = new FileWriter("arquivos_sistema/relatorios/cad_transacoes.txt");
-		FileWriter arquivoCadastraRefeicoes = new FileWriter("arquivos_sistema/relatorios/cad_restaurante.txt");
-		FileWriter arquivoHotel = new FileWriter("arquivos_sistema/relatorios/hotel_principal.txt");
-
-		
-		arquivoCadastroHospede(arquivoCadastraHospede);
-		arquivoTransacoesHotel(arquivoCadastraTransacoes);
-		arquivoCadastroTiposDeRefeicoes(arquivoCadastraRefeicoes);
-		arquivoCompletoHotel(arquivoHotel);
-		arquivoCadastraHospede.close();
-		arquivoCadastraTransacoes.close();
-		arquivoCadastraRefeicoes.close();
-		arquivoHotel.close();
-		
-	}
+	//CRUD Hospede
 	
-	
-	// #################################################CRUD
-	// HOSPEDE#######################################################
-
 	/**
 	 * Metodo que realiza o cadastro dos hospedes e adiciona na colecao
 	 * 
@@ -667,26 +635,6 @@ public class Hotel implements Serializable{
 		quartosLivresDoHotel.remove(IDQuarto);
 	}
 
-	/**
-	 * Metodo que atualiza os registro de lucro do hotel
-	 * 
-	 * @param email
-	 *            do hospede
-	 * @param idQuarto
-	 *            em que o hospede esta hospedado
-	 * 
-	 * @return o registro do hospede no hotel
-	 */
-	private String registroHotel(String email, String IDQuarto) {
-		StringBuilder dados = new StringBuilder();
-		dados.append(hospedesDoHotel.get(email).getNome());
-		dados.append(IDQuarto);
-		dados.append(calculaTotalEstadia(email, IDQuarto));
-
-		lucrosDoHotel.add(dados.toString());
-		System.out.println(dados);
-		return dados.toString();
-	}
 
 	/**
 	 * metodo que calcula o total de todas as estadias
@@ -718,11 +666,8 @@ public class Hotel implements Serializable{
 	 */
 	private double calculaTotalEstadia(String email, String IDQuarto) {
 
-		// pega o numero de dias de hospedagem
 		int diasHospede = hospedesDoHotel.get(email).getEstadias().get(IDQuarto).getQuantDias();
-		// pega o preco do quarto(depende do tipo)
 		double preco = quartosLivresDoHotel.get(IDQuarto).getPRECO();
-		// faz o calculo dos gastos
 		return diasHospede * preco;
 	}
 
@@ -741,26 +686,19 @@ public class Hotel implements Serializable{
 	 */
 	public String realizaPedido(String email, String itemMenu) throws PedidosInvalidoException {
 
-		// Verifica se a quantidade de pontos de hospede ja e o
-		// suficiente para mudar o tipo de cartao
 		hospedesDoHotel.get(email).alteraTipoDeCartao();
 		double preco = restaurante.precoPedido(itemMenu);
-
 		Pedidos pedido = factoryPedidos.criaPedido(email, preco);
-
-
 		double valorDesconto = hospedesDoHotel.get(email).getTipoDeCartao().desconto(preco);
 
 		hospedesDoHotel.get(email).getPedidosDoHospede().add(pedido);
 		restaurante.getPedidos().add(pedido);
-		
 		
 		// cria a transacao
 		Transacao transacaoAtual = factoryTransacao.criaTransacao(imprimeValor(preco, valorDesconto), itemMenu,
 				hospedesDoHotel.get(email).getNome());
 		
 		transacoes.add(transacaoAtual);
-		
 		recompensaPontos(email, preco);
 
 		// atualiza os dados das transacoes do hotel
@@ -770,7 +708,6 @@ public class Hotel implements Serializable{
 
 		DecimalFormat df = new DecimalFormat("R$.00");
 		df.setRoundingMode(RoundingMode.UP);
-		
 		return df.format(x);
 
 	}
@@ -1007,6 +944,28 @@ public class Hotel implements Serializable{
 				"Lucro medio por transacao: R$" + df.format(retornarValorDeTransacoes() / transacoes.size()) + "\r\n");
 
 	}
+	
+	public void iniciaArquivoSistema() throws IOException{
+
+		File sub = new File("arquivos_sistema"+File.separator+"relatorios");
+		sub.mkdirs();
+		FileWriter arquivoCadastraHospede = new FileWriter("arquivos_sistema/relatorios/cad_hospedes.txt");
+		FileWriter arquivoCadastraTransacoes = new FileWriter("arquivos_sistema/relatorios/cad_transacoes.txt");
+		FileWriter arquivoCadastraRefeicoes = new FileWriter("arquivos_sistema/relatorios/cad_restaurante.txt");
+		FileWriter arquivoHotel = new FileWriter("arquivos_sistema/relatorios/hotel_principal.txt");
+
+		
+		arquivoCadastroHospede(arquivoCadastraHospede);
+		arquivoTransacoesHotel(arquivoCadastraTransacoes);
+		arquivoCadastroTiposDeRefeicoes(arquivoCadastraRefeicoes);
+		arquivoCompletoHotel(arquivoHotel);
+		arquivoCadastraHospede.close();
+		arquivoCadastraTransacoes.close();
+		arquivoCadastraRefeicoes.close();
+		arquivoHotel.close();
+		
+	}
+
 
 	/*
 	 * (non-Javadoc)
